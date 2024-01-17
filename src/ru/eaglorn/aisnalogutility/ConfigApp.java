@@ -1,0 +1,23 @@
+package ru.eaglorn.aisnalogutility;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
+public class ConfigApp {
+	static void getConfig() {
+		try {
+			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));
+			Data.CONFIG_APP = new Gson().fromJson(reader, ConfigApp.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+		}
+	}
+
+	String NET_PATH = "";
+	String VERSION = "";
+}
