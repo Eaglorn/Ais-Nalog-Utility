@@ -34,12 +34,12 @@ public class FixThread extends Thread {
 				if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
 					Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
 				}
-				unpackChecked(fix);
+				unpack(fix);
 			}
 			
 			if(isAllFix) {
 				if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
-					unpackAll(fix);
+					unpack(fix);
 					Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
 				}
 			}
@@ -55,18 +55,7 @@ public class FixThread extends Thread {
 		}
 	}
 	
-	public void unpackChecked(Fix fix) {
-		String pathFix = Data.CONFIG_APP.NET_PATH + "\\promfix\\" + fix.NAME;
-		try {
-			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: распаковка  фикса " + fix.NAME;
-			decompress7ZipEmbedded(new File(pathFix), new File(AisNalogUtility.AIS_PATH));
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
-		} 
-	}
-	
-	public void unpackAll(Fix fix) {
+	public void unpack(Fix fix) {
 		String pathFix = Data.CONFIG_APP.NET_PATH + "\\promfix\\" + fix.NAME;
 		try {
 			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: распаковка  фикса " + fix.NAME;
