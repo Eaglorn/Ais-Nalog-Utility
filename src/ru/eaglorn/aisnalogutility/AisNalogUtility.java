@@ -139,6 +139,8 @@ public class AisNalogUtility {
 		};
 		
 		Arrays.sort(arrFiles, comp);
+		
+		
 		List<File> lst = Arrays.asList(arrFiles);
 
 		int i = 1;
