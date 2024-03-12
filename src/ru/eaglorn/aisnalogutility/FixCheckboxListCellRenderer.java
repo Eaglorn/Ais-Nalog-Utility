@@ -1,5 +1,6 @@
 package ru.eaglorn.aisnalogutility;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JCheckBox;
@@ -20,9 +21,16 @@ class FixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRender
 		setComponentOrientation(list.getComponentOrientation());
 
 		setFont(list.getFont());
+		
+		String str = String.valueOf(value);
 		setText(String.valueOf(value));
 
-		setBackground(list.getBackground());
+		if(Data.CONFIG_INSTALLED.INSTALLED.contains(str)) {
+			setBackground(new Color(210,255,210));
+		} else {
+			setBackground(new Color(255,210,210));
+		}
+		
 		setForeground(list.getForeground());
 
 		setSelected(isSelected);
