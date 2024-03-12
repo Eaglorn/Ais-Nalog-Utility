@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
@@ -123,6 +124,21 @@ public class AisNalogUtility {
 		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
 		File dir = new File(Data.CONFIG_APP.NET_PATH + "\\promfix");
 		File[] arrFiles = dir.listFiles();
+		
+		Comparator<File> comp = new Comparator<File>() {
+			@Override
+			public int compare(File f1, File f2) {
+				String name1 = f1.getName();
+				Integer numb1 = Integer.valueOf(name1.substring(name1.indexOf("№") + 1, name1.lastIndexOf(".")));
+				
+				String name2 = f2.getName();
+				Integer numb2 = Integer.valueOf(name2.substring(name2.indexOf("№") + 1, name2.lastIndexOf(".")));
+				
+				return numb1.compareTo(numb2);
+			}
+		};
+		
+		Arrays.sort(arrFiles, comp);
 		List<File> lst = Arrays.asList(arrFiles);
 
 		int i = 1;
@@ -223,28 +239,6 @@ public class AisNalogUtility {
 				e.printStackTrace();
 			}
 		}
-		
-		/*
-		File dir = new File("ftp:////fap.regions.tax.nalog.ru//Aisnalog3//AisNalog3PROM//");
-		File[] arrFiles = dir.listFiles();
-		List<File> lst = Arrays.asList(arrFiles);
-		
-		File ais_dir = null;
-		
-		for (File f : lst) {
-			if (ais_dir != null) {
-				if (f.lastModified() > ais_dir.lastModified()) ais_dir = f;
-			} else ais_dir = f;
-		}
-		String ais_dir_name = "";
-		try {
-			ais_dir_name = ais_dir.getName();
-			ais_dir_name = ais_dir_name.replace("_", ".");
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.log(Level.WARNING, e.getMessage());
-		}
-		*/
 
 		AIS_VERSION = version;
 
