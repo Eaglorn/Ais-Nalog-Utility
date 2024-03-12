@@ -27,7 +27,7 @@ public class ConfigInstalled {
 					Data.CONFIG_INSTALLED.VERSION = Data.CONFIG_APP.VERSION;
 				}
 				
-				if (!Files.exists(Paths.get(AisNalogUtility.AIS_PATH + "Client\\SCS.ClientPackage.fix"))) {
+				if (!Files.exists(Paths.get(AisNalogUtility.AIS_PATH + "Client\\CSC.ClientPackage.fix"))) {
 					Data.CONFIG_INSTALLED.INSTALLED.clear();
 					Data.CONFIG_INSTALLED.VERSION = Data.CONFIG_APP.VERSION;
 				}
