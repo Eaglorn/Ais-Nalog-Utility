@@ -7,14 +7,12 @@ import java.awt.event.ActionListener;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +35,6 @@ import javax.swing.border.EmptyBorder;
 import org.apache.commons.io.FileUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Kernel32Util;
@@ -51,7 +48,7 @@ public class AisNalogUtility {
 
 	public static JFrame APP = null;
 
-	public final static String APP_VERSION = "5";
+	public final static String APP_VERSION = "6";
 
 	public static JButton BUTTON_INSTALL_ALL_FIX = null;
 	public static JButton BUTTON_INSTALL_CHECKED_FIX = null;
@@ -276,12 +273,14 @@ public class AisNalogUtility {
 			Process process = pb.start();
 			process.waitFor();
 			LoadingThread.IS_RUN = false;
+			ConfigInstalled.save();
 			APP.setVisible(false);
 			APP.dispose();
 		} catch (IOException e) {
 			e.printStackTrace();
 			LOGGER.log(Level.WARNING, e.getMessage());
 		}
+		
 	}
 
 	private static void runApp() {
@@ -300,6 +299,8 @@ public class AisNalogUtility {
 		SPLIT_PANE.setRightComponent(getPanelFix());
 
 		APP.add(SPLIT_PANE);
+		
+		ConfigInstalled.getConfig();
 	}
 
 	public static void runAppAuth() {
@@ -335,23 +336,7 @@ public class AisNalogUtility {
 	}
 
 	public static void runAppRun() {
-		try {
-			FileReader file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
-			try (Scanner scan = new Scanner(file)) {
-				String gson = "";
-				while (scan.hasNextLine()) {
-					gson += scan.nextLine();
-				}
-				gson = Crypt.decrypt(gson);
-				Data.CONFIG_ADMIN = new Gson().fromJson(gson, ConfigAdmin.class);
-			} catch (JsonSyntaxException e) {
-				e.printStackTrace();
-				LOGGER.log(Level.WARNING, e.getMessage());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			LOGGER.log(Level.WARNING, e.getMessage());
-		}
+		ConfigAdmin.getConfig();
 
 		WString nullW = null;
 		PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();

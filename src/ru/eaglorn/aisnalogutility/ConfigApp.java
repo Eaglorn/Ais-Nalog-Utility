@@ -8,6 +8,9 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class ConfigApp {
+	String NET_PATH = "";
+	String VERSION = "";
+	
 	static void getConfig() {
 		try {
 			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));
@@ -17,7 +20,4 @@ public class ConfigApp {
 			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
 		}
 	}
-
-	String NET_PATH = "";
-	String VERSION = "";
 }
