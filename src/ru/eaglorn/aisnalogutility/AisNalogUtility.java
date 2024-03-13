@@ -2,6 +2,7 @@ package ru.eaglorn.aisnalogutility;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Console;
@@ -24,6 +25,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -49,6 +53,8 @@ public class AisNalogUtility {
 	public static JFrame APP = null;
 
 	public final static String APP_VERSION = "6";
+	
+	public static JMenuBar MENU_BAR = null;
 
 	public static JButton BUTTON_INSTALL_ALL_FIX = null;
 	public static JButton BUTTON_INSTALL_CHECKED_FIX = null;
@@ -60,7 +66,7 @@ public class AisNalogUtility {
 	static JSplitPane SPLIT_PANE = null;
 
 	public static JButton buttonAllFix() {
-		BUTTON_INSTALL_ALL_FIX = new JButton("Установить все фиксы для АИС Налог-3 ПРОМ");
+		BUTTON_INSTALL_ALL_FIX = new JButton("Установить все фиксы");
 
 		BUTTON_INSTALL_ALL_FIX.addActionListener(new ActionListener() {
 			@Override
@@ -80,7 +86,7 @@ public class AisNalogUtility {
 	}
 
 	public static JButton buttonCheckedFix() {
-		BUTTON_INSTALL_CHECKED_FIX = new JButton("Установить выбранные фиксы для АИС Налог-3 ПРОМ");
+		BUTTON_INSTALL_CHECKED_FIX = new JButton("Установить выбранные фиксы");
 
 		BUTTON_INSTALL_CHECKED_FIX.addActionListener(new ActionListener() {
 			@Override
@@ -167,6 +173,7 @@ public class AisNalogUtility {
 			}
 		});
 		fix_list.setLayoutOrientation(JList.VERTICAL);
+	    
 		return fix_list;
 	}
 
@@ -201,6 +208,8 @@ public class AisNalogUtility {
 	public static JPanel getPanelFix() {
 		JScrollPane scroll_pane_fix = new JScrollPane();
 		scroll_pane_fix.setViewportView(getFixList());
+		
+		scroll_pane_fix.getViewport().setViewPosition(new Point(0,99999));
 
 		JPanel panel_fix = new JPanel(new BorderLayout());
 
@@ -215,7 +224,7 @@ public class AisNalogUtility {
 		panel_install.setBorder(new EmptyBorder(10, 10, 10, 10));
 		GridLayout layout = new GridLayout(4, 0, 0, 0);
 		panel_install.setLayout(layout);
-
+		
 		String path = "";
 		String version = "";
 		if (new File("c:\\Program Files (x86)\\Ais3Prom\\Client\\version.txt").exists()) {
@@ -227,9 +236,9 @@ public class AisNalogUtility {
 		} else {
 			version = "АИС Налог-3 ПРОМ не установлен";
 		}
-
+		
 		File file = new File(path);
-
+		
 		if (file.exists()) {
 			try {
 				version = String.join("", FileUtils.readLines(file, "UTF-8"));
@@ -238,18 +247,17 @@ public class AisNalogUtility {
 				e.printStackTrace();
 			}
 		}
-
+		
 		AIS_VERSION = version;
-
+		
 		JLabel old_version = new JLabel("Установленная версия АИС Налог-3 ПРОМ: " + AIS_VERSION, SwingConstants.CENTER);
-		JLabel new_version = new JLabel("Новая версия АИС Налог-3 ПРОМ: " + Data.CONFIG_APP.VERSION,
-				SwingConstants.CENTER);
+		JLabel new_version = new JLabel("Актуальная версия АИС Налог-3 ПРОМ: " + Data.CONFIG_APP.VERSION, SwingConstants.CENTER);
 
 		panel_install.add(old_version);
 		panel_install.add(buttonAllFix());
 		panel_install.add(buttonCheckedFix());
 		panel_install.add(new_version);
-
+		
 		return panel_install;
 	}
 
@@ -282,6 +290,53 @@ public class AisNalogUtility {
 		}
 		
 	}
+	
+	public static JMenuBar menuBar() {
+		JMenuBar menubar = new JMenuBar();
+		
+		JMenu menu = new JMenu("Файл");
+		
+		JMenuItem itm = new JMenuItem("Выйти");
+		menu.add(itm);
+		itm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				APP.setVisible(false);
+				APP.dispose();
+			}
+		});
+		
+		menubar.add(menu);
+		
+		menu = new JMenu("Справка");
+
+		itm = new JMenuItem("Помощь");
+		menu.add(itm);
+		itm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, ""
+						+ "При нажатии кнопки <<Установить все фиксы>> выполнится установка фиксов, которые не были установлены ранее.\n"
+						+ "При нажатии <<Установить выбранные фиксы>> выполнится установка всех выбранных фиксов, даже если они были ранее установлены.\n"
+						+ "Красным цветом отмечены фиксы не установленые фиксы. Зелёным установленные.", "Справка", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		   
+		itm = new JMenuItem("О программе");
+		itm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "УФНС России по Хабаровскому краю.\n"
+						+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.", "О программе", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		menu.add(itm);
+   
+		menubar.add(menu);
+		
+		MENU_BAR = menubar;
+		return menubar;
+	}
 
 	private static void runApp() {
 		ConfigApp.getConfig();
@@ -292,6 +347,8 @@ public class AisNalogUtility {
 		APP.setVisible(true);
 		APP.setLocationRelativeTo(null);
 		APP.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		APP.setJMenuBar(menuBar());
 
 		SPLIT_PANE = new JSplitPane();
 		SPLIT_PANE.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
