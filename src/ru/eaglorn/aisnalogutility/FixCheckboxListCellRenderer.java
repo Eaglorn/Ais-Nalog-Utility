@@ -26,9 +26,9 @@ class FixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRender
 		setText(String.valueOf(value));
 
 		if(Data.CONFIG_INSTALLED.INSTALLED.contains(str)) {
-			setBackground(new Color(210,255,210));
+			setBackground(new Color(185,255,185));
 		} else {
-			setBackground(new Color(255,210,210));
+			setBackground(new Color(255,185,185));
 		}
 		
 		setForeground(list.getForeground());

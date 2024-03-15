@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 public class FixThread extends Thread {
 
-	public static boolean isAllFix = false;
+	public static int installMode = 0;
 
 	public static void decompress7ZipEmbedded(File source, File destination) throws IOException, InterruptedException {
 		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x",
@@ -29,18 +29,48 @@ public class FixThread extends Thread {
         } catch (Exception e) {
         }
 		
-		for (Fix fix : Data.FIXS) {
-			if (fix.CHECKED) {
-				if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
-					Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+		switch (installMode) {
+			case 1: { // All
+				for (Fix fix : Data.FIXS) {					
+					if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
+						Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+					}
+					unpack(fix);
 				}
-				unpack(fix);
+				
+				break;
+			}
+			case 2: { // Checked
+				for (Fix fix : Data.FIXS) {					
+					if (fix.CHECKED) {
+						if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
+							Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+						}
+						unpack(fix);
+					}
+				}
+				
+				break;
+			}
+			case 3: { // Unchecked
+				for (Fix fix : Data.FIXS) {					
+					if (!fix.CHECKED) {
+						if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
+							Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+						}
+						unpack(fix);
+					}
+				}
+				
+				break;
 			}
 			
-			if(isAllFix) {
-				if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
-					unpack(fix);
-					Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+			default: { // UnInstalled
+				for (Fix fix : Data.FIXS) {
+					if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
+						unpack(fix);
+						Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+					}
 				}
 			}
 		}

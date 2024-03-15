@@ -1,6 +1,7 @@
 package ru.eaglorn.aisnalogutility;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -54,16 +55,39 @@ public class AisNalogUtility {
 
 	public final static String APP_VERSION = "6";
 	
+	public static boolean INSTALLED = false;
+	
 	public static JMenuBar MENU_BAR = null;
 
+	public static JButton BUTTON_INSTALL_UNINSTALLED_FIX = null;
 	public static JButton BUTTON_INSTALL_ALL_FIX = null;
 	public static JButton BUTTON_INSTALL_CHECKED_FIX = null;
+	public static JButton BUTTON_INSTALL_UNCHECKED_FIX = null;
 
 	public static LoadingThread LOAD_THREAD = null;
 
 	public static Logger LOGGER = null;
 
 	static JSplitPane SPLIT_PANE = null;
+	
+	public static JButton buttonUninstalledFix() {
+		BUTTON_INSTALL_UNINSTALLED_FIX = new JButton("Установить новые фиксы");
+
+		BUTTON_INSTALL_UNINSTALLED_FIX.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
+
+				LoadingThread.IS_RUN = true;
+				LOAD_THREAD = new LoadingThread();
+				LOAD_THREAD.start();
+				Thread fix_thread = new FixThread();
+				fix_thread.start();
+			}
+		});
+		return BUTTON_INSTALL_UNINSTALLED_FIX;
+	}
 
 	public static JButton buttonAllFix() {
 		BUTTON_INSTALL_ALL_FIX = new JButton("Установить все фиксы");
@@ -77,7 +101,7 @@ public class AisNalogUtility {
 				LoadingThread.IS_RUN = true;
 				LOAD_THREAD = new LoadingThread();
 				LOAD_THREAD.start();
-				FixThread.isAllFix = true;
+				FixThread.installMode = 1;
 				Thread fix_thread = new FixThread();
 				fix_thread.start();
 			}
@@ -86,7 +110,7 @@ public class AisNalogUtility {
 	}
 
 	public static JButton buttonCheckedFix() {
-		BUTTON_INSTALL_CHECKED_FIX = new JButton("Установить выбранные фиксы");
+		BUTTON_INSTALL_CHECKED_FIX = new JButton("Установить только выбранные фиксы");
 
 		BUTTON_INSTALL_CHECKED_FIX.addActionListener(new ActionListener() {
 			@Override
@@ -97,11 +121,32 @@ public class AisNalogUtility {
 				LoadingThread.IS_RUN = true;
 				LOAD_THREAD = new LoadingThread();
 				LOAD_THREAD.start();
+				FixThread.installMode = 2;
 				Thread fix_thread = new FixThread();
 				fix_thread.start();
 			}
 		});
 		return BUTTON_INSTALL_CHECKED_FIX;
+	}
+	
+	public static JButton buttonUncheckedFix() {
+		BUTTON_INSTALL_UNCHECKED_FIX = new JButton("Установить все фиксы кроме выбранных");
+
+		BUTTON_INSTALL_UNCHECKED_FIX.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
+
+				LoadingThread.IS_RUN = true;
+				LOAD_THREAD = new LoadingThread();
+				LOAD_THREAD.start();
+				FixThread.installMode = 3;
+				Thread fix_thread = new FixThread();
+				fix_thread.start();
+			}
+		});
+		return BUTTON_INSTALL_UNCHECKED_FIX;
 	}
 
 	private static boolean checkPrivileges() {
@@ -214,6 +259,8 @@ public class AisNalogUtility {
 		JPanel panel_fix = new JPanel(new BorderLayout());
 
 		panel_fix.add(scroll_pane_fix);
+		
+		panel_fix.setMinimumSize(new Dimension(300,0));
 
 		return panel_fix;
 	}
@@ -222,7 +269,7 @@ public class AisNalogUtility {
 
 		JPanel panel_install = new JPanel();
 		panel_install.setBorder(new EmptyBorder(10, 10, 10, 10));
-		GridLayout layout = new GridLayout(4, 0, 0, 0);
+		GridLayout layout = new GridLayout(6, 0, 0, 0);
 		panel_install.setLayout(layout);
 		
 		String path = "";
@@ -230,11 +277,13 @@ public class AisNalogUtility {
 		if (new File("c:\\Program Files (x86)\\Ais3Prom\\Client\\version.txt").exists()) {
 			AIS_PATH = "c:\\Program Files (x86)\\Ais3Prom\\";
 			path = AIS_PATH + "Client\\version.txt";
+			INSTALLED = true;
 		} else if (new File("c:\\Program Files\\Ais3Prom\\Client\\version.txt").exists()) {
 			AIS_PATH = "c:\\Program Files\\Ais3Prom\\";
 			path = AIS_PATH + "Client\\version.txt";
+			INSTALLED = true;
 		} else {
-			version = "АИС Налог-3 ПРОМ не установлен";
+			version = "НЕ УСТАНОВЛЕН!";
 		}
 		
 		File file = new File(path);
@@ -250,13 +299,24 @@ public class AisNalogUtility {
 		
 		AIS_VERSION = version;
 		
-		JLabel old_version = new JLabel("Установленная версия АИС Налог-3 ПРОМ: " + AIS_VERSION, SwingConstants.CENTER);
-		JLabel new_version = new JLabel("Актуальная версия АИС Налог-3 ПРОМ: " + Data.CONFIG_APP.VERSION, SwingConstants.CENTER);
+		JLabel old_version = new JLabel("Установленная версия: " + AIS_VERSION, SwingConstants.CENTER);
+		JLabel new_version = new JLabel("Актуальная версия: " + Data.CONFIG_APP.VERSION, SwingConstants.CENTER);
 
 		panel_install.add(old_version);
+		panel_install.add(buttonUninstalledFix());
 		panel_install.add(buttonAllFix());
 		panel_install.add(buttonCheckedFix());
+		panel_install.add(buttonUncheckedFix());
 		panel_install.add(new_version);
+		
+		if(!INSTALLED) {
+			BUTTON_INSTALL_UNINSTALLED_FIX.setEnabled(false);
+			BUTTON_INSTALL_ALL_FIX.setEnabled(false);
+			BUTTON_INSTALL_CHECKED_FIX.setEnabled(false);
+			BUTTON_INSTALL_UNCHECKED_FIX.setEnabled(false);
+		}
+		
+		panel_install.setMinimumSize(new Dimension(300,0));
 		
 		return panel_install;
 	}
@@ -316,9 +376,14 @@ public class AisNalogUtility {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, ""
-						+ "При нажатии кнопки <<Установить все фиксы>> выполнится установка фиксов, которые не были установлены ранее.\n"
-						+ "При нажатии <<Установить выбранные фиксы>> выполнится установка всех выбранных фиксов, даже если они были ранее установлены.\n"
-						+ "Красным цветом отмечены не установленые фиксы. Зелёным установленные.", "Справка", JOptionPane.INFORMATION_MESSAGE);
+						+ "При нажатии кнопок:\n"
+						+ "    1) <<Установить новые фиксы>> - выполнится установка фиксов, которые не были установлены ранее.\n"
+						+ "    2) <<Установить все фиксы>> - выполнится установка всех фиксов.\n"
+						+ "    3) <<Установить выбранные фиксы>> - выполнится установка всех выбранных фиксов.\n"
+						+ "    4) <<Установить все фиксы кроме выбранных>> - выполнится установка всех фиксов кроме выбранных.\n\n"
+						+ "Цвет фиксов:\n:"
+						+ "    1) Красный - не установлен.\n"
+						+ "    2) Зелёным - установлен.", "Справка", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		   
@@ -342,8 +407,8 @@ public class AisNalogUtility {
 		ConfigApp.getConfig();
 
 		APP = new JFrame();
-		APP.setTitle("Аис Налог-3 ПРОМ Утилита для установки фиксов (v" + APP_VERSION + ")");
-		APP.setSize(650, 550);
+		APP.setTitle("Утилита для установки фиксов (v" + APP_VERSION + ")");
+		APP.setSize(550, 690);
 		APP.setVisible(true);
 		APP.setLocationRelativeTo(null);
 		APP.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
