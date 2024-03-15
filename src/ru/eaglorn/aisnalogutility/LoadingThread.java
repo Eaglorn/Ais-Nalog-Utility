@@ -18,6 +18,8 @@ public class LoadingThread extends Thread {
 	public static boolean LOAD_THREAD_REVERSE = false;
 
 	public static String LOAD_THREAD_TEXT = "";
+	
+	public static boolean TYPE_INSTALL = false;
 
 	@Override
 	public void run() {
@@ -52,7 +54,12 @@ public class LoadingThread extends Thread {
 				AisNalogUtility.APP.setSize(565, 180);
 				INSTALL_PANEL = new JPanel();
 				StringBuilder labelJLabel = new StringBuilder();
-				labelJLabel.append("<html><div style='text-align: center;'>Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+				labelJLabel.append("<html><div style='text-align: center;'>");
+				if(!TYPE_INSTALL) {
+					labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+				} else {
+					labelJLabel.append("Выполняется установка АИС Налог-3 ПРОМ.<br>После завершения установки программа закроется.<br>Для установки фиксов, нужно заного запустить программу.<br><br>");
+				}
 				labelJLabel.append(LOAD_PROCESS_TEXT).append("<br><br>").append(text.toString()).append("</div></html>");
 				LOAD_THREAD_JLABEL = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);
 				INSTALL_PANEL.add(LOAD_THREAD_JLABEL);

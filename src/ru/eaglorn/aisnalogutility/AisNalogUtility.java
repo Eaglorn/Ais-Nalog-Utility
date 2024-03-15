@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -53,7 +54,7 @@ public class AisNalogUtility {
 
 	public static JFrame APP = null;
 
-	public final static String APP_VERSION = "6";
+	public static final String APP_VERSION = "6";
 	
 	public static boolean INSTALLED = false;
 	
@@ -63,12 +64,33 @@ public class AisNalogUtility {
 	public static JButton BUTTON_INSTALL_ALL_FIX = null;
 	public static JButton BUTTON_INSTALL_CHECKED_FIX = null;
 	public static JButton BUTTON_INSTALL_UNCHECKED_FIX = null;
+	
+	public static JButton BUTTON_INSTALL_AIS = null;
 
 	public static LoadingThread LOAD_THREAD = null;
 
 	public static Logger LOGGER = null;
 
 	static JSplitPane SPLIT_PANE = null;
+	
+	public static JButton buttonInstallAis() {
+		BUTTON_INSTALL_AIS = new JButton("Установить АИС-Налог 3 ПРОМ");
+
+		BUTTON_INSTALL_AIS.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
+
+				LoadingThread.IS_RUN = true;
+				LOAD_THREAD = new LoadingThread();
+				LOAD_THREAD.start();
+				Thread ais_thread = new AisThread();
+				ais_thread.start();
+			}
+		});
+		return BUTTON_INSTALL_AIS;
+	}
 	
 	public static JButton buttonUninstalledFix() {
 		BUTTON_INSTALL_UNINSTALLED_FIX = new JButton("Установить новые фиксы");
@@ -229,8 +251,11 @@ public class AisNalogUtility {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		writer.print("");
-		writer.close();
+		if (writer != null) {
+			writer.print("");
+			writer.close();
+		}
+		
 
 		Logger logger = Logger.getLogger("AisNalogUtilityLog");
 		FileHandler fh;
@@ -269,7 +294,7 @@ public class AisNalogUtility {
 
 		JPanel panel_install = new JPanel();
 		panel_install.setBorder(new EmptyBorder(10, 10, 10, 10));
-		GridLayout layout = new GridLayout(6, 0, 0, 0);
+		GridLayout layout = new GridLayout(8, 0, 0, 0);
 		panel_install.setLayout(layout);
 		
 		String path = "";
@@ -290,7 +315,7 @@ public class AisNalogUtility {
 		
 		if (file.exists()) {
 			try {
-				version = String.join("", FileUtils.readLines(file, "UTF-8"));
+				version = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8));
 			} catch (IOException e) {
 				LOGGER.log(Level.WARNING, e.getMessage());
 				e.printStackTrace();
@@ -301,12 +326,16 @@ public class AisNalogUtility {
 		
 		JLabel old_version = new JLabel("Установленная версия: " + AIS_VERSION, SwingConstants.CENTER);
 		JLabel new_version = new JLabel("Актуальная версия: " + Data.CONFIG_APP.VERSION, SwingConstants.CENTER);
+		
+		JLabel space = new JLabel("" + AIS_VERSION, SwingConstants.CENTER);
 
 		panel_install.add(old_version);
 		panel_install.add(buttonUninstalledFix());
 		panel_install.add(buttonAllFix());
 		panel_install.add(buttonCheckedFix());
 		panel_install.add(buttonUncheckedFix());
+		panel_install.add(space);
+		panel_install.add(buttonInstallAis());
 		panel_install.add(new_version);
 		
 		if(!INSTALLED) {
@@ -335,7 +364,11 @@ public class AisNalogUtility {
 	}
 
 	public static void processBuilderStart(String path, String[] commands) throws InterruptedException {
-		ProcessBuilder pb = new ProcessBuilder("\"" + path + commands[0] + "\"");
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < commands.length; i++) {
+			stringBuilder.append(commands[i]);
+		}
+		ProcessBuilder pb = new ProcessBuilder("\"" + path + stringBuilder.toString() + "\"");
 		pb.redirectError();
 		try {
 			Process process = pb.start();

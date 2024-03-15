@@ -21,14 +21,7 @@ public class FixThread extends Thread {
 	}
 
 	@Override
-	public void run() {
-		try {
-			ProcessBuilder pb = new ProcessBuilder().inheritIO().command("taskkill", "/IM", "");
-            Process process = pb.start();
-            process.waitFor();
-        } catch (Exception e) {
-        }
-		
+	public void run() {	
 		switch (installMode) {
 			case 1: { // All
 				for (Fix fix : Data.FIXS) {					
