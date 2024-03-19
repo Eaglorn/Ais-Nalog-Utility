@@ -2,7 +2,7 @@ package ru.eaglorn.aisnalogutility;
 
 import java.util.logging.Level;
 
-public class AisThread extends Thread {
+public class PromAppThread extends Thread {
 
 	public static int installMode = 0;
 

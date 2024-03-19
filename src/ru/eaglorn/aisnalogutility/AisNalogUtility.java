@@ -49,34 +49,39 @@ import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 public class AisNalogUtility {
 
-	public static String AIS_PATH = "";
-	public static String AIS_VERSION = "";
+	public static String APP_PROM_PATH = "";
+	public static String APP_PROM_VERSION = "";
+	
+	public static String APP_OE_PATH = "";
+	public static String APP_OE_VERSION = "";
 
 	public static JFrame APP = null;
 
 	public static final String APP_VERSION = "6";
 	
-	public static boolean INSTALLED = false;
+	public static boolean APP_PROM_INSTALLED = false;
+	public static boolean APP_OE_INSTALLED = false;
 	
 	public static JMenuBar MENU_BAR = null;
 
-	public static JButton BUTTON_INSTALL_UNINSTALLED_FIX = null;
-	public static JButton BUTTON_INSTALL_ALL_FIX = null;
-	public static JButton BUTTON_INSTALL_CHECKED_FIX = null;
-	public static JButton BUTTON_INSTALL_UNCHECKED_FIX = null;
+	public static JButton BUTTON_INSTALL_UNINSTALLED_PROM_FIX = null;
+	public static JButton BUTTON_INSTALL_ALL_PROM_FIX = null;
+	public static JButton BUTTON_INSTALL_CHECKED_PROM_FIX = null;
+	public static JButton BUTTON_INSTALL_UNCHECKED_PROM_FIX = null;
 	
-	public static JButton BUTTON_INSTALL_AIS = null;
+	public static JButton BUTTON_INSTALL_APP_PROM = null;
 
 	public static LoadingThread LOAD_THREAD = null;
 
 	public static Logger LOGGER = null;
 
-	static JSplitPane SPLIT_PANE = null;
+	static JSplitPane SPLIT_PANE_PROM = null;
+	static JSplitPane SPLIT_PANE_PROM_INSTALL = null;
 	
-	public static JButton buttonInstallAis() {
-		BUTTON_INSTALL_AIS = new JButton("Установить АИС-Налог 3 ПРОМ");
+	public static JButton buttonInstallAisProm() {
+		BUTTON_INSTALL_APP_PROM = new JButton("Установить АИС-Налог 3 ПРОМ");
 
-		BUTTON_INSTALL_AIS.addActionListener(new ActionListener() {
+		BUTTON_INSTALL_APP_PROM.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled())
@@ -84,77 +89,19 @@ public class AisNalogUtility {
 
 				LoadingThread.IS_RUN = true;
 				LOAD_THREAD = new LoadingThread();
+				LoadingThread.TYPE_INSTALL = 1;
 				LOAD_THREAD.start();
-				Thread ais_thread = new AisThread();
-				ais_thread.start();
+				Thread app_prom_thread = new PromAppThread();
+				app_prom_thread.start();
 			}
 		});
-		return BUTTON_INSTALL_AIS;
-	}
-	
-	public static JButton buttonUninstalledFix() {
-		BUTTON_INSTALL_UNINSTALLED_FIX = new JButton("Установить новые фиксы");
-
-		BUTTON_INSTALL_UNINSTALLED_FIX.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				Thread fix_thread = new FixThread();
-				fix_thread.start();
-			}
-		});
-		return BUTTON_INSTALL_UNINSTALLED_FIX;
-	}
-
-	public static JButton buttonAllFix() {
-		BUTTON_INSTALL_ALL_FIX = new JButton("Установить все фиксы");
-
-		BUTTON_INSTALL_ALL_FIX.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				FixThread.installMode = 1;
-				Thread fix_thread = new FixThread();
-				fix_thread.start();
-			}
-		});
-		return BUTTON_INSTALL_ALL_FIX;
-	}
-
-	public static JButton buttonCheckedFix() {
-		BUTTON_INSTALL_CHECKED_FIX = new JButton("Установить только выбранные фиксы");
-
-		BUTTON_INSTALL_CHECKED_FIX.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				FixThread.installMode = 2;
-				Thread fix_thread = new FixThread();
-				fix_thread.start();
-			}
-		});
-		return BUTTON_INSTALL_CHECKED_FIX;
+		return BUTTON_INSTALL_APP_PROM;
 	}
 	
-	public static JButton buttonUncheckedFix() {
-		BUTTON_INSTALL_UNCHECKED_FIX = new JButton("Установить все фиксы кроме выбранных");
+	public static JButton buttonUninstalledPromFix() {
+		BUTTON_INSTALL_UNINSTALLED_PROM_FIX = new JButton("Установить новые фиксы");
 
-		BUTTON_INSTALL_UNCHECKED_FIX.addActionListener(new ActionListener() {
+		BUTTON_INSTALL_UNINSTALLED_PROM_FIX.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled())
@@ -163,12 +110,71 @@ public class AisNalogUtility {
 				LoadingThread.IS_RUN = true;
 				LOAD_THREAD = new LoadingThread();
 				LOAD_THREAD.start();
-				FixThread.installMode = 3;
-				Thread fix_thread = new FixThread();
-				fix_thread.start();
+				Thread prom_fix_thread = new PromFixThread();
+				prom_fix_thread.start();
 			}
 		});
-		return BUTTON_INSTALL_UNCHECKED_FIX;
+		return BUTTON_INSTALL_UNINSTALLED_PROM_FIX;
+	}
+
+	public static JButton buttonAllPromFix() {
+		BUTTON_INSTALL_ALL_PROM_FIX = new JButton("Установить все фиксы");
+
+		BUTTON_INSTALL_ALL_PROM_FIX.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
+
+				LoadingThread.IS_RUN = true;
+				LOAD_THREAD = new LoadingThread();
+				LOAD_THREAD.start();
+				PromFixThread.installMode = 1;
+				Thread prom_fix_thread = new PromFixThread();
+				prom_fix_thread.start();
+			}
+		});
+		return BUTTON_INSTALL_ALL_PROM_FIX;
+	}
+
+	public static JButton buttonCheckedPromFix() {
+		BUTTON_INSTALL_CHECKED_PROM_FIX = new JButton("Установить только выбранные фиксы");
+
+		BUTTON_INSTALL_CHECKED_PROM_FIX.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
+
+				LoadingThread.IS_RUN = true;
+				LOAD_THREAD = new LoadingThread();
+				LOAD_THREAD.start();
+				PromFixThread.installMode = 2;
+				Thread prom_fix_thread = new PromFixThread();
+				prom_fix_thread.start();
+			}
+		});
+		return BUTTON_INSTALL_CHECKED_PROM_FIX;
+	}
+	
+	public static JButton buttonUncheckedPromFix() {
+		BUTTON_INSTALL_UNCHECKED_PROM_FIX = new JButton("Установить все фиксы кроме выбранных");
+
+		BUTTON_INSTALL_UNCHECKED_PROM_FIX.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
+
+				LoadingThread.IS_RUN = true;
+				LOAD_THREAD = new LoadingThread();
+				LOAD_THREAD.start();
+				PromFixThread.installMode = 3;
+				Thread prom_fix_thread = new PromFixThread();
+				prom_fix_thread.start();
+			}
+		});
+		return BUTTON_INSTALL_UNCHECKED_PROM_FIX;
 	}
 
 	private static boolean checkPrivileges() {
@@ -188,8 +194,8 @@ public class AisNalogUtility {
 		return true;
 	}
 
-	public static JList<String> getFixList() {
-		DefaultListModel<String> fix_list_init = new DefaultListModel<>();
+	public static JList<String> getPromFixList() {
+		DefaultListModel<String> prom_fix_list_init = new DefaultListModel<>();
 
 		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
 		File dir = new File(Data.CONFIG_APP.NET_PATH + "\\promfix");
@@ -215,33 +221,33 @@ public class AisNalogUtility {
 
 		int i = 1;
 		for (File file : lst) {
-			fix_list_init.addElement(file.getName());
-			Data.FIXS.add(new Fix(i, file.getName()));
+			prom_fix_list_init.addElement(file.getName());
+			Data.PROM_FIXS.add(new Fix(i, file.getName()));
 			i++;
 		}
 
-		JList<String> fix_list = new JList<>(fix_list_init);
-		fix_list.setCellRenderer(new FixCheckboxListCellRenderer<String>());
-		fix_list.addListSelectionListener(listSelectionDocument);
-		fix_list.setSelectionModel(new DefaultListSelectionModel() {
+		JList<String> prom_fix_list = new JList<>(prom_fix_list_init);
+		prom_fix_list.setCellRenderer(new PromFixCheckboxListCellRenderer<String>());
+		prom_fix_list.addListSelectionListener(listSelectionDocument);
+		prom_fix_list.setSelectionModel(new DefaultListSelectionModel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void setSelectionInterval(int index0, int index1) {
 				if (super.isSelectedIndex(index0)) {
 					if (index0 >= 0)
-						Data.FIXS.get(index0).CHECKED = false;
+						Data.PROM_FIXS.get(index0).CHECKED = false;
 					super.removeSelectionInterval(index0, index1);
 				} else {
 					if (index0 >= 0)
-						Data.FIXS.get(index0).CHECKED = true;
+						Data.PROM_FIXS.get(index0).CHECKED = true;
 					super.addSelectionInterval(index0, index1);
 				}
 			}
 		});
-		fix_list.setLayoutOrientation(JList.VERTICAL);
+		prom_fix_list.setLayoutOrientation(JList.VERTICAL);
 	    
-		return fix_list;
+		return prom_fix_list;
 	}
 
 	public static Logger getLogger() {
@@ -275,38 +281,57 @@ public class AisNalogUtility {
 		return logger;
 	}
 
-	public static JPanel getPanelFix() {
-		JScrollPane scroll_pane_fix = new JScrollPane();
-		scroll_pane_fix.setViewportView(getFixList());
+	public static JPanel getPanelPromFixList() {
+		JScrollPane scroll_pane_prom_fix = new JScrollPane();
+		scroll_pane_prom_fix.setViewportView(getPromFixList());
 		
-		scroll_pane_fix.getViewport().setViewPosition(new Point(0,99999));
+		scroll_pane_prom_fix.getViewport().setViewPosition(new Point(0,99999));
 
-		JPanel panel_fix = new JPanel(new BorderLayout());
+		JPanel panel_prom_fix = new JPanel(new BorderLayout());
 
-		panel_fix.add(scroll_pane_fix);
+		panel_prom_fix.add(scroll_pane_prom_fix);
 		
-		panel_fix.setMinimumSize(new Dimension(300,0));
+		panel_prom_fix.setMinimumSize(new Dimension(300,0));
 
-		return panel_fix;
+		return panel_prom_fix;
 	}
-
-	public static JPanel getPanelInstall() {
+	
+	public static JPanel getPanelAppProm() {
 
 		JPanel panel_install = new JPanel();
 		panel_install.setBorder(new EmptyBorder(10, 10, 10, 10));
-		GridLayout layout = new GridLayout(8, 0, 0, 0);
+		GridLayout layout = new GridLayout(3, 0, 0, 0);
+		panel_install.setLayout(layout);
+		
+		JLabel old_version = new JLabel("Установленная версия: " + APP_PROM_VERSION, SwingConstants.CENTER);
+		JLabel new_version = new JLabel("Актуальная версия: " + Data.CONFIG_APP.PROM_VERSION, SwingConstants.CENTER);
+
+		panel_install.add(old_version);
+		panel_install.add(buttonInstallAisProm());
+		panel_install.add(new_version);
+		
+		panel_install.setMinimumSize(new Dimension(300,0));
+		
+		return panel_install;
+	}
+
+	public static JPanel getPanelPromFixInstall() {
+
+		JPanel panel_install = new JPanel();
+		panel_install.setBorder(new EmptyBorder(10, 10, 10, 10));
+		GridLayout layout = new GridLayout(4, 0, 0, 0);
 		panel_install.setLayout(layout);
 		
 		String path = "";
 		String version = "";
 		if (new File("c:\\Program Files (x86)\\Ais3Prom\\Client\\version.txt").exists()) {
-			AIS_PATH = "c:\\Program Files (x86)\\Ais3Prom\\";
-			path = AIS_PATH + "Client\\version.txt";
-			INSTALLED = true;
+			APP_PROM_PATH = "c:\\Program Files (x86)\\Ais3Prom\\";
+			path = APP_PROM_PATH + "Client\\version.txt";
+			APP_PROM_INSTALLED = true;
 		} else if (new File("c:\\Program Files\\Ais3Prom\\Client\\version.txt").exists()) {
-			AIS_PATH = "c:\\Program Files\\Ais3Prom\\";
-			path = AIS_PATH + "Client\\version.txt";
-			INSTALLED = true;
+			APP_PROM_PATH = "c:\\Program Files\\Ais3Prom\\";
+			path = APP_PROM_PATH + "Client\\version.txt";
+			APP_PROM_INSTALLED = true;
 		} else {
 			version = "НЕ УСТАНОВЛЕН!";
 		}
@@ -322,30 +347,21 @@ public class AisNalogUtility {
 			}
 		}
 		
-		AIS_VERSION = version;
+		APP_PROM_VERSION = version;
 		
-		JLabel old_version = new JLabel("Установленная версия: " + AIS_VERSION, SwingConstants.CENTER);
-		JLabel new_version = new JLabel("Актуальная версия: " + Data.CONFIG_APP.VERSION, SwingConstants.CENTER);
+		panel_install.add(buttonUninstalledPromFix());
+		panel_install.add(buttonAllPromFix());
+		panel_install.add(buttonCheckedPromFix());
+		panel_install.add(buttonUncheckedPromFix());
 		
-		JLabel space = new JLabel("" + AIS_VERSION, SwingConstants.CENTER);
-
-		panel_install.add(old_version);
-		panel_install.add(buttonUninstalledFix());
-		panel_install.add(buttonAllFix());
-		panel_install.add(buttonCheckedFix());
-		panel_install.add(buttonUncheckedFix());
-		panel_install.add(space);
-		panel_install.add(buttonInstallAis());
-		panel_install.add(new_version);
-		
-		if(!INSTALLED) {
-			BUTTON_INSTALL_UNINSTALLED_FIX.setEnabled(false);
-			BUTTON_INSTALL_ALL_FIX.setEnabled(false);
-			BUTTON_INSTALL_CHECKED_FIX.setEnabled(false);
-			BUTTON_INSTALL_UNCHECKED_FIX.setEnabled(false);
+		if(!APP_PROM_INSTALLED) {
+			BUTTON_INSTALL_UNINSTALLED_PROM_FIX.setEnabled(false);
+			BUTTON_INSTALL_ALL_PROM_FIX.setEnabled(false);
+			BUTTON_INSTALL_CHECKED_PROM_FIX.setEnabled(false);
+			BUTTON_INSTALL_UNCHECKED_PROM_FIX.setEnabled(false);
 		}
 		
-		panel_install.setMinimumSize(new Dimension(300,0));
+		panel_install.setMinimumSize(new Dimension(200,0));
 		
 		return panel_install;
 	}
@@ -441,19 +457,24 @@ public class AisNalogUtility {
 
 		APP = new JFrame();
 		APP.setTitle("Утилита для установки фиксов (v" + APP_VERSION + ")");
-		APP.setSize(550, 690);
+		APP.setSize(750, 690);
 		APP.setVisible(true);
 		APP.setLocationRelativeTo(null);
 		APP.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		APP.setJMenuBar(menuBar());
+		
+		SPLIT_PANE_PROM_INSTALL = new JSplitPane();
+		SPLIT_PANE_PROM_INSTALL.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		SPLIT_PANE_PROM_INSTALL.setLeftComponent(getPanelPromFixInstall());
+		SPLIT_PANE_PROM_INSTALL.setRightComponent(getPanelAppProm());
 
-		SPLIT_PANE = new JSplitPane();
-		SPLIT_PANE.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		SPLIT_PANE.setLeftComponent(getPanelInstall());
-		SPLIT_PANE.setRightComponent(getPanelFix());
+		SPLIT_PANE_PROM = new JSplitPane();
+		SPLIT_PANE_PROM.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		SPLIT_PANE_PROM.setLeftComponent(SPLIT_PANE_PROM_INSTALL);
+		SPLIT_PANE_PROM.setRightComponent(getPanelPromFixList());
 
-		APP.add(SPLIT_PANE);
+		APP.add(SPLIT_PANE_PROM);
 		
 		ConfigInstalled.getConfig();
 	}

@@ -7,11 +7,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-class FixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRenderer<E> {
+class PromFixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRenderer<E> {
 
 	private static final long serialVersionUID = 5422800800423430296L;
 
-	public FixCheckboxListCellRenderer() {
+	public PromFixCheckboxListCellRenderer() {
 		setOpaque(true);
 	}
 
@@ -25,7 +25,7 @@ class FixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRender
 		String str = String.valueOf(value);
 		setText(String.valueOf(value));
 
-		if(Data.CONFIG_INSTALLED.INSTALLED.contains(str)) {
+		if(Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(str)) {
 			setBackground(new Color(185,255,185));
 		} else {
 			setBackground(new Color(255,185,185));

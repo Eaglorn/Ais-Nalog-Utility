@@ -9,7 +9,8 @@ import com.google.gson.stream.JsonReader;
 
 public class ConfigApp {
 	String NET_PATH = "";
-	String VERSION = "";
+	String PROM_VERSION = "";
+	String OE_VERSION = "";
 	
 	static void getConfig() {
 		try {

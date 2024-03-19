@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-public class FixThread extends Thread {
+public class PromFixThread extends Thread {
 
 	public static int installMode = 0;
 
@@ -24,9 +24,9 @@ public class FixThread extends Thread {
 	public void run() {	
 		switch (installMode) {
 			case 1: { // All
-				for (Fix fix : Data.FIXS) {					
-					if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
-						Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+				for (Fix fix : Data.PROM_FIXS) {					
+					if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
+						Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
 					}
 					unpack(fix);
 				}
@@ -34,10 +34,10 @@ public class FixThread extends Thread {
 				break;
 			}
 			case 2: { // Checked
-				for (Fix fix : Data.FIXS) {					
+				for (Fix fix : Data.PROM_FIXS) {					
 					if (fix.CHECKED) {
-						if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
-							Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+						if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
+							Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
 						}
 						unpack(fix);
 					}
@@ -46,10 +46,10 @@ public class FixThread extends Thread {
 				break;
 			}
 			case 3: { // Unchecked
-				for (Fix fix : Data.FIXS) {					
+				for (Fix fix : Data.PROM_FIXS) {					
 					if (!fix.CHECKED) {
-						if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
-							Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+						if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
+							Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
 						}
 						unpack(fix);
 					}
@@ -59,10 +59,10 @@ public class FixThread extends Thread {
 			}
 			
 			default: { // UnInstalled
-				for (Fix fix : Data.FIXS) {
-					if(!Data.CONFIG_INSTALLED.INSTALLED.contains(fix.NAME)) {
+				for (Fix fix : Data.PROM_FIXS) {
+					if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
 						unpack(fix);
-						Data.CONFIG_INSTALLED.INSTALLED.add(fix.NAME);
+						Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
 					}
 				}
 			}
@@ -71,7 +71,7 @@ public class FixThread extends Thread {
 		try {
 			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: индексация распакованных фиксов.";
 			String[] commands = { "CommonComponents.Catalog.IndexationUtility.exe" };
-			AisNalogUtility.processBuilderStart(AisNalogUtility.AIS_PATH + "Client\\", commands);
+			AisNalogUtility.processBuilderStart(AisNalogUtility.APP_PROM_PATH + "Client\\", commands);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
@@ -82,7 +82,7 @@ public class FixThread extends Thread {
 		String pathFix = Data.CONFIG_APP.NET_PATH + "\\promfix\\" + fix.NAME;
 		try {
 			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: распаковка  фикса " + fix.NAME;
-			decompress7ZipEmbedded(new File(pathFix), new File(AisNalogUtility.AIS_PATH));
+			decompress7ZipEmbedded(new File(pathFix), new File(AisNalogUtility.APP_PROM_PATH));
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());

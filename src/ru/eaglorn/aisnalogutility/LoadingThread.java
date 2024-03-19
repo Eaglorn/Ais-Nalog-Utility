@@ -19,7 +19,7 @@ public class LoadingThread extends Thread {
 
 	public static String LOAD_THREAD_TEXT = "";
 	
-	public static boolean TYPE_INSTALL = false;
+	public static int TYPE_INSTALL = 0;
 
 	@Override
 	public void run() {
@@ -55,10 +55,12 @@ public class LoadingThread extends Thread {
 				INSTALL_PANEL = new JPanel();
 				StringBuilder labelJLabel = new StringBuilder();
 				labelJLabel.append("<html><div style='text-align: center;'>");
-				if(!TYPE_INSTALL) {
-					labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
-				} else {
-					labelJLabel.append("Выполняется установка АИС Налог-3 ПРОМ.<br>После завершения установки программа закроется.<br>Для установки фиксов, нужно заного запустить программу.<br><br>");
+				switch(TYPE_INSTALL) {
+					case(1) : {
+						labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+						break;
+					}
+					default: labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 				}
 				labelJLabel.append(LOAD_PROCESS_TEXT).append("<br><br>").append(text.toString()).append("</div></html>");
 				LOAD_THREAD_JLABEL = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);

@@ -14,22 +14,25 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class ConfigInstalled {
-	String VERSION = "";
-	List<String> INSTALLED = new ArrayList<String>();
+	String PROM_VERSION = "";
+	List<String> PROM_INSTALLED = new ArrayList<String>();
+	
+	String OE_VERSION = "";
+	List<String> OE_INSTALLED = new ArrayList<String>();
 	
 	static void getConfig() {
 		if (Files.exists(Paths.get("c:\\AisNalogUtility\\config\\installed.json"))) {
 			try {
 				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\installed.json"));
 				Data.CONFIG_INSTALLED = new Gson().fromJson(reader, ConfigInstalled.class);
-				if(!Data.CONFIG_APP.VERSION.equals(Data.CONFIG_INSTALLED.VERSION)) {
-					Data.CONFIG_INSTALLED.INSTALLED.clear();
-					Data.CONFIG_INSTALLED.VERSION = Data.CONFIG_APP.VERSION;
+				if(!Data.CONFIG_APP.PROM_VERSION.equals(Data.CONFIG_INSTALLED.PROM_VERSION)) {
+					Data.CONFIG_INSTALLED.PROM_INSTALLED.clear();
+					Data.CONFIG_INSTALLED.PROM_VERSION = Data.CONFIG_APP.PROM_VERSION;
 				}
 				
-				if (!Files.exists(Paths.get(AisNalogUtility.AIS_PATH + "Client\\CSC.ClientPackage.fix"))) {
-					Data.CONFIG_INSTALLED.INSTALLED.clear();
-					Data.CONFIG_INSTALLED.VERSION = Data.CONFIG_APP.VERSION;
+				if (!Files.exists(Paths.get(AisNalogUtility.APP_PROM_PATH + "Client\\CSC.ClientPackage.fix"))) {
+					Data.CONFIG_INSTALLED.PROM_INSTALLED.clear();
+					Data.CONFIG_INSTALLED.PROM_VERSION = Data.CONFIG_APP.PROM_VERSION;
 				}
 				
 				save();
@@ -38,7 +41,7 @@ public class ConfigInstalled {
 				AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
 			}
 		} else {
-			Data.CONFIG_INSTALLED.VERSION = Data.CONFIG_APP.VERSION;
+			Data.CONFIG_INSTALLED.PROM_VERSION = Data.CONFIG_APP.PROM_VERSION;
 			
 			File file = new File("c:\\AisNalogUtility\\config\\installed.json");
 			try {
