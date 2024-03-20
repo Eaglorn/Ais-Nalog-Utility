@@ -11,13 +11,14 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class ConfigAdmin {
 	private static final Logger logger = LoggerFactory.getLogger(ConfigAdmin.class);
 	
-	String login = "";
-	String password = "";
-	
 	static void getConfig() {
+		Data data = AisNalogUtility.getData();
 		try {
 			FileReader file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
 			try (Scanner scan = new Scanner(file)) {
@@ -26,7 +27,7 @@ public class ConfigAdmin {
 					gson += scan.nextLine();
 				}
 				gson = Crypt.decrypt(gson);
-				AisNalogUtility.data.setConfigAdmin(new Gson().fromJson(gson, ConfigAdmin.class));
+				data.setConfigAdmin(new Gson().fromJson(gson, ConfigAdmin.class));
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
 				logger.error(e.getMessage());
@@ -36,6 +37,9 @@ public class ConfigAdmin {
 			logger.error(e.getMessage());
 		}
 	}
+	private @Getter @Setter String login = "";
+	
+	private @Getter @Setter String password = "";
 
 	public ConfigAdmin(String login, char[] password) {
 		this.login = login;

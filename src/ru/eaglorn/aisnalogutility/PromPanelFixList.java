@@ -18,26 +18,13 @@ import lombok.Getter;
 
 public class PromPanelFixList {
 	
-	private JScrollPane scrollPane = new JScrollPane();
-	private @Getter JPanel panel = new JPanel(new BorderLayout());
-
-	public PromPanelFixList() {
-		scrollPane.setViewportView(getPromFixList());
-		
-		scrollPane.getViewport().setViewPosition(new Point(0,99999));
-
-		panel.add(scrollPane);
-		
-		panel.setMinimumSize(new Dimension(265,0));
-		
-		AisNalogUtility.app.addWidth(265);
-	}
-	
 	public static JList<String> getPromFixList() {
+		Data data = AisNalogUtility.getData();
+		
 		DefaultListModel<String> modelList = new DefaultListModel<>();
 
 		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
-		File dir = new File(Data.CONFIG_APP.NET_PATH + "\\promfix");
+		File dir = new File(data.getConfigApp().getNetPath() + "\\promfix");
 		File[] arrFiles = dir.listFiles();
 		
 		Comparator<File> comp = new Comparator<File>() {
@@ -61,9 +48,9 @@ public class PromPanelFixList {
 		int i = 1;
 		for (File file : lst) {
 			modelList.addElement(file.getName());
-			Data.PROM_FIXS.add(new Fix(i, file.getName()));
+			data.getPromFixs().add(new Fix(i, file.getName()));
 			i++;
-			PROM_FIX_HAVE++;
+			AisNalogUtility.getApp().setPromFixHave(AisNalogUtility.getApp().getPromFixHave() + 1);
 		}
 
 		JList<String> list = new JList<>(modelList);
@@ -75,12 +62,10 @@ public class PromPanelFixList {
 			@Override
 			public void setSelectionInterval(int index0, int index1) {
 				if (super.isSelectedIndex(index0)) {
-					if (index0 >= 0)
-						Data.PROM_FIXS.get(index0).CHECKED = false;
+					if (index0 >= 0) data.getPromFixs().get(index0).setChecked(false);
 					super.removeSelectionInterval(index0, index1);
 				} else {
-					if (index0 >= 0)
-						Data.PROM_FIXS.get(index0).CHECKED = true;
+					if (index0 >= 0) data.getPromFixs().get(index0).setChecked(true);
 					super.addSelectionInterval(index0, index1);
 				}
 			}
@@ -88,5 +73,22 @@ public class PromPanelFixList {
 		list.setLayoutOrientation(JList.VERTICAL);
 	    
 		return list;
+	}
+	private JScrollPane scrollPane = new JScrollPane();
+	
+	private @Getter JPanel panel = new JPanel(new BorderLayout());
+
+	private int width = 265;
+	
+	public PromPanelFixList() {
+		scrollPane.setViewportView(getPromFixList());
+		
+		scrollPane.getViewport().setViewPosition(new Point(0,99999));
+
+		panel.add(scrollPane);
+		
+		panel.setMinimumSize(new Dimension(width,0));
+		
+		AisNalogUtility.getApp().addWidth(width);
 	}
 }

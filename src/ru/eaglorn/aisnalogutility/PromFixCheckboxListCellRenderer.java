@@ -15,8 +15,7 @@ class PromFixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRe
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, boolean isSelected,
-			boolean cellHasFocus) {
+	public Component getListCellRendererComponent(JList<? extends E> list, E value, int index, boolean isSelected, boolean cellHasFocus) {
 		setComponentOrientation(list.getComponentOrientation());
 
 		setFont(list.getFont());
@@ -24,7 +23,7 @@ class PromFixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRe
 		String str = String.valueOf(value);
 		setText(String.valueOf(value));
 
-		if(Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(str)) {
+		if(AisNalogUtility.getData().getConfigFix().getPromFixs().contains(str)) {
 			setBackground(new Color(185,255,185));
 		} else {
 			setBackground(new Color(255,185,185));

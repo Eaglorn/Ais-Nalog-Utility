@@ -7,29 +7,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PromFixThread extends Thread {
-	private static final Logger LOGGER = LoggerFactory.getLogger(PromFixThread.class);
+	private static final Logger logger = LoggerFactory.getLogger(PromFixThread.class);
 
 	public static int installMode = 0;
 
 	public static void decompress7ZipEmbedded(File source, File destination) throws IOException, InterruptedException {
-		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x",
-				source.getAbsolutePath(), "-o" + destination.getAbsolutePath(), "-aoa");
+		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x", source.getAbsolutePath(), "-o" + destination.getAbsolutePath(), "-aoa");
 		try {
 			Process process = pb.start();
 			process.waitFor();
 		} catch (IOException e) {
 			e.printStackTrace();
-			LOGGER.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
 	@Override
-	public void run() {	
+	public void run() {
+		App app = AisNalogUtility.getApp();
+		Data data = AisNalogUtility.getData();
+		
 		switch (installMode) {
 			case 1: { // All
-				for (Fix fix : Data.PROM_FIXS) {					
-					if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
-						Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
+				for (Fix fix : data.getPromFixs()) {					
+					if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+						data.getConfigFix().getPromFixs().add(getName());
 					}
 					unpack(fix);
 				}
@@ -37,10 +39,10 @@ public class PromFixThread extends Thread {
 				break;
 			}
 			case 2: { // Checked
-				for (Fix fix : Data.PROM_FIXS) {					
-					if (fix.CHECKED) {
-						if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
-							Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
+				for (Fix fix : data.getPromFixs()) {					
+					if (fix.isChecked()) {
+						if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+							data.getConfigFix().getPromFixs().add(getName());
 						}
 						unpack(fix);
 					}
@@ -49,10 +51,10 @@ public class PromFixThread extends Thread {
 				break;
 			}
 			case 3: { // Unchecked
-				for (Fix fix : Data.PROM_FIXS) {					
-					if (!fix.CHECKED) {
-						if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
-							Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
+				for (Fix fix : data.getPromFixs()) {					
+					if (!fix.isChecked()) {
+						if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+							data.getConfigFix().getPromFixs().add(getName());
 						}
 						unpack(fix);
 					}
@@ -62,33 +64,35 @@ public class PromFixThread extends Thread {
 			}
 			
 			default: { // UnInstalled
-				for (Fix fix : Data.PROM_FIXS) {
-					if(!Data.CONFIG_INSTALLED.PROM_INSTALLED.contains(fix.NAME)) {
+				for (Fix fix : data.getPromFixs()) {
+					if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
 						unpack(fix);
-						Data.CONFIG_INSTALLED.PROM_INSTALLED.add(fix.NAME);
+						data.getConfigFix().getPromFixs().add(getName());
 					}
 				}
 			}
 		}
 
 		try {
-			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: индексация распакованных фиксов.";
-			String[] commands = { AisNalogUtility.APP_PROM_PATH + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
-			AisNalogUtility.processBuilderStart(commands, true);
+			app.getLoadingThread().setProcessText("Статус выполнения: индексация распакованных фиксов.");
+			String[] commands = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
+			app.processBuilderStart(commands, true);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			LOGGER.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 	
 	public void unpack(Fix fix) {
-		String pathFix = Data.CONFIG_APP.NET_PATH + "\\promfix\\" + fix.NAME;
+		App app = AisNalogUtility.getApp();
+		
+		String pathFix = AisNalogUtility.getData().getConfigApp().getNetPath() + "\\promfix\\" + fix.getName();
 		try {
-			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: распаковка  фикса " + fix.NAME;
-			decompress7ZipEmbedded(new File(pathFix), new File(AisNalogUtility.APP_PROM_PATH));
+			app.getLoadingThread().setProcessText("Статус выполнения: распаковка  фикса " + fix.getName());
+			decompress7ZipEmbedded(new File(pathFix), new File(app.getPromPath()));
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
-			LOGGER.error(e.getMessage());
+			logger.error(e.getMessage());
 		} 
 	}
 }

@@ -21,20 +21,17 @@ import lombok.Setter;
 public class ConfigFix {
 	private static final Logger logger = LoggerFactory.getLogger(ConfigFix.class);
 	
-	private @Getter @Setter String promVersion = "";
-	private @Getter @Setter List<String> promFixs = new ArrayList<String>();
-	
-	private @Getter @Setter String oeVersion = "";
-	private @Getter @Setter List<String> oeFixs = new ArrayList<String>();
-	
 	public static void getConfig() {
+		Data data = AisNalogUtility.getData();
+		App app = AisNalogUtility.getApp();
+		
 		if (Files.exists(Paths.get("c:\\AisNalogUtility\\config\\installed.json"))) {
 			try {
 				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\installed.json"));
-				AisNalogUtility.data.setConfigFix(new Gson().fromJson(reader, ConfigFix.class));
-				if(!AisNalogUtility.data.getConfigApp().getPromVersion().equals(AisNalogUtility.data.getConfigFix().getPromVersion()) || !Files.exists(Paths.get(AisNalogUtility.app.getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
-					AisNalogUtility.data.getConfigFix().getPromFixs().clear();
-					AisNalogUtility.data.getConfigFix().setPromVersion(AisNalogUtility.data.getConfigApp().getPromVersion());
+				data.setConfigFix(new Gson().fromJson(reader, ConfigFix.class));
+				if(!data.getConfigApp().getPromVersion().equals(data.getConfigFix().getPromVersion()) || !Files.exists(Paths.get(app.getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
+					data.getConfigFix().getPromFixs().clear();
+					data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
 				}
 				
 				save();
@@ -43,7 +40,7 @@ public class ConfigFix {
 				logger.error(e.getMessage());
 			}
 		} else {
-			AisNalogUtility.data.getConfigFix().setPromVersion(AisNalogUtility.data.getConfigApp().getPromVersion());
+			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
 			
 			File file = new File("c:\\AisNalogUtility\\config\\installed.json");
 			try {
@@ -56,9 +53,9 @@ public class ConfigFix {
 			save();
 		}
 	}
-	
 	public static void save() {
-		String str = new Gson().toJson(AisNalogUtility.data.getConfigFix(), ConfigFix.class);
+		Data data = AisNalogUtility.getData();
+		String str = new Gson().toJson(data.getConfigFix(), ConfigFix.class);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\installed.json")) {
 			file.write(str);
 			file.close();
@@ -67,6 +64,13 @@ public class ConfigFix {
 			logger.error(e.getMessage());
 		}
 	}
+	
+	private @Getter @Setter String promVersion = "";
+	private @Getter @Setter List<String> promFixs = new ArrayList<String>();
+	
+	private @Getter @Setter String oeVersion = "";
+	
+	private @Getter @Setter List<String> oeFixs = new ArrayList<String>();
 
 
 }

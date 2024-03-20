@@ -11,6 +11,8 @@ public class MenuBar {
 	
 	
 	public MenuBar() {
+		App app = AisNalogUtility.getApp();
+		
 		JMenu menu = new JMenu("Файл");
 		
 		JMenuItem itm = new JMenuItem("Выйти");
@@ -18,12 +20,12 @@ public class MenuBar {
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AisNalogUtility.app.getFrame().setVisible(false);
-				AisNalogUtility.app.getFrame().dispose();
+				app.getFrame().setVisible(false);
+				app.getFrame().dispose();
 			}
 		});
 		
-		AisNalogUtility.app.getMenuBar().add(menu);
+		app.getMenuBar().add(menu);
 		
 		menu = new JMenu("Справка");
 
@@ -59,6 +61,6 @@ public class MenuBar {
 		});
 		menu.add(itm);
    
-		AisNalogUtility.app.getMenuBar().add(menu);
+		app.getMenuBar().add(menu);
 	}
 }

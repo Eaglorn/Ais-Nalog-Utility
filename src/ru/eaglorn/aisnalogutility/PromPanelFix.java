@@ -13,10 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import lombok.Getter;
 
 public class PromPanelFix {
+	private static final Logger logger = LoggerFactory.getLogger(PromPanelFix.class);
 	
 	private @Getter JPanel panel = null;
 	
@@ -25,7 +28,11 @@ public class PromPanelFix {
 	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
 	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
 	
+	private int width = 320;
+	
 	public PromPanelFix() {
+		App app = AisNalogUtility.getApp();
+		
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		GridLayout layout = new GridLayout(5, 0, 0, 0);
@@ -34,13 +41,13 @@ public class PromPanelFix {
 		String path = "";
 		String version = "";
 		if (new File("c:\\Program Files (x86)\\Ais3Prom\\Client\\version.txt").exists()) {
-			APP_PROM_PATH = "c:\\Program Files (x86)\\Ais3Prom\\";
-			path = APP_PROM_PATH + "Client\\version.txt";
-			APP_PROM_INSTALLED = true;
+			app.setPromPath("c:\\Program Files (x86)\\Ais3Prom\\");
+			path = app.getPromPath() + "Client\\version.txt";
+			app.setPromInstalled(true);
 		} else if (new File("c:\\Program Files\\Ais3Prom\\Client\\version.txt").exists()) {
-			APP_PROM_PATH = "c:\\Program Files\\Ais3Prom\\";
-			path = APP_PROM_PATH + "Client\\version.txt";
-			APP_PROM_INSTALLED = true;
+			app.setPromPath("c:\\Program Files\\Ais3Prom\\");
+			path = app.getPromPath() + "Client\\version.txt";
+			app.setPromInstalled(true);
 		} else {
 			version = "НЕ УСТАНОВЛЕН!";
 		}
@@ -51,99 +58,101 @@ public class PromPanelFix {
 			try {
 				version = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8));
 			} catch (IOException e) {
-				LOGGER.error(e.getMessage());
+				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
 		
-		APP_PROM_VERSION = version;
-		
-		panel.add(PROM_FIX_INFO);
+		app.setPromVersion(version);
 		panel.add(createButtonUninstalled());
 		panel.add(createButtonAll());
 		panel.add(createButtonChecked());
 		panel.add(createButtonUnchecked());
 		
-		if(!APP_PROM_INSTALLED) {
+		if(!app.isPromInstalled()) {
 			buttonUninstalled.setEnabled(false);
 			buttonAll.setEnabled(false);
 			buttonChecked.setEnabled(false);
 			buttonUnchecked.setEnabled(false);
 		}
 		
-		panel.setMinimumSize(new Dimension(320,0));
+		panel.setMinimumSize(new Dimension(width,0));
 		
-		WIDTH += 320;
+		app.addWidth(width);
 	}
 	
-	public JButton createButtonUninstalled() {
-		buttonUninstalled.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				Thread prom_fix_thread = new PromFixThread();
-				prom_fix_thread.start();
-			}
-		});
-		return buttonUninstalled;
-	}
-
 	public JButton createButtonAll() {
+		App app = AisNalogUtility.getApp();
+		
 		buttonAll.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
+				if (!((JButton) e.getSource()).isEnabled()) return;
 
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				PromFixThread.installMode = 1;
-				Thread prom_fix_thread = new PromFixThread();
-				prom_fix_thread.start();
+				app.setLoadingThread(new LoadingThread());
+				LoadingThread loadingThread = app.getLoadingThread();
+				loadingThread.start();
+				
+				Thread thread = new PromFixThread();
+				thread.start();
 			}
 		});
 		return buttonAll;
 	}
 
 	public JButton createButtonChecked() {
+		App app = AisNalogUtility.getApp();
+		
 		buttonChecked.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
+				if (!((JButton) e.getSource()).isEnabled()) return;
 
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				PromFixThread.installMode = 2;
-				Thread prom_fix_thread = new PromFixThread();
-				prom_fix_thread.start();
+				app.setLoadingThread(new LoadingThread());
+				LoadingThread loadingThread = app.getLoadingThread();
+				loadingThread.start();
+				
+				Thread thread = new PromFixThread();
+				thread.start();
 			}
 		});
 		return buttonChecked;
 	}
-	
+
 	public JButton createButtonUnchecked() {
+		App app = AisNalogUtility.getApp();
+		
 		buttonUnchecked.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
+				if (!((JButton) e.getSource()).isEnabled()) return;
 
-				LoadingThread.IS_RUN = true;
-				LOAD_THREAD = new LoadingThread();
-				LOAD_THREAD.start();
-				PromFixThread.installMode = 3;
-				Thread prom_fix_thread = new PromFixThread();
-				prom_fix_thread.start();
+				app.setLoadingThread(new LoadingThread());
+				LoadingThread loadingThread = app.getLoadingThread();
+				loadingThread.start();
+				
+				Thread thread = new PromFixThread();
+				thread.start();
 			}
 		});
 		return buttonUnchecked;
+	}
+	
+	public JButton createButtonUninstalled() {
+		App app = AisNalogUtility.getApp();
+		
+		buttonUninstalled.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled()) return;
+				
+				app.setLoadingThread(new LoadingThread());
+				app.getLoadingThread().start();
+				
+				Thread thread = new PromFixThread();
+				thread.start();
+			}
+		});
+		return buttonUninstalled;
 	}
 }

@@ -7,74 +7,76 @@ import javax.swing.SwingConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class LoadingThread extends Thread {
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoadingThread.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoadingThread.class);
 
-	static JPanel INSTALL_PANEL = null;
+	private JPanel panel = null;
 
-	public static boolean IS_RUN = true;
-	public static String LOAD_PROCESS_TEXT = "";
+	private @Getter @Setter boolean work = true;
+	private @Setter String processText = "";
 
-	public static int LOAD_THREAD_INT = 0;
-	public static JLabel LOAD_THREAD_JLABEL = null;
-	public static boolean LOAD_THREAD_REVERSE = false;
-
-	public static String LOAD_THREAD_TEXT = "";
+	private int number = 0;
+	private JLabel label = null;
+	private boolean reverse = false;
 	
-	public static int TYPE_INSTALL = 0;
+	private @Setter int type = 0;
 
 	@Override
 	public void run() {
-		while (IS_RUN) {
+		App app = AisNalogUtility.getApp();
+		while (work) {
 			try {
 				StringBuilder text = new StringBuilder();
-				if (!LOAD_THREAD_REVERSE) {
-					if (LOAD_THREAD_INT == 37)
-						LOAD_THREAD_REVERSE = !LOAD_THREAD_REVERSE;
+				if (!reverse) {
+					if (number == 37)
+						reverse = !reverse;
 					for (int i = 0; i < 39; i++) {
-						if (i == LOAD_THREAD_INT) {
+						if (i == number) {
 							text.append("███");
 						} else {
 							text.append("_");
 						}
 					}
-					LOAD_THREAD_INT++;
+					number++;
 				} else {
-					if (LOAD_THREAD_INT == 1)
-						LOAD_THREAD_REVERSE = !LOAD_THREAD_REVERSE;
+					if (number == 1)
+						reverse = !reverse;
 					for (int i = 0; i < 39; i++) {
-						if (i == LOAD_THREAD_INT) {
+						if (i == number) {
 							text.append("███");
 						} else {
 							text.append("_");
 						}
 					}
-					LOAD_THREAD_INT--;
+					number--;
 				}
 
-				AisNalogUtility.APP.getContentPane().removeAll();
-				AisNalogUtility.APP.setSize(565, 180);
-				INSTALL_PANEL = new JPanel();
+				app.getFrame().removeAll();
+				app.getFrame().setSize(565, 180);
+				panel = new JPanel();
 				StringBuilder labelJLabel = new StringBuilder();
 				labelJLabel.append("<html><div style='text-align: center;'>");
-				switch(TYPE_INSTALL) {
+				switch(type) {
 					case(1) : {
 						labelJLabel.append("Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 						break;
 					}
 					default: labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 				}
-				labelJLabel.append(LOAD_PROCESS_TEXT + "<br><br>" + text.toString() + "<br></div></html>");
-				LOAD_THREAD_JLABEL = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);
-				INSTALL_PANEL.add(LOAD_THREAD_JLABEL);
-				AisNalogUtility.APP.add(INSTALL_PANEL);
-				AisNalogUtility.APP.revalidate();
-				AisNalogUtility.APP.repaint();
+				labelJLabel.append(processText + "<br><br>" + text.toString() + "<br></div></html>");
+				label = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);
+				panel.add(label);
+				app.getFrame().add(panel);
+				app.getFrame().revalidate();
+				app.getFrame().repaint();
 
 				Thread.sleep(70);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				LOGGER.error(e.getMessage());
+				logger.error(e.getMessage());
 			}
 		}
 	}

@@ -19,8 +19,5 @@ public interface AdvApi32 extends Advapi32 {
 	public static final int LOGON_NETCREDENTIALS_ONLY = 0x00000002;
 	public static final int LOGON_WITH_PROFILE = 0x00000001;
 
-	boolean CreateProcessWithLogonW(WString lpUsername, WString lpDomain, WString lpPassword, int dwLogonFlags,
-			WString lpApplicationName, WString lpCommandLine, int dwCreationFlags, Pointer lpEnvironment,
-			WString lpCurrentDirectory, STARTUPINFO lpStartupInfo, PROCESS_INFORMATION lpProcessInfo);
-
+	boolean CreateProcessWithLogonW(WString lpUsername, WString lpDomain, WString lpPassword, int dwLogonFlags, WString lpApplicationName, WString lpCommandLine, int dwCreationFlags, Pointer lpEnvironment, WString lpCurrentDirectory, STARTUPINFO lpStartupInfo, PROCESS_INFORMATION lpProcessInfo);
 }

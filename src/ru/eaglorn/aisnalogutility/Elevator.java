@@ -18,8 +18,7 @@ public class Elevator {
 		if (!result) {
 			int lastError = Kernel32.INSTANCE.GetLastError();
 			String errorMessage = Kernel32Util.formatMessageFromLastErrorCode(lastError);
-			throw new RuntimeException("Error performing elevation: " + lastError + ": " + errorMessage + " (apperror="
-					+ execInfo.hInstApp + ")");
+			throw new RuntimeException("Error performing elevation: " + lastError + ": " + errorMessage + " (apperror=" + execInfo.hInstApp + ")");
 		}
 	}
 }

@@ -14,17 +14,17 @@ import lombok.Getter;
 public class ConfigApp {
 	private static final Logger logger = LoggerFactory.getLogger(ConfigApp.class);
 	
-	private @Getter String netPath = "";
-	private @Getter String promVersion = "";
-	private @Getter String oeVersion = "";
-	
-	public void getConfig() {
+	public static void getConfig() {
 		try {
 			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));
-			AisNalogUtility.data.setConfigApp(new Gson().fromJson(reader, ConfigApp.class));
+			AisNalogUtility.getData().setConfigApp(new Gson().fromJson(reader, ConfigApp.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 	}
+	private @Getter String netPath = "";
+	private @Getter String promVersion = "";
+	
+	private @Getter String oeVersion = "";
 }

@@ -37,10 +37,14 @@ public class App {
 	
 	private @Getter @Setter boolean promInstalled = false;
 
-	private @Getter @Setter LoadingThread LOAD_THREAD;
+	private @Getter @Setter LoadingThread loadingThread;
 	
 	private @Getter @Setter int promFixInstalled = 0;
-	private @Getter @Setter int promFixhave = 0;
+	private @Getter @Setter int promFixHave = 0;
+	
+	public void addWidth(int add) {
+		width += add;
+	}
 	
 	public void processBuilderStart(String[] commands, boolean exit) throws InterruptedException {
 		ProcessBuilder pb = new ProcessBuilder(commands);
@@ -49,7 +53,7 @@ public class App {
 			Process process = pb.start();
 			process.waitFor();
 			if(exit) {
-				LoadingThread.IS_RUN = false;
+				loadingThread.setWork(false);
 				ConfigFix.save();
 				frame.setVisible(false);
 				frame.dispose();
@@ -58,9 +62,5 @@ public class App {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
-	}
-	
-	public void addWidth(int add) {
-		width += add;
 	}
 }

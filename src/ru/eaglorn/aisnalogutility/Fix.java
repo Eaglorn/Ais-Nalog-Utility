@@ -1,12 +1,15 @@
 package ru.eaglorn.aisnalogutility;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Fix {
-	public boolean CHECKED = false;
-	public int INDEX = 0;
-	public String NAME = "";
+	private @Getter @Setter boolean checked = false;
+	private @Getter @Setter int index = 0;
+	private @Getter @Setter String name = "";
 
 	public Fix(int index, String name) {
-		this.INDEX = index;
-		this.NAME = name;
+		this.index = index;
+		this.name = name;
 	}
 }

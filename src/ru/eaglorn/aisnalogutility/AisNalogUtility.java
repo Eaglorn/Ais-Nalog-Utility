@@ -1,38 +1,14 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
-import javax.swing.DefaultListModel;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,15 +20,12 @@ import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 import lombok.Getter;
-import lombok.Setter;
-import lombok.val;
 
 public class AisNalogUtility {
 	private static final Logger logger = LoggerFactory.getLogger(AisNalogUtility.class);
 	
-	public static App app = new App();
-	
-	public static Data data = new Data();
+	private static @Getter App app = new App();
+	private static @Getter Data data = new Data();
 
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
@@ -108,12 +81,12 @@ public class AisNalogUtility {
 		
 		ConfigFix.getConfig();
 		
-		PROM_FIX_INSTALLED = Data.CONFIG_INSTALLED.PROM_INSTALLED.size();
+		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
 		
-		if(PROM_FIX_HAVE < 1) {
-			PROM_FIX_INFO.setText("Отсутствуют фиксы для установки.");
+		if(app.getPromFixHave() < 1) {
+			app.getPromPanelApp().getInfo().setText("Отсутствуют фиксы для установки.");
 		} else {
-			PROM_FIX_INFO.setText("Установлено " + PROM_FIX_INSTALLED + " фиксов из " + PROM_FIX_HAVE + ".");
+			app.getPromPanelApp().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
 		}
 		
 	}
@@ -123,9 +96,9 @@ public class AisNalogUtility {
 		String login = terminal.readLine("Input local admin login: ");
 		char[] password = terminal.readPassword("Input local admin password: ");
 
-		Data.CONFIG_ADMIN = new ConfigAdmin(login, password);
+		data.setConfigAdmin(new ConfigAdmin(login, password));
 
-		String crypt = new Gson().toJson(Data.CONFIG_ADMIN, ConfigAdmin.class);
+		String crypt = new Gson().toJson(data.getConfigAdmin(), ConfigAdmin.class);
 		crypt = Crypt.encrypt(crypt);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\auth")) {
 			file.write(crypt);
@@ -157,8 +130,8 @@ public class AisNalogUtility {
 		PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
 		STARTUPINFO startupInfo = new STARTUPINFO();
 		boolean result = false;
-		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(Data.CONFIG_ADMIN.LOGIN), nullW,
-				new WString(Data.CONFIG_ADMIN.PASSWORD), AdvApi32.LOGON_WITH_PROFILE, nullW,
+		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(data.getConfigAdmin().getLogin()), nullW,
+				new WString(data.getConfigAdmin().getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
 				new WString(
 						"c:\\AisNalogUtility\\java\\bin\\javaw.exe -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
 				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
