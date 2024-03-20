@@ -9,15 +9,17 @@ public class PromAppThread extends Thread {
 	@Override
 	public void run() {
 		try {
+			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: загрузка установочных файлов АИС Налог-3 ПРОМ.";
+			
+			String[] commands1 = { "robocopy", "/XC", "/XO", "/NP", "/NS", "/NC", "/NFL", "/NDL", "/R:3", "/W:1", "/Z",
+					Data.CONFIG_APP.NET_PATH + "\\\\aisprom\\\\",
+					"c:\\AisNalogUtility\\aisprom\\"};
+			AisNalogUtility.processBuilderStart(commands1, false);
+			
 			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: установка АИС Налог-3 ПРОМ.";
 			
-			String[] commands1 = { " /x ", " /s", " /xc ", " /xo ",
-					"\""+ Data.CONFIG_APP.NET_PATH + "//aisprom//" +"\"",
-					"\"" + "c://AisNalogUtility//aisprom//" +"\"" };
-			AisNalogUtility.processBuilderStart("robocopy ", commands1);
-			
-			String[] commands2 = { "run-silentmode.cmd" };
-			AisNalogUtility.processBuilderStart("c://AisNalogUtility//aisprom//", commands2);
+			String[] commands2 = { "\"c:\\AisNalogUtility\\aisprom\\run-silentmode.cmd\"" };
+			AisNalogUtility.processBuilderStart(commands2, true);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());

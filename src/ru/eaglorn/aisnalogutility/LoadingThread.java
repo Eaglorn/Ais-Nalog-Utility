@@ -57,7 +57,7 @@ public class LoadingThread extends Thread {
 				labelJLabel.append("<html><div style='text-align: center;'>");
 				switch(TYPE_INSTALL) {
 					case(1) : {
-						labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+						labelJLabel.append("Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 						break;
 					}
 					default: labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");

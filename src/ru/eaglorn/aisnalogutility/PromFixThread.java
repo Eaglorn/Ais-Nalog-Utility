@@ -70,8 +70,8 @@ public class PromFixThread extends Thread {
 
 		try {
 			LoadingThread.LOAD_PROCESS_TEXT = "Статус выполнения: индексация распакованных фиксов.";
-			String[] commands = { "CommonComponents.Catalog.IndexationUtility.exe" };
-			AisNalogUtility.processBuilderStart(AisNalogUtility.APP_PROM_PATH + "Client\\", commands);
+			String[] commands = { AisNalogUtility.APP_PROM_PATH + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
+			AisNalogUtility.processBuilderStart(commands, true);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());

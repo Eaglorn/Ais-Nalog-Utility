@@ -56,8 +56,11 @@ public class AisNalogUtility {
 	public static String APP_OE_VERSION = "";
 
 	public static JFrame APP = null;
+	
+	public static int WIDTH = 750;
+	public static int HEIGTH = 600;
 
-	public static final String APP_VERSION = "6";
+	public static final String APP_VERSION = "7";
 	
 	public static boolean APP_PROM_INSTALLED = false;
 	public static boolean APP_OE_INSTALLED = false;
@@ -292,6 +295,8 @@ public class AisNalogUtility {
 		panel_prom_fix.add(scroll_pane_prom_fix);
 		
 		panel_prom_fix.setMinimumSize(new Dimension(300,0));
+		
+		WIDTH += 300;
 
 		return panel_prom_fix;
 	}
@@ -310,7 +315,9 @@ public class AisNalogUtility {
 		panel_install.add(buttonInstallAisProm());
 		panel_install.add(new_version);
 		
-		panel_install.setMinimumSize(new Dimension(300,0));
+		panel_install.setMinimumSize(new Dimension(250,0));
+		
+		WIDTH += 250;
 		
 		return panel_install;
 	}
@@ -361,7 +368,9 @@ public class AisNalogUtility {
 			BUTTON_INSTALL_UNCHECKED_PROM_FIX.setEnabled(false);
 		}
 		
-		panel_install.setMinimumSize(new Dimension(200,0));
+		panel_install.setMinimumSize(new Dimension(270,0));
+		
+		WIDTH += 270;
 		
 		return panel_install;
 	}
@@ -379,20 +388,18 @@ public class AisNalogUtility {
 			runAppAuth();
 	}
 
-	public static void processBuilderStart(String path, String[] commands) throws InterruptedException {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < commands.length; i++) {
-			stringBuilder.append(commands[i]);
-		}
-		ProcessBuilder pb = new ProcessBuilder("\"" + path + stringBuilder.toString() + "\"");
+	public static void processBuilderStart(String[] commands, boolean exit) throws InterruptedException {
+		ProcessBuilder pb = new ProcessBuilder(commands);
 		pb.redirectError();
 		try {
 			Process process = pb.start();
 			process.waitFor();
-			LoadingThread.IS_RUN = false;
-			ConfigInstalled.save();
-			APP.setVisible(false);
-			APP.dispose();
+			if(exit) {
+				LoadingThread.IS_RUN = false;
+				ConfigInstalled.save();
+				APP.setVisible(false);
+				APP.dispose();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			LOGGER.log(Level.WARNING, e.getMessage());
@@ -456,8 +463,9 @@ public class AisNalogUtility {
 		ConfigApp.getConfig();
 
 		APP = new JFrame();
-		APP.setTitle("Утилита для установки фиксов (v" + APP_VERSION + ")");
-		APP.setSize(750, 690);
+		APP.setTitle("Утилита для АИС Налог 3 ПРОМ (v" + APP_VERSION + ")");
+		APP.setSize(WIDTH, HEIGTH);
+		WIDTH = 0;
 		APP.setVisible(true);
 		APP.setLocationRelativeTo(null);
 		APP.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -473,6 +481,8 @@ public class AisNalogUtility {
 		SPLIT_PANE_PROM.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		SPLIT_PANE_PROM.setLeftComponent(SPLIT_PANE_PROM_INSTALL);
 		SPLIT_PANE_PROM.setRightComponent(getPanelPromFixList());
+		
+		APP.setSize(WIDTH, HEIGTH);
 
 		APP.add(SPLIT_PANE_PROM);
 		
