@@ -5,7 +5,6 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Kernel32Util;
 
 public class Elevator {
-
 	public static void executeAsAdministrator(String command, String args) {
 		Shell32X.SHELLEXECUTEINFO execInfo = new Shell32X.SHELLEXECUTEINFO();
 		execInfo.lpFile = new WString(command);

@@ -2,12 +2,16 @@ package ru.eaglorn.aisnalogutility;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class ConfigApp {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigApp.class);
+	
 	String NET_PATH = "";
 	String PROM_VERSION = "";
 	String OE_VERSION = "";
@@ -18,7 +22,7 @@ public class ConfigApp {
 			Data.CONFIG_APP = new Gson().fromJson(reader, ConfigApp.class);
 		} catch (IOException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 }

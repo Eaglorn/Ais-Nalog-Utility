@@ -8,7 +8,6 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 class PromFixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRenderer<E> {
-
 	private static final long serialVersionUID = 5422800800423430296L;
 
 	public PromFixCheckboxListCellRenderer() {

@@ -11,7 +11,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 public class FixListSelectionDocument extends PlainDocument implements ListSelectionListener {
-
 	private static final long serialVersionUID = 2610351175473201734L;
 
 	private String delim;

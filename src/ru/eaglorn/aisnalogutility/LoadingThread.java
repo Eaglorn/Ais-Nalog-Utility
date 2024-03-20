@@ -1,12 +1,14 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.util.logging.Level;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class LoadingThread extends Thread {
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoadingThread.class);
 
 	static JPanel INSTALL_PANEL = null;
 
@@ -72,7 +74,7 @@ public class LoadingThread extends Thread {
 				Thread.sleep(70);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-				AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 		}
 	}

@@ -2,9 +2,12 @@ package ru.eaglorn.aisnalogutility;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PromFixThread extends Thread {
+	private static final Logger LOGGER = LoggerFactory.getLogger(PromFixThread.class);
 
 	public static int installMode = 0;
 
@@ -16,7 +19,7 @@ public class PromFixThread extends Thread {
 			process.waitFor();
 		} catch (IOException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 
@@ -74,7 +77,7 @@ public class PromFixThread extends Thread {
 			AisNalogUtility.processBuilderStart(commands, true);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 	
@@ -85,7 +88,7 @@ public class PromFixThread extends Thread {
 			decompress7ZipEmbedded(new File(pathFix), new File(AisNalogUtility.APP_PROM_PATH));
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		} 
 	}
 }

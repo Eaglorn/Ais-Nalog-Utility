@@ -1,15 +1,19 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.io.FileReader;
-import java.util.Scanner;
-import java.util.logging.Level;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 public class ConfigAdmin {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigAdmin.class);
+	
 	String LOGIN = "";
 	String PASSWORD = "";
 	
@@ -25,11 +29,11 @@ public class ConfigAdmin {
 				Data.CONFIG_ADMIN = new Gson().fromJson(gson, ConfigAdmin.class);
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
-				AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 

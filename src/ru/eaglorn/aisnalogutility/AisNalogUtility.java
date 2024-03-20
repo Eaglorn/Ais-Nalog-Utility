@@ -8,18 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Console;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
@@ -39,6 +33,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.sun.jna.WString;
@@ -48,6 +44,7 @@ import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 public class AisNalogUtility {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AisNalogUtility.class);
 
 	public static String APP_PROM_PATH = "";
 	public static String APP_PROM_VERSION = "";
@@ -75,8 +72,6 @@ public class AisNalogUtility {
 	public static JButton BUTTON_INSTALL_APP_PROM = null;
 
 	public static LoadingThread LOAD_THREAD = null;
-
-	public static Logger LOGGER = null;
 
 	public static JSplitPane SPLIT_PANE_PROM = null;
 	public static JSplitPane SPLIT_PANE_PROM_INSTALL = null;
@@ -193,7 +188,7 @@ public class AisNalogUtility {
 		try {
 			fileTest = File.createTempFile("test", ".dll", testPriv);
 		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 			return false;
 		} finally {
 			if (fileTest != null)
@@ -257,37 +252,6 @@ public class AisNalogUtility {
 		prom_fix_list.setLayoutOrientation(JList.VERTICAL);
 	    
 		return prom_fix_list;
-	}
-
-	public static Logger getLogger() {
-		PrintWriter writer = null;
-		try {
-			writer = new PrintWriter("C:/AisNalogUtility/log.txt");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		if (writer != null) {
-			writer.print("");
-			writer.close();
-		}
-		
-
-		Logger logger = Logger.getLogger("AisNalogUtilityLog");
-		FileHandler fh;
-
-		try {
-
-			fh = new FileHandler("C:/AisNalogUtility/log.txt");
-			logger.addHandler(fh);
-			SimpleFormatter formatter = new SimpleFormatter();
-			fh.setFormatter(formatter);
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return logger;
 	}
 
 	public static JPanel getPanelPromFixList() {
@@ -355,7 +319,7 @@ public class AisNalogUtility {
 			try {
 				version = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8));
 			} catch (IOException e) {
-				LOGGER.log(Level.WARNING, e.getMessage());
+				LOGGER.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -383,8 +347,6 @@ public class AisNalogUtility {
 	}
 
 	public static void main(String[] args) {
-		LOGGER = getLogger();
-
 		String arg = args[0];
 
 		if (arg.equals("-run"))
@@ -409,7 +371,7 @@ public class AisNalogUtility {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 		
 	}
@@ -524,7 +486,7 @@ public class AisNalogUtility {
 			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 
@@ -557,9 +519,8 @@ public class AisNalogUtility {
 		if (!result) {
 			int error = Kernel32.INSTANCE.GetLastError();
 			System.out.println("OS error #" + error);
-			LOGGER.log(Level.WARNING, "OS error #" + error);
-			System.out.println(Kernel32Util.formatMessageFromLastErrorCode(error));
-			LOGGER.log(Level.WARNING, Kernel32Util.formatMessageFromLastErrorCode(error));
+			LOGGER.error("OS error #" + error);
+			LOGGER.error(Kernel32Util.formatMessageFromLastErrorCode(error));
 		}
 	}
 

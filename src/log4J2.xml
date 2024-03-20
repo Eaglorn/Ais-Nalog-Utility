@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" name="AisNalogUtility">
+  <Appenders>
+	<RollingFile name="Info" fileName="c:/AisNalogUtility/logs/info.log"
+                    filePattern="c:/AisNalogUtility/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.info.gz">
+        <PatternLayout>
+            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="1 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+    <RollingFile name="Warn" fileName="c:/AisNalogUtility/logs/warn.log"
+                    filePattern="c:/AisNalogUtility/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.warn.gz">
+        <PatternLayout>
+            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="1 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+    <RollingFile name="Error" fileName="c:/AisNalogUtility/logs/error.log"
+                    filePattern="c:/AisNalogUtility/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.error.gz">
+        <PatternLayout>
+            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="1 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Info"/>
+    </Root>
+    <Root level="warn">
+      <AppenderRef ref="Warn"/>
+    </Root>
+    <Root level="error">
+      <AppenderRef ref="Error"/>
+    </Root>
+  </Loggers>
+</Configuration>

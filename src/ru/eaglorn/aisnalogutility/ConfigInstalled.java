@@ -8,12 +8,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class ConfigInstalled {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigInstalled.class);
+	
 	String PROM_VERSION = "";
 	List<String> PROM_INSTALLED = new ArrayList<String>();
 	
@@ -38,7 +42,7 @@ public class ConfigInstalled {
 				save();
 			} catch (IOException e) {
 				e.printStackTrace();
-				AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 		} else {
 			Data.CONFIG_INSTALLED.PROM_VERSION = Data.CONFIG_APP.PROM_VERSION;
@@ -48,7 +52,7 @@ public class ConfigInstalled {
 				file.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
-				AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+				LOGGER.error(e.getMessage());
 			}
 			
 			save();
@@ -62,7 +66,7 @@ public class ConfigInstalled {
 			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 

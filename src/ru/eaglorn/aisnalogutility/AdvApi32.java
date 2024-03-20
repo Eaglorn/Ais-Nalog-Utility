@@ -8,7 +8,6 @@ import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 public interface AdvApi32 extends Advapi32 {
-
 	int CREATE_NEW_CONSOLE = 0x00000010;
 
 	int CREATE_NO_WINDOW = 0x08000000;

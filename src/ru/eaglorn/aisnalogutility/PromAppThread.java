@@ -1,8 +1,10 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.util.logging.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PromAppThread extends Thread {
+	private static final Logger LOGGER = LoggerFactory.getLogger(PromAppThread.class);
 
 	public static int installMode = 0;
 
@@ -22,7 +24,7 @@ public class PromAppThread extends Thread {
 			AisNalogUtility.processBuilderStart(commands2, true);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			AisNalogUtility.LOGGER.log(Level.WARNING, e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	}
 }
