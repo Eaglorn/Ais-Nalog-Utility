@@ -12,10 +12,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 public class ConfigAdmin {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigAdmin.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConfigAdmin.class);
 	
-	String LOGIN = "";
-	String PASSWORD = "";
+	String login = "";
+	String password = "";
 	
 	static void getConfig() {
 		try {
@@ -26,19 +26,19 @@ public class ConfigAdmin {
 					gson += scan.nextLine();
 				}
 				gson = Crypt.decrypt(gson);
-				Data.CONFIG_ADMIN = new Gson().fromJson(gson, ConfigAdmin.class);
+				AisNalogUtility.data.setConfigAdmin(new Gson().fromJson(gson, ConfigAdmin.class));
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
-				LOGGER.error(e.getMessage());
+				logger.error(e.getMessage());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			LOGGER.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
 	public ConfigAdmin(String login, char[] password) {
-		this.LOGIN = login;
-		this.PASSWORD = String.valueOf(password);
+		this.login = login;
+		this.password = String.valueOf(password);
 	}
 }
