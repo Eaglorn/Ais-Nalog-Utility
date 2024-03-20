@@ -6,25 +6,27 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/commons-io-2.15.1.jar" sourcepath="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/commons-io-2.15.1-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-io-2.15.1.jar" sourcepath="C:/AisNalogUtilityLib/commons-io-2.15.1-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/commons-io-2.15.1-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-io-2.15.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/gson-2.10.1.jar" sourcepath="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/gson-2.10.1-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/gson-2.10.1.jar" sourcepath="C:/AisNalogUtilityLib/gson-2.10.1-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/gson-2.10.1-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/gson-2.10.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/jna-5.14.0.jar" sourcepath="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/jna-5.14.0-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/jna-5.14.0.jar" sourcepath="C:/AisNalogUtilityLib/jna-5.14.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/jna-5.14.0-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/jna-5.14.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/jna-platform-5.14.0.jar" sourcepath="C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/jna-platform-5.14.0-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/jna-platform-5.14.0.jar" sourcepath="C:/AisNalogUtilityLib/jna-platform-5.14.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/averin/Documents/GitHub/Ais-Nalog-Utility/lib/jna-platform-5.14.0-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/jna-platform-5.14.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-core-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-core-2.23.1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-api-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-api-2.23.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
