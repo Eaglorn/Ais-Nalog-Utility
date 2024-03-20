@@ -78,8 +78,13 @@ public class AisNalogUtility {
 
 	public static Logger LOGGER = null;
 
-	static JSplitPane SPLIT_PANE_PROM = null;
-	static JSplitPane SPLIT_PANE_PROM_INSTALL = null;
+	public static JSplitPane SPLIT_PANE_PROM = null;
+	public static JSplitPane SPLIT_PANE_PROM_INSTALL = null;
+	
+	public static JLabel PROM_FIX_INFO = new JLabel("", SwingConstants.CENTER);
+	
+	public static int PROM_FIX_INSTALLED = 0;
+	public static int PROM_FIX_HAVE = 0;
 	
 	public static JButton buttonInstallAisProm() {
 		BUTTON_INSTALL_APP_PROM = new JButton("Установить АИС-Налог 3 ПРОМ");
@@ -227,6 +232,7 @@ public class AisNalogUtility {
 			prom_fix_list_init.addElement(file.getName());
 			Data.PROM_FIXS.add(new Fix(i, file.getName()));
 			i++;
+			PROM_FIX_HAVE++;
 		}
 
 		JList<String> prom_fix_list = new JList<>(prom_fix_list_init);
@@ -294,9 +300,9 @@ public class AisNalogUtility {
 
 		panel_prom_fix.add(scroll_pane_prom_fix);
 		
-		panel_prom_fix.setMinimumSize(new Dimension(300,0));
+		panel_prom_fix.setMinimumSize(new Dimension(265,0));
 		
-		WIDTH += 300;
+		WIDTH += 265;
 
 		return panel_prom_fix;
 	}
@@ -315,9 +321,9 @@ public class AisNalogUtility {
 		panel_install.add(buttonInstallAisProm());
 		panel_install.add(new_version);
 		
-		panel_install.setMinimumSize(new Dimension(250,0));
+		panel_install.setMinimumSize(new Dimension(235,0));
 		
-		WIDTH += 250;
+		WIDTH += 235;
 		
 		return panel_install;
 	}
@@ -326,7 +332,7 @@ public class AisNalogUtility {
 
 		JPanel panel_install = new JPanel();
 		panel_install.setBorder(new EmptyBorder(10, 10, 10, 10));
-		GridLayout layout = new GridLayout(4, 0, 0, 0);
+		GridLayout layout = new GridLayout(5, 0, 0, 0);
 		panel_install.setLayout(layout);
 		
 		String path = "";
@@ -356,6 +362,7 @@ public class AisNalogUtility {
 		
 		APP_PROM_VERSION = version;
 		
+		panel_install.add(PROM_FIX_INFO);
 		panel_install.add(buttonUninstalledPromFix());
 		panel_install.add(buttonAllPromFix());
 		panel_install.add(buttonCheckedPromFix());
@@ -368,9 +375,9 @@ public class AisNalogUtility {
 			BUTTON_INSTALL_UNCHECKED_PROM_FIX.setEnabled(false);
 		}
 		
-		panel_install.setMinimumSize(new Dimension(270,0));
+		panel_install.setMinimumSize(new Dimension(320,0));
 		
-		WIDTH += 270;
+		WIDTH += 320;
 		
 		return panel_install;
 	}
@@ -431,15 +438,18 @@ public class AisNalogUtility {
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, ""
-						+ "При нажатии кнопок:\n"
+				JOptionPane.showMessageDialog(null,"При нажатии кнопок:\n"
 						+ "    1) <<Установить новые фиксы>> - выполнится установка фиксов, которые не были установлены ранее.\n"
 						+ "    2) <<Установить все фиксы>> - выполнится установка всех фиксов.\n"
 						+ "    3) <<Установить выбранные фиксы>> - выполнится установка всех выбранных фиксов.\n"
-						+ "    4) <<Установить все фиксы кроме выбранных>> - выполнится установка всех фиксов кроме выбранных.\n\n"
-						+ "Цвет фиксов:\n:"
+						+ "    4) <<Установить все фиксы кроме выбранных>> - выполнится установка всех фиксов кроме выбранных.\n"
+						+ "    5) <<Установить АИС-Налог 3 ПРОМ>> - Если АСИ Налог-3 ПРОМ не установлен, то выполнится установка АИС\n"
+						+ "                                         Налог-3 ПРОМ, иначе выполнится переустановка АС Налог-3 ПРОМ с\n"
+						+ "                                         удалением всех установленных фиксов.\n\n"
+						+ "Цвет фиксов:\n"
 						+ "    1) Красный - не установлен.\n"
-						+ "    2) Зелёным - установлен.", "Справка", JOptionPane.INFORMATION_MESSAGE);
+						+ "    2) Зелёным - установлен.\n\n" 
+						+ "По вопросам или ошибками в работе программы обращаться в ФКУ", "Справка", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		   
@@ -447,8 +457,10 @@ public class AisNalogUtility {
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "УФНС России по Хабаровскому краю.\n"
-						+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.", "О программе", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "УФНС России по Хабаровскому краю.\n\n"
+						+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n"
+						+ "Версия программы - 7\n\n"
+						+ "Дата выпуска данной версии - 20.03.2024", "О программе", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		menu.add(itm);
@@ -487,6 +499,15 @@ public class AisNalogUtility {
 		APP.add(SPLIT_PANE_PROM);
 		
 		ConfigInstalled.getConfig();
+		
+		PROM_FIX_INSTALLED = Data.CONFIG_INSTALLED.PROM_INSTALLED.size();
+		
+			if(PROM_FIX_HAVE < 1) {
+				PROM_FIX_INFO.setText("Отсутствуют фиксы для установки.");
+			} else {
+				PROM_FIX_INFO.setText("Установлено " + PROM_FIX_INSTALLED + " фиксов из " + PROM_FIX_HAVE + ".");
+			}
+		
 	}
 
 	public static void runAppAuth() {

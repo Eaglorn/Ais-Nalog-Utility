@@ -62,7 +62,7 @@ public class LoadingThread extends Thread {
 					}
 					default: labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 				}
-				labelJLabel.append(LOAD_PROCESS_TEXT).append("<br><br>").append(text.toString()).append("</div></html>");
+				labelJLabel.append(LOAD_PROCESS_TEXT + "<br><br>" + text.toString() + "<br></div></html>");
 				LOAD_THREAD_JLABEL = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);
 				INSTALL_PANEL.add(LOAD_THREAD_JLABEL);
 				AisNalogUtility.APP.add(INSTALL_PANEL);
