@@ -26,9 +26,9 @@ public class ConfigFix {
 		Data data = AisNalogUtility.getData();
 		App app = AisNalogUtility.getApp();
 		
-		if (Files.exists(Paths.get("c:\\AisNalogUtility\\config\\installed.json"))) {
+		if (Files.exists(Paths.get("c:\\AisNalogUtility\\config\\save.json"))) {
 			try {
-				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\installed.json"));
+				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\save.json"));
 				data.setConfigFix(new Gson().fromJson(reader, ConfigFix.class));
 				if(!data.getConfigApp().getPromVersion().equals(data.getConfigFix().getPromVersion()) || !Files.exists(Paths.get(app.getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
 					data.getConfigFix().getPromFixs().clear();
@@ -42,7 +42,7 @@ public class ConfigFix {
 			}
 		} else {
 			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
-			File file = new File("c:\\AisNalogUtility\\config\\installed.json");
+			File file = new File("c:\\AisNalogUtility\\config\\save.json");
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
@@ -56,7 +56,7 @@ public class ConfigFix {
 	public static void save() {
 		Data data = AisNalogUtility.getData();
 		String str = new Gson().toJson(data.getConfigFix(), ConfigFix.class);
-		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\installed.json")) {
+		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\save.json")) {
 			file.write(str);
 			file.close();
 		} catch (IOException e) {

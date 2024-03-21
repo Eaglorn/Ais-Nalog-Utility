@@ -25,7 +25,7 @@ public class ConfigApp {
 		}
 	}
 	private @Getter String netPath = "";
-	private @Getter String oeVersion = "";
 	
+	private @Getter String oeVersion = "";
 	private @Getter String promVersion = "";
 }
