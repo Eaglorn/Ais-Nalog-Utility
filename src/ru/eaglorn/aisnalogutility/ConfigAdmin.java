@@ -18,6 +18,10 @@ import lombok.val;
 public class ConfigAdmin {
 	private static @val Logger logger = LoggerFactory.getLogger(ConfigAdmin.class);
 	
+	private @Getter @Setter String login = "";
+	
+	private @Getter @Setter String password = "";
+	
 	static void getConfig() {
 		Data data = AisNalogUtility.getData();
 		try {
@@ -37,10 +41,6 @@ public class ConfigAdmin {
 			logger.error(e.getMessage());
 		}
 	}
-	
-	private @Getter @Setter String login = "";
-	
-	private @Getter @Setter String password = "";
 
 	public ConfigAdmin(String login, char[] password) {
 		this.login = login;

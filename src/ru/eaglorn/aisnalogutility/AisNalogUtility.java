@@ -125,7 +125,7 @@ public class AisNalogUtility {
 		try {
 			if (!checkPrivileges()) {
 				Elevator.executeAsAdministrator("c:\\AisNalogUtility\\java\\bin\\javaw.exe ",
-						"-jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app");
+						"-Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app");
 			} else {
 				javax.swing.SwingUtilities.invokeLater(new Runnable()
 				{
@@ -150,7 +150,7 @@ public class AisNalogUtility {
 			boolean result = false;
 			result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(data.getConfigAdmin().getLogin()), nullW,
 					new WString(data.getConfigAdmin().getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
-					new WString("c:\\AisNalogUtility\\java\\bin\\javaw.exe -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
+					new WString("c:\\AisNalogUtility\\java\\bin\\javaw.exe -Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
 					AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
 			if (!result) {
 				int error = Kernel32.INSTANCE.GetLastError();

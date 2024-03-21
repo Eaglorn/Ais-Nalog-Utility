@@ -15,6 +15,11 @@ import lombok.val;
 public class ConfigApp {
 	private static @val Logger logger = LoggerFactory.getLogger(ConfigApp.class);
 	
+	private @Getter String netPath = "";
+	
+	private @Getter String oeVersion = "";
+	private @Getter String promVersion = "";
+	
 	public static void getConfig() {
 		try {
 			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));
@@ -24,8 +29,4 @@ public class ConfigApp {
 			logger.error(e.getMessage());
 		}
 	}
-	private @Getter String netPath = "";
-	
-	private @Getter String oeVersion = "";
-	private @Getter String promVersion = "";
 }

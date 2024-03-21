@@ -21,6 +21,7 @@ public class App {
 	private @Getter @Setter String promPath = "";
 	
 	private @Getter @Setter String promVersion = "";
+	private @Getter @Setter String oeVersion = "";
 	
 	private @val @Getter String version = "7";
 	

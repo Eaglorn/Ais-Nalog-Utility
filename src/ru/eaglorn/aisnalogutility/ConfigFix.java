@@ -22,6 +22,12 @@ import lombok.val;
 public class ConfigFix {
 	private static @val Logger logger = LoggerFactory.getLogger(ConfigFix.class);
 	
+	private @Getter @Setter String promVersion = "";
+	private @Getter @Setter String oeVersion = "";
+	
+	private @Getter @Setter List<String> promFixs = new ArrayList<>();
+	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
+	
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();
 		App app = AisNalogUtility.getApp();
@@ -64,10 +70,4 @@ public class ConfigFix {
 			logger.error(e.getMessage());
 		}
 	}
-	
-	private @Getter @Setter String promVersion = "";
-	private @Getter @Setter String oeVersion = "";
-	
-	private @Getter @Setter List<String> promFixs = new ArrayList<>();
-	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
 }
