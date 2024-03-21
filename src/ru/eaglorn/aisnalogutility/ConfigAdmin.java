@@ -22,12 +22,11 @@ public class ConfigAdmin {
 		try {
 			FileReader file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
 			try (Scanner scan = new Scanner(file)) {
-				String gson = "";
+				StringBuilder gson = new StringBuilder();
 				while (scan.hasNextLine()) {
-					gson += scan.nextLine();
+					gson.append(scan.nextLine());
 				}
-				gson = Crypt.decrypt(gson);
-				data.setConfigAdmin(new Gson().fromJson(gson, ConfigAdmin.class));
+				data.setConfigAdmin(new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class));
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
 				logger.error(e.getMessage());

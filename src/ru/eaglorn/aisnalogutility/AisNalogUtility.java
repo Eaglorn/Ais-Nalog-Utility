@@ -20,12 +20,13 @@ import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 import lombok.Getter;
+import lombok.val;
 
 public class AisNalogUtility {
-	private static final Logger logger = LoggerFactory.getLogger(AisNalogUtility.class);
+	private static @val Logger logger = LoggerFactory.getLogger(AisNalogUtility.class);
 	
-	private static @Getter App app = new App();
-	private static @Getter Data data = new Data();
+	private static @Getter App app;
+	private static @val @Getter Data data = new Data();
 
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
@@ -114,7 +115,8 @@ public class AisNalogUtility {
 			Elevator.executeAsAdministrator("c:\\AisNalogUtility\\java\\bin\\javaw.exe ",
 					"-jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app");
 		} else {
-			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			javax.swing.SwingUtilities.invokeLater(new Runnable()
+			{
 				@Override
 				public void run() {
 					runApp();
@@ -132,14 +134,13 @@ public class AisNalogUtility {
 		boolean result = false;
 		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(data.getConfigAdmin().getLogin()), nullW,
 				new WString(data.getConfigAdmin().getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
-				new WString(
-						"c:\\AisNalogUtility\\java\\bin\\javaw.exe -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
+				new WString("c:\\AisNalogUtility\\java\\bin\\javaw.exe -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
 				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
 		if (!result) {
 			int error = Kernel32.INSTANCE.GetLastError();
-			System.out.println("OS error #" + error);
-			logger.error("OS error #" + error);
-			logger.error(Kernel32Util.formatMessageFromLastErrorCode(error));
+			logger.error("OS error # {}", error);
+			String messageError = Kernel32Util.formatMessageFromLastErrorCode(error);
+			logger.error("OS detail error # {}", messageError);
 		}
 	}
 
