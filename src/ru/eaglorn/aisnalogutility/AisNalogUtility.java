@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AisNalogUtility {
 	private static @val @Getter App app = new App();
 	private static @val @Getter Data data = new Data();
-	
+
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
 		if (!testPriv.canWrite())
@@ -37,7 +37,8 @@ public class AisNalogUtility {
 			log.error(e.getMessage());
 			return false;
 		} finally {
-			if (fileTest != null) fileTest.delete();
+			if (fileTest != null)
+				fileTest.delete();
 		}
 		return true;
 	}
@@ -45,52 +46,56 @@ public class AisNalogUtility {
 	public static void main(String[] args) {
 		String arg = args[0];
 
-		if (arg.equals("-run")) runAppRun();
-		if (arg.equals("-app")) runAppMain();
-		if (arg.equals("-auth")) runAppAuth();
+		if (arg.equals("-run"))
+			runAppRun();
+		if (arg.equals("-app"))
+			runAppMain();
+		if (arg.equals("-auth"))
+			runAppAuth();
 	}
 
 	private static void runApp() {
 		ConfigApp.getConfig();
-		
+
 		JFrame frame = app.getFrame();
 
 		frame.setTitle("Утилита для АИС Налог 3 ПРОМ (v" + app.getVersion() + ")");
-		
+
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+
 		new MenuBar();
-		
+
 		frame.setJMenuBar(app.getMenuBar());
-		
+
 		app.getPromSplitPaneInstall().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		
+
 		app.setPromPanelFix(new PromPanelFix());
 		app.getPromSplitPaneInstall().setLeftComponent(app.getPromPanelFix().getPanel());
-		
+
 		app.setPromPanelApp(new PromPanelApp());
 		app.getPromSplitPaneInstall().setRightComponent(app.getPromPanelApp().getPanel());
 
 		app.getPromSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.getPromSplitPane().setLeftComponent(app.getPromSplitPaneInstall());
-		
+
 		app.setPromPanelFixList(new PromPanelFixList());
 		app.getPromSplitPane().setRightComponent(app.getPromPanelFixList().getPanel());
-		
+
 		frame.add(app.getPromSplitPane());
-		
+
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
+
 		ConfigFix.getConfig();
-		
+
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
-		
-		if(app.getPromFixHave() < 1) {
+
+		if (app.getPromFixHave() < 1) {
 			app.getPromPanelFix().getInfo().setText("Отсутствуют фиксы для установки.");
 		} else {
-			app.getPromPanelFix().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
+			app.getPromPanelFix().getInfo()
+					.setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
 		}
 	}
 
@@ -116,8 +121,7 @@ public class AisNalogUtility {
 			Elevator.executeAsAdministrator("c:\\AisNalogUtility\\java\\bin\\javaw.exe ",
 					"-Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app");
 		} else {
-			javax.swing.SwingUtilities.invokeLater(new Runnable()
-			{
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
 					runApp();
@@ -135,7 +139,8 @@ public class AisNalogUtility {
 		boolean result = false;
 		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(data.getConfigAdmin().getLogin()), nullW,
 				new WString(data.getConfigAdmin().getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
-				new WString("c:\\AisNalogUtility\\java\\bin\\javaw.exe -Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
+				new WString(
+						"c:\\AisNalogUtility\\java\\bin\\javaw.exe -Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
 				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
 		if (!result) {
 			int error = Kernel32.INSTANCE.GetLastError();

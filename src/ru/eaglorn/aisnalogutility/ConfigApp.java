@@ -12,10 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConfigApp {
 	private @Getter String netPath = "";
-	
+
 	private @Getter String oeVersion = "";
 	private @Getter String promVersion = "";
-	
+
 	public static void getConfig() {
 		try {
 			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));

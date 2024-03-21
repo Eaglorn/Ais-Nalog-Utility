@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConfigAdmin {
 	private @Getter @Setter String login = "";
-	
+
 	private @Getter @Setter String password = "";
-	
+
 	static void getConfig() {
 		Data data = AisNalogUtility.getData();
 		try {

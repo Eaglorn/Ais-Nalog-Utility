@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Crypt {
 	private static @val String initVector = "kgsyrmgnbsdhyrkp";
 	private static @val String key = "ngdteohqkslbhydm";
-	
+
 	private static @val String charset = "UTF-8";
 
 	public static String decrypt(String encrypted) {

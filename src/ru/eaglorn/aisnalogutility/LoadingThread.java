@@ -11,14 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoadingThread extends Thread {
 	private JLabel label = null;
-	
+
 	private int number = 0;
 	private @Setter String processText = "";
 	private boolean reverse = false;
-	
-	
+
 	private @Setter int type = 0;
-	
+
 	private @Getter @Setter boolean work = true;
 
 	@Override
@@ -55,12 +54,15 @@ public class LoadingThread extends Thread {
 			JPanel panel = new JPanel();
 			StringBuilder labelJLabel = new StringBuilder();
 			labelJLabel.append("<html><div style='text-align: center;'>");
-			switch(type) {
-				case(1) : {
-					labelJLabel.append("Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
-					break;
-				}
-				default: labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+			switch (type) {
+			case (1): {
+				labelJLabel.append(
+						"Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+				break;
+			}
+			default:
+				labelJLabel.append(
+						"Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 			}
 			labelJLabel.append(processText + "<br><br>" + text.toString() + "<br></div></html>");
 			label = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);

@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
 public class MenuBar {
 	public MenuBar() {
 		App app = AisNalogUtility.getApp();
-		
+
 		JMenu menu = new JMenu("Файл");
-		
+
 		JMenuItem itm = new JMenuItem("Выйти");
 		menu.add(itm);
 		itm.addActionListener(new ActionListener() {
@@ -22,9 +22,9 @@ public class MenuBar {
 				app.getFrame().dispose();
 			}
 		});
-		
+
 		app.getMenuBar().add(menu);
-		
+
 		menu = new JMenu("Справка");
 
 		itm = new JMenuItem("Помощь");
@@ -32,7 +32,7 @@ public class MenuBar {
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"При нажатии кнопок:\n"
+				JOptionPane.showMessageDialog(null, "При нажатии кнопок:\n"
 						+ "    1) <<Установить новые фиксы>> - выполнится установка фиксов, которые не были установлены ранее.\n"
 						+ "    2) <<Установить все фиксы>> - выполнится установка всех фиксов.\n"
 						+ "    3) <<Установить выбранные фиксы>> - выполнится установка всех выбранных фиксов.\n"
@@ -40,25 +40,25 @@ public class MenuBar {
 						+ "    5) <<Установить АИС-Налог 3 ПРОМ>> - Если АСИ Налог-3 ПРОМ не установлен, то выполнится установка АИС\n"
 						+ "                                         Налог-3 ПРОМ, иначе выполнится переустановка АС Налог-3 ПРОМ с\n"
 						+ "                                         удалением всех установленных фиксов.\n\n"
-						+ "Цвет фиксов:\n"
-						+ "    1) Красный - не установлен.\n"
-						+ "    2) Зелёным - установлен.\n\n" 
-						+ "По вопросам или ошибками в работе программы обращаться в ФКУ", "Справка", JOptionPane.INFORMATION_MESSAGE);
+						+ "Цвет фиксов:\n" + "    1) Красный - не установлен.\n" + "    2) Зелёным - установлен.\n\n"
+						+ "По вопросам или ошибками в работе программы обращаться в ФКУ", "Справка",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		   
+
 		itm = new JMenuItem("О программе");
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "УФНС России по Хабаровскому краю.\n\n"
-						+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n"
-						+ "Версия программы - 7\n\n"
-						+ "Дата выпуска данной версии - 20.03.2024", "О программе", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"УФНС России по Хабаровскому краю.\n\n"
+								+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n" + "Версия программы - 7\n\n"
+								+ "Дата выпуска данной версии - 20.03.2024",
+						"О программе", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		menu.add(itm);
-   
+
 		app.getMenuBar().add(menu);
 	}
 }

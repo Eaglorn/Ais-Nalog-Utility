@@ -21,23 +21,24 @@ public class ConfigFix {
 
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oeVersion = "";
-	
+
 	private @Getter @Setter List<String> promFixs = new ArrayList<>();
 	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
-	
+
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();
 		App app = AisNalogUtility.getApp();
-		
+
 		if (Files.exists(Paths.get("c:\\AisNalogUtility\\config\\save.json"))) {
 			try {
 				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\save.json"));
 				data.setConfigFix(new Gson().fromJson(reader, ConfigFix.class));
-				if(!data.getConfigApp().getPromVersion().equals(data.getConfigFix().getPromVersion()) || !Files.exists(Paths.get(app.getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
+				if (!data.getConfigApp().getPromVersion().equals(data.getConfigFix().getPromVersion())
+						|| !Files.exists(Paths.get(app.getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
 					data.getConfigFix().getPromFixs().clear();
 					data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
 				}
-				
+
 				save();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -52,10 +53,11 @@ public class ConfigFix {
 				e.printStackTrace();
 				log.error(e.getMessage());
 			}
-			
+
 			save();
 		}
 	}
+
 	public static void save() {
 		Data data = AisNalogUtility.getData();
 		String str = new Gson().toJson(data.getConfigFix(), ConfigFix.class);
