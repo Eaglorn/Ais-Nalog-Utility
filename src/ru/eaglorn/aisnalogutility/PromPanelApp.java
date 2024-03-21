@@ -14,34 +14,12 @@ import javax.swing.border.EmptyBorder;
 import lombok.Getter;
 
 public class PromPanelApp {
+	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
 	
-	public static JButton buttonInstall() {
-		App app = AisNalogUtility.getApp();
-		
-		JButton buttonInstall = new JButton("Установить АИС-Налог 3 ПРОМ");
-		buttonInstall.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled()) return;
-				
-				app.setLoadingThread(new LoadingThread());
-				LoadingThread loadingThread = app.getLoadingThread();
-				loadingThread.setType(1);
-				loadingThread.start();
-				
-				Thread thread = new PromAppThread();
-				thread.start();
-			}
-		});
-		return buttonInstall;
-	}
-	
-	private @Getter JPanel panel = new JPanel();
 	private JLabel oldVersion;
-	
 	private JLabel newVersion;
 	
-	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
+	private @Getter JPanel panel = new JPanel();
 	
 	private int width = 235;
 	
@@ -63,6 +41,27 @@ public class PromPanelApp {
 		panel.setMinimumSize(new Dimension(width,0));
 		
 		app.addWidth(width);
+	}
+	
+	private JButton buttonInstall() {
+		App app = AisNalogUtility.getApp();
+		
+		JButton buttonInstall = new JButton("Установить АИС-Налог 3 ПРОМ");
+		buttonInstall.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled()) return;
+				
+				app.setLoadingThread(new LoadingThread());
+				LoadingThread loadingThread = app.getLoadingThread();
+				loadingThread.setType(1);
+				loadingThread.start();
+				
+				Thread thread = new PromAppThread();
+				thread.start();
+			}
+		});
+		return buttonInstall;
 	}
 	
 	

@@ -21,12 +21,12 @@ import lombok.Getter;
 public class PromPanelFix {
 	private static final Logger logger = LoggerFactory.getLogger(PromPanelFix.class);
 	
-	private @Getter JPanel panel = null;
-	
 	private JButton buttonUninstalled = new JButton("Установить новые фиксы");
 	private JButton buttonAll = new JButton("Установить все фиксы");
 	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
 	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
+	
+	private @Getter JPanel panel = null;
 	
 	private int width = 320;
 	
@@ -81,7 +81,7 @@ public class PromPanelFix {
 		app.addWidth(width);
 	}
 	
-	public JButton createButtonAll() {
+	private JButton createButtonAll() {
 		App app = AisNalogUtility.getApp();
 		
 		buttonAll.addActionListener(new ActionListener() {
@@ -100,7 +100,7 @@ public class PromPanelFix {
 		return buttonAll;
 	}
 
-	public JButton createButtonChecked() {
+	private JButton createButtonChecked() {
 		App app = AisNalogUtility.getApp();
 		
 		buttonChecked.addActionListener(new ActionListener() {
@@ -119,7 +119,7 @@ public class PromPanelFix {
 		return buttonChecked;
 	}
 
-	public JButton createButtonUnchecked() {
+	private JButton createButtonUnchecked() {
 		App app = AisNalogUtility.getApp();
 		
 		buttonUnchecked.addActionListener(new ActionListener() {
@@ -138,7 +138,7 @@ public class PromPanelFix {
 		return buttonUnchecked;
 	}
 	
-	public JButton createButtonUninstalled() {
+	private JButton createButtonUninstalled() {
 		App app = AisNalogUtility.getApp();
 		
 		buttonUninstalled.addActionListener(new ActionListener() {

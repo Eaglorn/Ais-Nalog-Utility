@@ -16,31 +16,32 @@ import lombok.val;
 public class App {
 	private static final Logger logger = LoggerFactory.getLogger(App.class);
 	
+	private @val @Getter JFrame frame = new JFrame();
+	
+	private @Getter @Setter String promPath = "";
+	
+	private @Getter @Setter String promVersion = "";
+	
 	private @val @Getter String version = "7";
 	
 	private @Getter @Setter int width = 0;
 	private @Getter @Setter int heigth = 600;
 	
-	private @Getter @Setter String promPath = "";
-	private @Getter @Setter String promVersion = "";
+	private @Getter @Setter LoadingThread loadingThread;
 	
-	private @val @Getter JFrame frame = new JFrame();
-	
-	private @val @Getter JSplitPane promSplitPane = new JSplitPane();
-	private @val @Getter JSplitPane promSplitPaneInstall = new JSplitPane();
+	private @val @Getter JMenuBar menuBar = new JMenuBar();
 	
 	private @val @Getter PromPanelApp promPanelApp = new PromPanelApp();
 	private @val @Getter PromPanelFix promPanelFix = new PromPanelFix();
 	private @val @Getter PromPanelFixList promPanelFixList = new PromPanelFixList();
 	
-	private @val @Getter JMenuBar menuBar = new JMenuBar();
+	private @val @Getter JSplitPane promSplitPane = new JSplitPane();
+	private @val @Getter JSplitPane promSplitPaneInstall = new JSplitPane();
+	
+	private @Getter @Setter int promFixHave = 0;
+	private @Getter @Setter int promFixInstalled = 0;
 	
 	private @Getter @Setter boolean promInstalled = false;
-
-	private @Getter @Setter LoadingThread loadingThread;
-	
-	private @Getter @Setter int promFixInstalled = 0;
-	private @Getter @Setter int promFixHave = 0;
 	
 	public void addWidth(int add) {
 		width += add;

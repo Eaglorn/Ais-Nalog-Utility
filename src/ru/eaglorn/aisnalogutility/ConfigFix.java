@@ -41,7 +41,6 @@ public class ConfigFix {
 			}
 		} else {
 			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
-			
 			File file = new File("c:\\AisNalogUtility\\config\\installed.json");
 			try {
 				file.createNewFile();
@@ -66,11 +65,8 @@ public class ConfigFix {
 	}
 	
 	private @Getter @Setter String promVersion = "";
-	private @Getter @Setter List<String> promFixs = new ArrayList<String>();
-	
 	private @Getter @Setter String oeVersion = "";
 	
-	private @Getter @Setter List<String> oeFixs = new ArrayList<String>();
-
-
+	private @Getter @Setter List<String> promFixs = new ArrayList<>();
+	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
 }

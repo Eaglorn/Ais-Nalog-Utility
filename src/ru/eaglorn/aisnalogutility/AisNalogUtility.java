@@ -27,7 +27,7 @@ public class AisNalogUtility {
 	
 	private static @Getter App app;
 	private static @val @Getter Data data = new Data();
-
+	
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
 		if (!testPriv.canWrite())
@@ -45,16 +45,19 @@ public class AisNalogUtility {
 		return true;
 	}
 
-
 	public static void main(String[] args) {
-		String arg = args[0];
-
-		if (arg.equals("-run"))
-			runAppRun();
-		if (arg.equals("-app"))
-			runAppMain();
-		if (arg.equals("-auth"))
-			runAppAuth();
+		try {
+			String arg = args[0];
+	
+			if (arg.equals("-run"))
+				runAppRun();
+			if (arg.equals("-app"))
+				runAppMain();
+			if (arg.equals("-auth"))
+				runAppAuth();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 
 	private static void runApp() {

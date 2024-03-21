@@ -6,10 +6,10 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.Setter;
+
 public class PromFixThread extends Thread {
 	private static final Logger logger = LoggerFactory.getLogger(PromFixThread.class);
-
-	public static int installMode = 0;
 
 	public static void decompress7ZipEmbedded(File source, File destination) throws IOException, InterruptedException {
 		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x", source.getAbsolutePath(), "-o" + destination.getAbsolutePath(), "-aoa");
@@ -21,6 +21,8 @@ public class PromFixThread extends Thread {
 			logger.error(e.getMessage());
 		}
 	}
+
+	private @Setter int installMode = 0;
 
 	@Override
 	public void run() {
@@ -78,8 +80,8 @@ public class PromFixThread extends Thread {
 			String[] commands = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
 			app.processBuilderStart(commands, true);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
 			logger.error(e.getMessage());
+			Thread.currentThread().interrupt();
 		}
 	}
 	
@@ -91,8 +93,8 @@ public class PromFixThread extends Thread {
 			app.getLoadingThread().setProcessText("Статус выполнения: распаковка  фикса " + fix.getName());
 			decompress7ZipEmbedded(new File(pathFix), new File(app.getPromPath()));
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
 			logger.error(e.getMessage());
+			Thread.currentThread().interrupt();
 		} 
 	}
 }

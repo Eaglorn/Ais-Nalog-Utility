@@ -10,6 +10,6 @@ public class Data {
 	private @Getter @Setter ConfigAdmin configAdmin;
 	private @Getter @Setter ConfigApp configApp;
 	private @Getter @Setter ConfigFix configFix;
-	private @Getter List<Fix> promFixs = new ArrayList<>();
 	private @Getter List<Fix> oeFixs = new ArrayList<>();
+	private @Getter List<Fix> promFixs = new ArrayList<>();
 }

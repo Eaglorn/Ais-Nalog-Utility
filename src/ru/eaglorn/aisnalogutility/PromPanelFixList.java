@@ -17,8 +17,25 @@ import javax.swing.JScrollPane;
 import lombok.Getter;
 
 public class PromPanelFixList {
+	private @Getter JPanel panel = new JPanel(new BorderLayout());
 	
-	public static JList<String> getPromFixList() {
+	private JScrollPane scrollPane = new JScrollPane();
+
+	private int width = 265;
+	
+	public PromPanelFixList() {
+		scrollPane.setViewportView(getPromFixList());
+		
+		scrollPane.getViewport().setViewPosition(new Point(0,99999));
+
+		panel.add(scrollPane);
+		
+		panel.setMinimumSize(new Dimension(width,0));
+		
+		AisNalogUtility.getApp().addWidth(width);
+	}
+	
+	private JList<String> getPromFixList() {
 		Data data = AisNalogUtility.getData();
 		
 		DefaultListModel<String> modelList = new DefaultListModel<>();
@@ -73,22 +90,5 @@ public class PromPanelFixList {
 		list.setLayoutOrientation(JList.VERTICAL);
 	    
 		return list;
-	}
-	private JScrollPane scrollPane = new JScrollPane();
-	
-	private @Getter JPanel panel = new JPanel(new BorderLayout());
-
-	private int width = 265;
-	
-	public PromPanelFixList() {
-		scrollPane.setViewportView(getPromFixList());
-		
-		scrollPane.getViewport().setViewPosition(new Point(0,99999));
-
-		panel.add(scrollPane);
-		
-		panel.setMinimumSize(new Dimension(width,0));
-		
-		AisNalogUtility.getApp().addWidth(width);
 	}
 }

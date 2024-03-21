@@ -3,10 +3,12 @@ package ru.eaglorn.aisnalogutility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.Setter;
+
 public class PromAppThread extends Thread {
 	private static final Logger logger = LoggerFactory.getLogger(PromAppThread.class);
 
-	public static int installMode = 0;
+	private @Setter int installMode = 0;
 
 	@Override
 	public void run() {
@@ -28,6 +30,7 @@ public class PromAppThread extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
+			Thread.currentThread().interrupt();
 		}
 	}
 }
