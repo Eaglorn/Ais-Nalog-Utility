@@ -5,19 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ConfigAdmin {
-	private static @val Logger logger = LoggerFactory.getLogger(ConfigAdmin.class);
-	
 	private @Getter @Setter String login = "";
 	
 	private @Getter @Setter String password = "";
@@ -34,11 +30,11 @@ public class ConfigAdmin {
 				data.setConfigAdmin(new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class));
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
-				logger.error(e.getMessage());
+				log.error(e.getMessage());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 

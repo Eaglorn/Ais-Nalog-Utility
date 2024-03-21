@@ -6,14 +6,11 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Crypt {
-	private static @val Logger logger = LoggerFactory.getLogger(Crypt.class);
-	
 	private static @val String initVector = "kgsyrmgnbsdhyrkp";
 	private static @val String key = "ngdteohqkslbhydm";
 	
@@ -31,7 +28,7 @@ public class Crypt {
 			return new String(original);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			logger.error(ex.getMessage());
+			log.error(ex.getMessage());
 		}
 
 		return null;
@@ -49,7 +46,7 @@ public class Crypt {
 			return new String(Base64.getEncoder().encode(encrypted));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			logger.error(ex.getMessage());
+			log.error(ex.getMessage());
 		}
 		return null;
 	}

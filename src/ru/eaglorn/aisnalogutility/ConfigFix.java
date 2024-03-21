@@ -9,19 +9,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ConfigFix {
-	private static @val Logger logger = LoggerFactory.getLogger(ConfigFix.class);
-	
+
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oeVersion = "";
 	
@@ -44,7 +41,7 @@ public class ConfigFix {
 				save();
 			} catch (IOException e) {
 				e.printStackTrace();
-				logger.error(e.getMessage());
+				log.error(e.getMessage());
 			}
 		} else {
 			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
@@ -53,7 +50,7 @@ public class ConfigFix {
 				file.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
-				logger.error(e.getMessage());
+				log.error(e.getMessage());
 			}
 			
 			save();
@@ -67,7 +64,7 @@ public class ConfigFix {
 			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 }

@@ -3,14 +3,10 @@ package ru.eaglorn.aisnalogutility;
 import java.io.File;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
-import lombok.val;
-
+@Slf4j
 public class PromFixThread extends Thread {
-	private static @val Logger logger = LoggerFactory.getLogger(PromFixThread.class);
-	
 	private int installMode = 0;
 	
 	public PromFixThread(int installMode) {
@@ -24,7 +20,7 @@ public class PromFixThread extends Thread {
 			process.waitFor();
 		} catch (IOException e) {
 			e.printStackTrace();
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 
@@ -84,7 +80,7 @@ public class PromFixThread extends Thread {
 			String[] commands = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
 			app.processBuilderStart(commands, true);
 		} catch (InterruptedException e) {
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 			Thread.currentThread().interrupt();
 		}
 	}
@@ -97,7 +93,7 @@ public class PromFixThread extends Thread {
 			app.getLoadingThread().setProcessText("Статус выполнения: распаковка  фикса " + fix.getName());
 			decompress7ZipEmbedded(new File(pathFix), new File(app.getPromPath()));
 		} catch (IOException | InterruptedException e) {
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 			Thread.currentThread().interrupt();
 		} 
 	}

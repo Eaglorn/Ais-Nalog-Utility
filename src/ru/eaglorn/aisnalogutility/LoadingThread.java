@@ -4,16 +4,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class LoadingThread extends Thread {
-	private static @val Logger logger = LoggerFactory.getLogger(LoadingThread.class);
-
 	private JLabel label = null;
 	
 	private int number = 0;
@@ -76,7 +72,7 @@ public class LoadingThread extends Thread {
 			try {
 				Thread.sleep(70);
 			} catch (InterruptedException e) {
-				logger.error(e.getMessage());
+				log.error(e.getMessage());
 				Thread.currentThread().interrupt();
 			}
 		}

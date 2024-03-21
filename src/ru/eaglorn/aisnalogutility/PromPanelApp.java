@@ -14,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import lombok.Getter;
 
 public class PromPanelApp {
-	
 	private JLabel oldVersion;
 	private JLabel newVersion;
 	

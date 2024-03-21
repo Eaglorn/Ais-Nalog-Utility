@@ -6,16 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JSplitPane;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class App {
-	private static @val Logger logger = LoggerFactory.getLogger(App.class);
-	
 	private @val @Getter JFrame frame = new JFrame();
 	
 	private @Getter @Setter String promPath = "";
@@ -62,7 +59,7 @@ public class App {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 }

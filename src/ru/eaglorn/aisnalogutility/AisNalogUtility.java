@@ -10,9 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.sun.jna.WString;
 import com.sun.jna.platform.win32.Kernel32;
@@ -22,10 +19,10 @@ import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 import lombok.Getter;
 import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AisNalogUtility {
-	private static @val Logger logger = LoggerFactory.getLogger(AisNalogUtility.class);
-	
 	private static @val @Getter App app = new App();
 	private static @val @Getter Data data = new Data();
 	
@@ -37,7 +34,7 @@ public class AisNalogUtility {
 		try {
 			fileTest = File.createTempFile("test", ".dll", testPriv);
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 			return false;
 		} finally {
 			if (fileTest != null) fileTest.delete();
@@ -110,7 +107,7 @@ public class AisNalogUtility {
 			file.write(crypt);
 			file.close();
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			log.error(e.getMessage());
 		}
 	}
 
@@ -142,9 +139,9 @@ public class AisNalogUtility {
 				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
 		if (!result) {
 			int error = Kernel32.INSTANCE.GetLastError();
-			logger.error("OS error # {}", error);
+			log.error("OS error # {}", error);
 			String messageError = Kernel32Util.formatMessageFromLastErrorCode(error);
-			logger.error("OS detail error # {}", messageError);
+			log.error("OS detail error # {}", messageError);
 		}
 	}
 

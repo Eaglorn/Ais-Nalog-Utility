@@ -15,15 +15,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import lombok.Getter;
-import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class PromPanelFix {
-	private static @val Logger logger = LoggerFactory.getLogger(PromPanelFix.class);
-	
 	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
 	
 	private JButton buttonUninstalled = new JButton("Установить новые фиксы");
@@ -63,7 +60,7 @@ public class PromPanelFix {
 			try {
 				version = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8));
 			} catch (IOException e) {
-				logger.error(e.getMessage());
+				log.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
