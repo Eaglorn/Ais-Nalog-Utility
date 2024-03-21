@@ -37,7 +37,7 @@ public class PromFixThread extends Thread {
 			case 1: { // All
 				for (Fix fix : data.getPromFixs()) {					
 					if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-						data.getConfigFix().getPromFixs().add(getName());
+						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
 					unpack(fix);
 				}
@@ -48,7 +48,7 @@ public class PromFixThread extends Thread {
 				for (Fix fix : data.getPromFixs()) {					
 					if (fix.isChecked()) {
 						if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-							data.getConfigFix().getPromFixs().add(getName());
+							data.getConfigFix().getPromFixs().add(fix.getName());
 						}
 						unpack(fix);
 					}
@@ -60,7 +60,7 @@ public class PromFixThread extends Thread {
 				for (Fix fix : data.getPromFixs()) {					
 					if (!fix.isChecked()) {
 						if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-							data.getConfigFix().getPromFixs().add(getName());
+							data.getConfigFix().getPromFixs().add(fix.getName());
 						}
 						unpack(fix);
 					}
@@ -73,7 +73,7 @@ public class PromFixThread extends Thread {
 				for (Fix fix : data.getPromFixs()) {
 					if(!data.getConfigFix().getPromFixs().contains(fix.getName())) {
 						unpack(fix);
-						data.getConfigFix().getPromFixs().add(getName());
+						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
 				}
 			}
