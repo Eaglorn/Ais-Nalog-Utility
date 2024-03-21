@@ -14,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import lombok.Getter;
 
 public class PromPanelApp {
-	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
 	
 	private JLabel oldVersion;
 	private JLabel newVersion;
@@ -33,7 +32,6 @@ public class PromPanelApp {
 		oldVersion = new JLabel("Установленная версия: " + app.getPromVersion(), SwingConstants.CENTER);
 		newVersion = new JLabel("Актуальная версия: " + AisNalogUtility.getData().getConfigApp().getPromVersion(), SwingConstants.CENTER);
 
-		panel.add(info);
 		panel.add(oldVersion);
 		panel.add(buttonInstall());
 		panel.add(newVersion);
@@ -52,7 +50,6 @@ public class PromPanelApp {
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled()) return;
 				
-				app.setLoadingThread(new LoadingThread());
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.setType(1);
 				loadingThread.start();

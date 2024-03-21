@@ -1,6 +1,5 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -17,11 +16,13 @@ public class Crypt {
 	
 	private static @val String initVector = "kgsyrmgnbsdhyrkp";
 	private static @val String key = "ngdteohqkslbhydm";
+	
+	private static @val String charset = "UTF-8";
 
 	public static String decrypt(String encrypted) {
 		try {
-			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
-			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(charset), "AES");
 
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
@@ -38,8 +39,8 @@ public class Crypt {
 
 	public static String encrypt(String value) {
 		try {
-			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(StandardCharsets.UTF_8));
-			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
+			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
+			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(charset), "AES");
 
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);

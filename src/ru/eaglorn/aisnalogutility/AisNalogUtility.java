@@ -25,7 +25,7 @@ import lombok.val;
 public class AisNalogUtility {
 	private static @val Logger logger = LoggerFactory.getLogger(AisNalogUtility.class);
 	
-	private static @Getter App app;
+	private static @val @Getter App app = new App();
 	private static @val @Getter Data data = new Data();
 	
 	private static boolean checkPrivileges() {
@@ -61,14 +61,22 @@ public class AisNalogUtility {
 		app.getFrame().setLocationRelativeTo(null);
 		app.getFrame().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
+		new MenuBar();
+		
 		app.getFrame().setJMenuBar(app.getMenuBar());
 		
 		app.getPromSplitPaneInstall().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		
+		app.setPromPanelFix(new PromPanelFix());
 		app.getPromSplitPaneInstall().setLeftComponent(app.getPromPanelFix().getPanel());
+		
+		app.setPromPanelApp(new PromPanelApp());
 		app.getPromSplitPaneInstall().setRightComponent(app.getPromPanelApp().getPanel());
 
 		app.getPromSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.getPromSplitPane().setLeftComponent(app.getPromSplitPaneInstall());
+		
+		app.setPromPanelFixList(new PromPanelFixList());
 		app.getPromSplitPane().setRightComponent(app.getPromPanelFixList().getPanel());
 		
 		app.getFrame().add(app.getPromSplitPane());
@@ -80,11 +88,10 @@ public class AisNalogUtility {
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
 		
 		if(app.getPromFixHave() < 1) {
-			app.getPromPanelApp().getInfo().setText("Отсутствуют фиксы для установки.");
+			app.getPromPanelFix().getInfo().setText("Отсутствуют фиксы для установки.");
 		} else {
-			app.getPromPanelApp().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
+			app.getPromPanelFix().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
 		}
-		
 	}
 
 	public static void runAppAuth() {

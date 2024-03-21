@@ -32,15 +32,13 @@ public interface Shell32X extends Shell32 {
 
 		public WString lpVerb;
 		public int nShow;
-		
-		String[] str = new String[] { "cbSize", "fMask", "hwnd", "lpVerb", "lpFile", "lpParameters",
-				"lpDirectory", "nShow", "hInstApp", "lpIDList", "lpClass", "hKeyClass", "dwHotKey", "hMonitor",
-				"hProcess", };
 
 		@Override
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		protected List getFieldOrder() {
-			return Arrays.asList(str);
+			return Arrays.asList(new String[] { "cbSize", "fMask", "hwnd", "lpVerb", "lpFile", "lpParameters",
+					"lpDirectory", "nShow", "hInstApp", "lpIDList", "lpClass", "hKeyClass", "dwHotKey", "hMonitor",
+					"hProcess", });
 		}
 	}
 	

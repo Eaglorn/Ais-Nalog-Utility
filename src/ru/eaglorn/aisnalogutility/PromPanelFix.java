@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.commons.io.FileUtils;
@@ -21,6 +23,8 @@ import lombok.val;
 
 public class PromPanelFix {
 	private static @val Logger logger = LoggerFactory.getLogger(PromPanelFix.class);
+	
+	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
 	
 	private JButton buttonUninstalled = new JButton("Установить новые фиксы");
 	private JButton buttonAll = new JButton("Установить все фиксы");
@@ -65,6 +69,9 @@ public class PromPanelFix {
 		}
 		
 		app.setPromVersion(version);
+		
+		
+		panel.add(info);
 		panel.add(createButtonUninstalled());
 		panel.add(createButtonAll());
 		panel.add(createButtonChecked());
@@ -90,7 +97,6 @@ public class PromPanelFix {
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled()) return;
 
-				app.setLoadingThread(new LoadingThread());
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				
@@ -109,7 +115,6 @@ public class PromPanelFix {
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled()) return;
 
-				app.setLoadingThread(new LoadingThread());
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				
@@ -128,7 +133,6 @@ public class PromPanelFix {
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled()) return;
 
-				app.setLoadingThread(new LoadingThread());
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				
@@ -147,7 +151,6 @@ public class PromPanelFix {
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled()) return;
 				
-				app.setLoadingThread(new LoadingThread());
 				app.getLoadingThread().start();
 				
 				Thread thread = new PromFixThread();
