@@ -54,7 +54,7 @@ public class LoadingThread extends Thread {
 				number--;
 			}
 
-			app.getFrame().removeAll();
+			app.getFrame().getContentPane().removeAll();
 			app.getFrame().setSize(565, 180);
 			JPanel panel = new JPanel();
 			StringBuilder labelJLabel = new StringBuilder();

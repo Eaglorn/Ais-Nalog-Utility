@@ -89,6 +89,24 @@ public class PromPanelFix {
 		app.addWidth(width);
 	}
 	
+	private JButton createButtonUninstalled() {
+		App app = AisNalogUtility.getApp();
+		
+		buttonUninstalled.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!((JButton) e.getSource()).isEnabled()) return;
+				
+				LoadingThread loadingThread = app.getLoadingThread();
+				loadingThread.start();
+				
+				Thread thread = new PromFixThread(0);
+				thread.start();
+			}
+		});
+		return buttonUninstalled;
+	}
+	
 	private JButton createButtonAll() {
 		App app = AisNalogUtility.getApp();
 		
@@ -100,7 +118,7 @@ public class PromPanelFix {
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				
-				Thread thread = new PromFixThread();
+				Thread thread = new PromFixThread(1);
 				thread.start();
 			}
 		});
@@ -118,7 +136,7 @@ public class PromPanelFix {
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				
-				Thread thread = new PromFixThread();
+				Thread thread = new PromFixThread(2);
 				thread.start();
 			}
 		});
@@ -136,27 +154,10 @@ public class PromPanelFix {
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				
-				Thread thread = new PromFixThread();
+				Thread thread = new PromFixThread(3);
 				thread.start();
 			}
 		});
 		return buttonUnchecked;
-	}
-	
-	private JButton createButtonUninstalled() {
-		App app = AisNalogUtility.getApp();
-		
-		buttonUninstalled.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled()) return;
-				
-				app.getLoadingThread().start();
-				
-				Thread thread = new PromFixThread();
-				thread.start();
-			}
-		});
-		return buttonUninstalled;
 	}
 }

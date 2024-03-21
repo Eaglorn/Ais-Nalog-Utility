@@ -20,7 +20,7 @@ public class PromPanelApp {
 	
 	private @Getter JPanel panel = new JPanel();
 	
-	private int width = 235;
+	private int width = 260;
 	
 	public PromPanelApp() {
 		App app = AisNalogUtility.getApp();

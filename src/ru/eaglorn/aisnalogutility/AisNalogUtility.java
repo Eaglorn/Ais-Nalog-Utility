@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
@@ -54,16 +55,16 @@ public class AisNalogUtility {
 
 	private static void runApp() {
 		ConfigApp.getConfig();
+		
+		JFrame frame = app.getFrame();
 
-		app.getFrame().setTitle("Утилита для АИС Налог 3 ПРОМ (v" + app.getVersion() + ")");
-		app.getFrame().setSize(0, app.getHeigth());
-		app.getFrame().setVisible(true);
-		app.getFrame().setLocationRelativeTo(null);
-		app.getFrame().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setTitle("Утилита для АИС Налог 3 ПРОМ (v" + app.getVersion() + ")");
+		
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		new MenuBar();
 		
-		app.getFrame().setJMenuBar(app.getMenuBar());
+		frame.setJMenuBar(app.getMenuBar());
 		
 		app.getPromSplitPaneInstall().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		
@@ -79,9 +80,11 @@ public class AisNalogUtility {
 		app.setPromPanelFixList(new PromPanelFixList());
 		app.getPromSplitPane().setRightComponent(app.getPromPanelFixList().getPanel());
 		
-		app.getFrame().add(app.getPromSplitPane());
+		frame.add(app.getPromSplitPane());
 		
-		app.getFrame().setSize(app.getWidth(), app.getHeigth());
+		frame.setSize(app.getWidth(), app.getHeigth());
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 		
 		ConfigFix.getConfig();
 		

@@ -36,9 +36,11 @@ public interface Shell32X extends Shell32 {
 		@Override
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		protected List getFieldOrder() {
-			return Arrays.asList(new String[] { "cbSize", "fMask", "hwnd", "lpVerb", "lpFile", "lpParameters",
+			String[] str = new String[] { "cbSize", "fMask", "hwnd", "lpVerb", "lpFile", "lpParameters",
 					"lpDirectory", "nShow", "hInstApp", "lpIDList", "lpClass", "hKeyClass", "dwHotKey", "hMonitor",
-					"hProcess", });
+					"hProcess", };
+			
+			return Arrays.asList(str);
 		}
 	}
 	
