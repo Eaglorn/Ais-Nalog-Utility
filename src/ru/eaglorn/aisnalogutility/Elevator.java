@@ -7,8 +7,10 @@ import com.sun.jna.WString;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Kernel32Util;
 
+import lombok.val;
+
 public class Elevator {
-	private static final Logger logger = LoggerFactory.getLogger(Elevator.class);
+	private static @val Logger logger = LoggerFactory.getLogger(Elevator.class);
 	
 	public static void executeAsAdministrator(String command, String args) throws RuntimeException {
 		Shell32X.SHELLEXECUTEINFO execInfo = new Shell32X.SHELLEXECUTEINFO();

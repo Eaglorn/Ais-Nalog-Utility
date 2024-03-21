@@ -7,9 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import lombok.Setter;
+import lombok.val;
 
 public class PromFixThread extends Thread {
-	private static final Logger logger = LoggerFactory.getLogger(PromFixThread.class);
+	private static @val Logger logger = LoggerFactory.getLogger(PromFixThread.class);
 
 	public static void decompress7ZipEmbedded(File source, File destination) throws IOException, InterruptedException {
 		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x", source.getAbsolutePath(), "-o" + destination.getAbsolutePath(), "-aoa");

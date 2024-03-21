@@ -9,9 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 
 public class LoadingThread extends Thread {
-	private static final Logger logger = LoggerFactory.getLogger(LoadingThread.class);
+	private static @val Logger logger = LoggerFactory.getLogger(LoadingThread.class);
 
 	private JLabel label = null;
 	

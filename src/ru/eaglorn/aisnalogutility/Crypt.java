@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import lombok.val;
 
 public class Crypt {
-	private static final Logger logger = LoggerFactory.getLogger(Crypt.class);
+	private static @val Logger logger = LoggerFactory.getLogger(Crypt.class);
 	
 	private static @val String initVector = "kgsyrmgnbsdhyrkp";
 	private static @val String key = "ngdteohqkslbhydm";

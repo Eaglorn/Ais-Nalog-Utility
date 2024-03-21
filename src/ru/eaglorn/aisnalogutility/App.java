@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.val;
 
 public class App {
-	private static final Logger logger = LoggerFactory.getLogger(App.class);
+	private static @val Logger logger = LoggerFactory.getLogger(App.class);
 	
 	private @val @Getter JFrame frame = new JFrame();
 	

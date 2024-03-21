@@ -13,9 +13,10 @@ import com.google.gson.JsonSyntaxException;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 
 public class ConfigAdmin {
-	private static final Logger logger = LoggerFactory.getLogger(ConfigAdmin.class);
+	private static @val Logger logger = LoggerFactory.getLogger(ConfigAdmin.class);
 	
 	static void getConfig() {
 		Data data = AisNalogUtility.getData();
@@ -36,6 +37,7 @@ public class ConfigAdmin {
 			logger.error(e.getMessage());
 		}
 	}
+	
 	private @Getter @Setter String login = "";
 	
 	private @Getter @Setter String password = "";

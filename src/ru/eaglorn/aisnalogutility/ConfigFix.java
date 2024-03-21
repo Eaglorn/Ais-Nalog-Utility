@@ -17,9 +17,10 @@ import com.google.gson.stream.JsonReader;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 
 public class ConfigFix {
-	private static final Logger logger = LoggerFactory.getLogger(ConfigFix.class);
+	private static @val Logger logger = LoggerFactory.getLogger(ConfigFix.class);
 	
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();

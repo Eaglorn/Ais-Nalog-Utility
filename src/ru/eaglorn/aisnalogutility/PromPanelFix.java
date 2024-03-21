@@ -17,9 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import lombok.Getter;
+import lombok.val;
 
 public class PromPanelFix {
-	private static final Logger logger = LoggerFactory.getLogger(PromPanelFix.class);
+	private static @val Logger logger = LoggerFactory.getLogger(PromPanelFix.class);
 	
 	private JButton buttonUninstalled = new JButton("Установить новые фиксы");
 	private JButton buttonAll = new JButton("Установить все фиксы");

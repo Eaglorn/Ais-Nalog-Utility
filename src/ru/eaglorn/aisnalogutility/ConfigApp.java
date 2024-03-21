@@ -10,9 +10,10 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import lombok.Getter;
+import lombok.val;
 
 public class ConfigApp {
-	private static final Logger logger = LoggerFactory.getLogger(ConfigApp.class);
+	private static @val Logger logger = LoggerFactory.getLogger(ConfigApp.class);
 	
 	public static void getConfig() {
 		try {
