@@ -4,6 +4,8 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,6 +28,10 @@ public class AisNalogUtility {
 	private static @val @Getter App app = new App();
 	private static @val @Getter Data data = new Data();
 
+	public static void cleanUp(Path path) throws IOException {
+		Files.delete(path);
+	}
+
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
 		if (!testPriv.canWrite())
@@ -37,8 +43,13 @@ public class AisNalogUtility {
 			log.error(e.getMessage());
 			return false;
 		} finally {
-			if (fileTest != null)
-				fileTest.delete();
+			if (fileTest != null) {
+				try {
+					cleanUp(Path.of(fileTest.getAbsolutePath()));
+				} catch (IOException e) {
+					log.error(e.getMessage());
+				}
+			}
 		}
 		return true;
 	}
@@ -92,7 +103,7 @@ public class AisNalogUtility {
 		crypt = Crypt.encrypt(crypt);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\auth")) {
 			file.write(crypt);
-			file.close();
+			file.flush();
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}

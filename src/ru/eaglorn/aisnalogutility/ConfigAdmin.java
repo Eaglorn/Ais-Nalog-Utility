@@ -19,20 +19,19 @@ public class ConfigAdmin {
 
 	static void getConfig() {
 		Data data = AisNalogUtility.getData();
+		FileReader file = null;
 		try {
-			FileReader file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
-			try (Scanner scan = new Scanner(file)) {
-				StringBuilder gson = new StringBuilder();
-				while (scan.hasNextLine()) {
-					gson.append(scan.nextLine());
-				}
-				data.setConfigAdmin(new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class));
-			} catch (JsonSyntaxException e) {
-				e.printStackTrace();
-				log.error(e.getMessage());
-			}
+			file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
+		}
+		try (Scanner scan = new Scanner(file)) {
+			StringBuilder gson = new StringBuilder();
+			while (scan.hasNextLine()) {
+				gson.append(scan.nextLine());
+			}
+			data.setConfigAdmin(new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class));
+		} catch (JsonSyntaxException e) {
 			log.error(e.getMessage());
 		}
 	}

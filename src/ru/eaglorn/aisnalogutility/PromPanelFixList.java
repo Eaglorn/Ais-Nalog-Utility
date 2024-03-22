@@ -56,7 +56,7 @@ public class PromPanelFixList {
 			AisNalogUtility.getApp().setPromFixHave(AisNalogUtility.getApp().getPromFixHave() + 1);
 		}
 		JList<String> list = new JList<>(modelList);
-		list.setCellRenderer(new PromFixCheckboxListCellRenderer<String>());
+		list.setCellRenderer(new PromFixCheckboxListCellRenderer<>());
 		list.addListSelectionListener(listSelectionDocument);
 		list.setSelectionModel(new DefaultListSelectionModel() {
 			private static final long serialVersionUID = 1L;
