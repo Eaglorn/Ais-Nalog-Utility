@@ -29,53 +29,51 @@ public class PromFixThread extends Thread {
 	public void run() {
 		App app = AisNalogUtility.getApp();
 		Data data = AisNalogUtility.getData();
-
 		switch (installMode) {
-		case 1: { // All
-			for (Fix fix : data.getPromFixs()) {
-				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-					data.getConfigFix().getPromFixs().add(fix.getName());
-				}
-				unpack(fix);
-			}
-
-			break;
-		}
-		case 2: { // Checked
-			for (Fix fix : data.getPromFixs()) {
-				if (fix.isChecked()) {
+			case 1: { // All
+				for (Fix fix : data.getPromFixs()) {
 					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
 						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
 					unpack(fix);
 				}
+	
+				break;
 			}
-
-			break;
-		}
-		case 3: { // Unchecked
-			for (Fix fix : data.getPromFixs()) {
-				if (!fix.isChecked()) {
+			case 2: { // Checked
+				for (Fix fix : data.getPromFixs()) {
+					if (fix.isChecked()) {
+						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+							data.getConfigFix().getPromFixs().add(fix.getName());
+						}
+						unpack(fix);
+					}
+				}
+	
+				break;
+			}
+			case 3: { // Unchecked
+				for (Fix fix : data.getPromFixs()) {
+					if (!fix.isChecked()) {
+						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+							data.getConfigFix().getPromFixs().add(fix.getName());
+						}
+						unpack(fix);
+					}
+				}
+	
+				break;
+			}
+	
+			default: { // UnInstalled
+				for (Fix fix : data.getPromFixs()) {
 					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+						unpack(fix);
 						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
-					unpack(fix);
-				}
-			}
-
-			break;
-		}
-
-		default: { // UnInstalled
-			for (Fix fix : data.getPromFixs()) {
-				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-					unpack(fix);
-					data.getConfigFix().getPromFixs().add(fix.getName());
 				}
 			}
 		}
-		}
-
 		try {
 			app.getLoadingThread().setProcessText("Статус выполнения: индексация распакованных фиксов.");
 			String[] commands = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
@@ -88,7 +86,6 @@ public class PromFixThread extends Thread {
 
 	public void unpack(Fix fix) {
 		App app = AisNalogUtility.getApp();
-
 		String pathFix = AisNalogUtility.getData().getConfigApp().getNetPath() + "\\promfix\\" + fix.getName();
 		try {
 			app.getLoadingThread().setProcessText("Статус выполнения: распаковка  фикса " + fix.getName());

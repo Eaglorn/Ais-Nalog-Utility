@@ -45,7 +45,6 @@ public class AisNalogUtility {
 
 	public static void main(String[] args) {
 		String arg = args[0];
-
 		if (arg.equals("-run"))
 			runAppRun();
 		if (arg.equals("-app"))
@@ -56,41 +55,26 @@ public class AisNalogUtility {
 
 	private static void runApp() {
 		ConfigApp.getConfig();
-
 		JFrame frame = app.getFrame();
-
-		frame.setTitle("Утилита для АИС Налог 3 ПРОМ (v" + app.getVersion() + ")");
-
+		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getVersion() + ")");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
 		new MenuBar();
-
 		frame.setJMenuBar(app.getMenuBar());
-
 		app.getPromSplitPaneInstall().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-
 		app.setPromPanelFix(new PromPanelFix());
 		app.getPromSplitPaneInstall().setLeftComponent(app.getPromPanelFix().getPanel());
-
 		app.setPromPanelApp(new PromPanelApp());
 		app.getPromSplitPaneInstall().setRightComponent(app.getPromPanelApp().getPanel());
-
 		app.getPromSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.getPromSplitPane().setLeftComponent(app.getPromSplitPaneInstall());
-
 		app.setPromPanelFixList(new PromPanelFixList());
 		app.getPromSplitPane().setRightComponent(app.getPromPanelFixList().getPanel());
-
 		frame.add(app.getPromSplitPane());
-
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
 		ConfigFix.getConfig();
-
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
-
 		if (app.getPromFixHave() < 1) {
 			app.getPromPanelFix().getInfo().setText("Отсутствуют фиксы для установки.");
 		} else {
@@ -103,9 +87,7 @@ public class AisNalogUtility {
 		Console terminal = System.console();
 		String login = terminal.readLine("Input local admin login: ");
 		char[] password = terminal.readPassword("Input local admin password: ");
-
 		data.setConfigAdmin(new ConfigAdmin(login, password));
-
 		String crypt = new Gson().toJson(data.getConfigAdmin(), ConfigAdmin.class);
 		crypt = Crypt.encrypt(crypt);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\auth")) {
@@ -132,7 +114,6 @@ public class AisNalogUtility {
 
 	public static void runAppRun() {
 		ConfigAdmin.getConfig();
-
 		WString nullW = null;
 		PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
 		STARTUPINFO startupInfo = new STARTUPINFO();

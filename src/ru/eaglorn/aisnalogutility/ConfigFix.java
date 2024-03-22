@@ -14,22 +14,21 @@ import com.google.gson.stream.JsonReader;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ConfigFix {
-
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oeVersion = "";
-
 	private @Getter @Setter List<String> promFixs = new ArrayList<>();
 	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
+	private static @val String pathSave = "c:\\AisNalogUtility\\config\\save.json";
 
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();
 		App app = AisNalogUtility.getApp();
-
-		if (Files.exists(Paths.get("c:\\AisNalogUtility\\config\\save.json"))) {
+		if (Files.exists(Paths.get(pathSave))) {
 			try {
 				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\save.json"));
 				data.setConfigFix(new Gson().fromJson(reader, ConfigFix.class));
@@ -38,7 +37,6 @@ public class ConfigFix {
 					data.getConfigFix().getPromFixs().clear();
 					data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
 				}
-
 				save();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -46,14 +44,15 @@ public class ConfigFix {
 			}
 		} else {
 			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
-			File file = new File("c:\\AisNalogUtility\\config\\save.json");
+			File file = new File(pathSave);
 			try {
-				file.createNewFile();
+				if(file.createNewFile()) {
+					log.error("Error create save file.");
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				log.error(e.getMessage());
 			}
-
 			save();
 		}
 	}
@@ -61,9 +60,9 @@ public class ConfigFix {
 	public static void save() {
 		Data data = AisNalogUtility.getData();
 		String str = new Gson().toJson(data.getConfigFix(), ConfigFix.class);
-		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\save.json")) {
+		try (FileWriter file = new FileWriter(pathSave)) {
 			file.write(str);
-			file.close();
+			file.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			log.error(e.getMessage());

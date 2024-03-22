@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConfigApp {
 	private @Getter String netPath = "";
-
 	private @Getter String oeVersion = "";
 	private @Getter String promVersion = "";
 

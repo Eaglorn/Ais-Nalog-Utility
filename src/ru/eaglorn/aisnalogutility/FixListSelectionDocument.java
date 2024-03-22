@@ -10,9 +10,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class FixListSelectionDocument extends PlainDocument implements ListSelectionListener {
 	private static final long serialVersionUID = 2610351175473201734L;
-
 	private String delim;
 	private MessageFormat elementFormat;
 
@@ -36,6 +38,7 @@ public class FixListSelectionDocument extends PlainDocument implements ListSelec
 			remove(0, getLength());
 			insertString(0, text, null);
 		} catch (BadLocationException e) {
+			log.error(e.getMessage());;
 		}
 	}
 
@@ -43,21 +46,16 @@ public class FixListSelectionDocument extends PlainDocument implements ListSelec
 	public void valueChanged(ListSelectionEvent e) {
 		JList<?> list = (JList<?>) e.getSource();
 		ListModel<?> model = list.getModel();
-
 		ListSelectionModel listSelectionModel = list.getSelectionModel();
-
 		int minSelectionIndex = listSelectionModel.getMinSelectionIndex();
 		int maxSelectionIndex = listSelectionModel.getMaxSelectionIndex();
-
 		StringBuilder textBuilder = new StringBuilder();
-
 		for (int i = minSelectionIndex; i <= maxSelectionIndex; i++) {
 			if (listSelectionModel.isSelectedIndex(i)) {
 				Object elementAt = model.getElementAt(i);
 				formatElement(elementAt, textBuilder, i);
 			}
 		}
-
 		setText(textBuilder.toString());
 	}
 }

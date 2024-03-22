@@ -10,9 +10,7 @@ import javax.swing.JOptionPane;
 public class MenuBar {
 	public MenuBar() {
 		App app = AisNalogUtility.getApp();
-
 		JMenu menu = new JMenu("Файл");
-
 		JMenuItem itm = new JMenuItem("Выйти");
 		menu.add(itm);
 		itm.addActionListener(new ActionListener() {
@@ -22,11 +20,8 @@ public class MenuBar {
 				app.getFrame().dispose();
 			}
 		});
-
 		app.getMenuBar().add(menu);
-
 		menu = new JMenu("Справка");
-
 		itm = new JMenuItem("Помощь");
 		menu.add(itm);
 		itm.addActionListener(new ActionListener() {
@@ -45,20 +40,17 @@ public class MenuBar {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-
 		itm = new JMenuItem("О программе");
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
 						"УФНС России по Хабаровскому краю.\n\n"
-								+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n" + "Версия программы - 7\n\n"
-								+ "Дата выпуска данной версии - 20.03.2024",
-						"О программе", JOptionPane.INFORMATION_MESSAGE);
+						+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n" + "Версия программы - 7\n\n"
+						+ "Дата выпуска данной версии - 20.03.2024","О программе", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		menu.add(itm);
-
 		app.getMenuBar().add(menu);
 	}
 }
