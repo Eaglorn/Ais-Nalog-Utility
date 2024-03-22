@@ -37,7 +37,6 @@ public class PromFixThread extends Thread {
 				}
 				unpack(fix);
 			}
-
 			break;
 		}
 		case 2: { // Checked
@@ -49,7 +48,6 @@ public class PromFixThread extends Thread {
 					unpack(fix);
 				}
 			}
-
 			break;
 		}
 		case 3: { // Unchecked
@@ -61,10 +59,8 @@ public class PromFixThread extends Thread {
 					unpack(fix);
 				}
 			}
-
 			break;
 		}
-
 		default: { // UnInstalled
 			for (Fix fix : data.getPromFixs()) {
 				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
