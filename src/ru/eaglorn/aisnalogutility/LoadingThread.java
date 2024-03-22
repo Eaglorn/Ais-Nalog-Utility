@@ -49,10 +49,12 @@ public class LoadingThread extends Thread {
 			JPanel panel = new JPanel();
 			StringBuilder labelJLabel = new StringBuilder();
 			labelJLabel.append("<html><div style='text-align: center;'>");
-			if(type == 1) {
-				labelJLabel.append("Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+			if (type == 1) {
+				labelJLabel.append(
+						"Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 			} else {
-				labelJLabel.append("Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+				labelJLabel.append(
+						"Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
 			}
 			labelJLabel.append(processText + "<br><br>" + text.toString() + "<br></div></html>");
 			JLabel label = new JLabel(labelJLabel.toString(), SwingConstants.CENTER);

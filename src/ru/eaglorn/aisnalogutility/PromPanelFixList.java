@@ -20,6 +20,7 @@ public class PromPanelFixList {
 	private @Getter JPanel panel = new JPanel(new BorderLayout());
 	private JScrollPane scrollPane = new JScrollPane();
 	private int width = 265;
+
 	public PromPanelFixList() {
 		scrollPane.setViewportView(getPromFixList());
 		scrollPane.getViewport().setViewPosition(new Point(0, 99999));
@@ -59,6 +60,7 @@ public class PromPanelFixList {
 		list.addListSelectionListener(listSelectionDocument);
 		list.setSelectionModel(new DefaultListSelectionModel() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void setSelectionInterval(int index0, int index1) {
 				if (super.isSelectedIndex(index0)) {

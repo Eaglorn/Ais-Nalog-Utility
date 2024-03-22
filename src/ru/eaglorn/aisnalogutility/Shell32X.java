@@ -31,7 +31,7 @@ public interface Shell32X extends Shell32 {
 		public WString lpParameters;
 		public WString lpVerb;
 		public int nShow;
-		
+
 		@Override
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		protected List getFieldOrder() {
@@ -41,7 +41,7 @@ public interface Shell32X extends Shell32 {
 			return Arrays.asList(str);
 		}
 	}
-	
+
 	Shell32X INSTANCE = Native.load("shell32", Shell32X.class, W32APIOptions.UNICODE_OPTIONS);
 	int SE_ERR_ACCESSDENIED = 5;
 	int SE_ERR_DLLNOTFOUND = 32;
@@ -62,7 +62,8 @@ public interface Shell32X extends Shell32 {
 	int SW_SHOWNA = 8;
 	int SW_SHOWNOACTIVATE = 4;
 	int SW_SHOWNORMAL = 1;
-	
+
 	int ShellExecute(int i, String lpVerb, String lpFile, String lpParameters, String lpDirectory, int nShow);
+
 	boolean ShellExecuteEx(SHELLEXECUTEINFO lpExecInfo);
 }

@@ -46,7 +46,7 @@ public class ConfigFix {
 			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
 			File file = new File(pathSave);
 			try {
-				if(file.createNewFile()) {
+				if (file.createNewFile()) {
 					log.error("Error create save file.");
 				}
 			} catch (IOException e) {

@@ -38,7 +38,7 @@ public class FixListSelectionDocument extends PlainDocument implements ListSelec
 			remove(0, getLength());
 			insertString(0, text, null);
 		} catch (BadLocationException e) {
-			log.error(e.getMessage());;
+			log.error(e.getMessage());
 		}
 	}
 

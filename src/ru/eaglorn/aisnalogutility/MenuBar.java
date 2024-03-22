@@ -46,8 +46,9 @@ public class MenuBar {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
 						"УФНС России по Хабаровскому краю.\n\n"
-						+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n" + "Версия программы - 7\n\n"
-						+ "Дата выпуска данной версии - 20.03.2024","О программе", JOptionPane.INFORMATION_MESSAGE);
+								+ "Программа для установки фиксов на АИС Налог-3 ПРОМ.\n\n" + "Версия программы - 7\n\n"
+								+ "Дата выпуска данной версии - 20.03.2024",
+						"О программе", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		menu.add(itm);

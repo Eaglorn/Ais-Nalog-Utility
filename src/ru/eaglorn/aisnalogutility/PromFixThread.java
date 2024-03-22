@@ -30,49 +30,49 @@ public class PromFixThread extends Thread {
 		App app = AisNalogUtility.getApp();
 		Data data = AisNalogUtility.getData();
 		switch (installMode) {
-			case 1: { // All
-				for (Fix fix : data.getPromFixs()) {
+		case 1: { // All
+			for (Fix fix : data.getPromFixs()) {
+				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+					data.getConfigFix().getPromFixs().add(fix.getName());
+				}
+				unpack(fix);
+			}
+
+			break;
+		}
+		case 2: { // Checked
+			for (Fix fix : data.getPromFixs()) {
+				if (fix.isChecked()) {
 					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
 						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
 					unpack(fix);
 				}
-	
-				break;
 			}
-			case 2: { // Checked
-				for (Fix fix : data.getPromFixs()) {
-					if (fix.isChecked()) {
-						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-							data.getConfigFix().getPromFixs().add(fix.getName());
-						}
-						unpack(fix);
-					}
-				}
-	
-				break;
-			}
-			case 3: { // Unchecked
-				for (Fix fix : data.getPromFixs()) {
-					if (!fix.isChecked()) {
-						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-							data.getConfigFix().getPromFixs().add(fix.getName());
-						}
-						unpack(fix);
-					}
-				}
-	
-				break;
-			}
-	
-			default: { // UnInstalled
-				for (Fix fix : data.getPromFixs()) {
+
+			break;
+		}
+		case 3: { // Unchecked
+			for (Fix fix : data.getPromFixs()) {
+				if (!fix.isChecked()) {
 					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-						unpack(fix);
 						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
+					unpack(fix);
 				}
 			}
+
+			break;
+		}
+
+		default: { // UnInstalled
+			for (Fix fix : data.getPromFixs()) {
+				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+					unpack(fix);
+					data.getConfigFix().getPromFixs().add(fix.getName());
+				}
+			}
+		}
 		}
 		try {
 			app.getLoadingThread().setProcessText("Статус выполнения: индексация распакованных фиксов.");

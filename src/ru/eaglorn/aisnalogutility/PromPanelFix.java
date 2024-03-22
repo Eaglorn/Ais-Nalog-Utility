@@ -78,7 +78,8 @@ public class PromPanelFix {
 		buttonUninstalled.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled()) return;
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				Thread thread = new PromFixThread(0);
@@ -93,7 +94,8 @@ public class PromPanelFix {
 		buttonAll.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled()) return;
+				if (!((JButton) e.getSource()).isEnabled())
+					return;
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.start();
 				Thread thread = new PromFixThread(1);
