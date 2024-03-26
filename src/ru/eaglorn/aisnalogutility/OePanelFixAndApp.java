@@ -31,12 +31,20 @@ public class OePanelFixAndApp {
 		app.addWidth(width);
 	}
 
-	
-
 	private JButton buttonInstallOe() {
 		App app = AisNalogUtility.getApp();
-		JButton buttonInstall = new JButton("Установить АИС-Налог 3 ОЭ");
-		buttonInstall.addActionListener(new ActionListener() {
+		String text;
+		if (app.isOeInstalled()) {
+			if (app.getOeVersion().equals(AisNalogUtility.getData().getConfigApp().getOeVersion())) {
+				text = "Переустановить АИС-Налог 3 ОЭ";
+			} else {
+				text = "Установить новую версию\nАИС-Налог 3 ОЭ";
+			}
+		} else {
+			text = "Установить АИС-Налог 3 ПРОМ";
+		}
+		JButton button = new JButton(text);
+		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!((JButton) e.getSource()).isEnabled())
@@ -50,7 +58,7 @@ public class OePanelFixAndApp {
 				thread.start();
 			}
 		});
-		return buttonInstall;
+		return button;
 	}
 
 }

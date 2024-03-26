@@ -73,22 +73,15 @@ public class AisNalogUtility {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
-		
 		app.getSplitPaneProm().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		
 		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
 		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
-		
 		app.setPromPanelFix(new PromPanelFix());
 		app.getSplitPaneProm().setRightComponent(app.getPromPanelFix().getPanel());
-		
 		app.getSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		
 		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
-		
 		app.setOePanelFixAndApp(new OePanelFixAndApp());
 		app.getSplitPane().setRightComponent(app.getPromPanelFix().getPanel());
-		
 		frame.add(app.getSplitPane());
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);
