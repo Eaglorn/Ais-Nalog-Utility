@@ -4,6 +4,8 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -45,8 +47,8 @@ public class AisNalogUtility {
 		} finally {
 			if (fileTest != null) {
 				try {
-					cleanUp(Path.of(fileTest.getAbsolutePath()));
-				} catch (IOException e) {
+					cleanUp(Path.of(new URI(fileTest.getAbsolutePath())));
+				} catch (IOException | URISyntaxException e) {
 					log.error(e.getMessage());
 				}
 			}
@@ -67,14 +69,14 @@ public class AisNalogUtility {
 	private static void runApp() {
 		ConfigApp.getConfig();
 		JFrame frame = app.getFrame();
-		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getVersion() + ")");
+		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getAppVersion() + ")");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
 		app.getPromSplitPaneInstall().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.setPromPanelFix(new PromPanelFix());
 		app.getPromSplitPaneInstall().setLeftComponent(app.getPromPanelFix().getPanel());
-		app.setPromPanelApp(new PromPanelApp());
+		app.setPromPanelApp(new AisPanelApp());
 		app.getPromSplitPaneInstall().setRightComponent(app.getPromPanelApp().getPanel());
 		app.getPromSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.getPromSplitPane().setLeftComponent(app.getPromSplitPaneInstall());

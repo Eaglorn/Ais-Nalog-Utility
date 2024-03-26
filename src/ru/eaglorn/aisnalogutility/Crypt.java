@@ -23,7 +23,7 @@ public class Crypt {
 		try {
 			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
 			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(charset), "AES");
-			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING");
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 			byte[] original = cipher.doFinal(Base64.getDecoder().decode(encrypted));
 			return new String(original);
@@ -38,7 +38,7 @@ public class Crypt {
 		try {
 			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
 			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(charset), "AES");
-			Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING");
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 			byte[] encrypted = cipher.doFinal(value.getBytes());
 			return new String(Base64.getEncoder().encode(encrypted));
