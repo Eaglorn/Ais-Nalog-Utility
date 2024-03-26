@@ -27,11 +27,11 @@ public class App {
 	private @Getter @Setter int heigth = 600;
 	private @Getter LoadingThread loadingThread = new LoadingThread();
 	private @val @Getter JMenuBar menuBar = new JMenuBar();
-	private @val @Getter @Setter AisPanelApp promPanelApp;
+	private @val @Getter @Setter PromPanelFixAndApp promPanelFixAndApp;
 	private @val @Getter @Setter PromPanelFix promPanelFix;
-	private @val @Getter @Setter PromPanelFixList promPanelFixList;
-	private @val @Getter JSplitPane promSplitPane = new JSplitPane();
-	private @val @Getter JSplitPane promSplitPaneInstall = new JSplitPane();
+	private @val @Getter @Setter OePanelFixAndApp oePanelFixAndApp;
+	private @val @Getter JSplitPane splitPane = new JSplitPane();
+	private @val @Getter JSplitPane splitPaneProm = new JSplitPane();
 	private @Getter @Setter int promFixHave = 0;
 	private @Getter @Setter int promFixInstalled = 0;
 	private @Getter @Setter boolean promInstalled = false;

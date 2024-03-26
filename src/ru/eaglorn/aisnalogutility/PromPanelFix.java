@@ -1,109 +1,80 @@
 package ru.eaglorn.aisnalogutility;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Point;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 
 import lombok.Getter;
 
 public class PromPanelFix {
-	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
-	private JButton buttonUninstalled = new JButton("Установить новые фиксы");
-	private JButton buttonAll = new JButton("Установить все фиксы");
-	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
-	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
-	private @Getter JPanel panel = null;
-	private int width = 320;
+	private @Getter JPanel panel = new JPanel(new BorderLayout());
+	private JScrollPane scrollPane = new JScrollPane();
+	private int width = 265;
 
 	public PromPanelFix() {
-		App app = AisNalogUtility.getApp();
-		panel = new JPanel();
-		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		GridLayout layout = new GridLayout(5, 0, 0, 0);
-		panel.setLayout(layout);
-		panel.add(info);
-		panel.add(createButtonUninstalled());
-		panel.add(createButtonAll());
-		panel.add(createButtonChecked());
-		panel.add(createButtonUnchecked());
-		if (!app.isPromInstalled()) {
-			buttonUninstalled.setEnabled(false);
-			buttonAll.setEnabled(false);
-			buttonChecked.setEnabled(false);
-			buttonUnchecked.setEnabled(false);
-		}
+		scrollPane.setViewportView(getPromFixList());
+		scrollPane.getViewport().setViewPosition(new Point(0, 99999));
+		panel.add(scrollPane);
 		panel.setMinimumSize(new Dimension(width, 0));
-		app.addWidth(width);
+		AisNalogUtility.getApp().addWidth(width);
 	}
 
-	private JButton createButtonUninstalled() {
-		App app = AisNalogUtility.getApp();
-		buttonUninstalled.addActionListener(new ActionListener() {
+	private JList<String> getPromFixList() {
+		Data data = AisNalogUtility.getData();
+		DefaultListModel<String> modelList = new DefaultListModel<>();
+		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
+		File dir = new File(data.getConfigApp().getNetPath() + "\\promfix");
+		File[] arrFiles = dir.listFiles();
+		Comparator<File> comp = new Comparator<File>() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-				LoadingThread loadingThread = app.getLoadingThread();
-				loadingThread.start();
-				Thread thread = new PromFixThread(0);
-				thread.start();
+			public int compare(File f1, File f2) {
+				String name1 = f1.getName();
+				Integer numb1 = Integer.valueOf(name1.substring(name1.indexOf("№") + 1, name1.lastIndexOf(".")));
+				String name2 = f2.getName();
+				Integer numb2 = Integer.valueOf(name2.substring(name2.indexOf("№") + 1, name2.lastIndexOf(".")));
+				return numb1.compareTo(numb2);
 			}
-		});
-		return buttonUninstalled;
-	}
+		};
 
-	private JButton createButtonAll() {
-		App app = AisNalogUtility.getApp();
-		buttonAll.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-				LoadingThread loadingThread = app.getLoadingThread();
-				loadingThread.start();
-				Thread thread = new PromFixThread(1);
-				thread.start();
-			}
-		});
-		return buttonAll;
-	}
+		Arrays.sort(arrFiles, comp);
+		List<File> lst = Arrays.asList(arrFiles);
+		int i = 1;
+		for (File file : lst) {
+			modelList.addElement(file.getName());
+			data.getPromFixs().add(new Fix(i, file.getName()));
+			i++;
+			AisNalogUtility.getApp().setPromFixHave(AisNalogUtility.getApp().getPromFixHave() + 1);
+		}
+		JList<String> list = new JList<>(modelList);
+		list.setCellRenderer(new PromFixCheckboxListCellRenderer<>());
+		list.addListSelectionListener(listSelectionDocument);
+		list.setSelectionModel(new DefaultListSelectionModel() {
+			private static final long serialVersionUID = 1L;
 
-	private JButton createButtonChecked() {
-		App app = AisNalogUtility.getApp();
-		buttonChecked.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-				LoadingThread loadingThread = app.getLoadingThread();
-				loadingThread.start();
-				Thread thread = new PromFixThread(2);
-				thread.start();
+			public void setSelectionInterval(int index0, int index1) {
+				if (super.isSelectedIndex(index0)) {
+					if (index0 >= 0)
+						data.getPromFixs().get(index0).setChecked(false);
+					super.removeSelectionInterval(index0, index1);
+				} else {
+					if (index0 >= 0)
+						data.getPromFixs().get(index0).setChecked(true);
+					super.addSelectionInterval(index0, index1);
+				}
 			}
 		});
-		return buttonChecked;
-	}
-
-	private JButton createButtonUnchecked() {
-		App app = AisNalogUtility.getApp();
-		buttonUnchecked.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
-					return;
-				LoadingThread loadingThread = app.getLoadingThread();
-				loadingThread.start();
-				Thread thread = new PromFixThread(3);
-				thread.start();
-			}
-		});
-		return buttonUnchecked;
+		list.setLayoutOrientation(JList.VERTICAL);
+		return list;
 	}
 }

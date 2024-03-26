@@ -73,25 +73,32 @@ public class AisNalogUtility {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
-		app.getPromSplitPaneInstall().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		
+		app.getSplitPaneProm().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		
+		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
+		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
+		
 		app.setPromPanelFix(new PromPanelFix());
-		app.getPromSplitPaneInstall().setLeftComponent(app.getPromPanelFix().getPanel());
-		app.setPromPanelApp(new AisPanelApp());
-		app.getPromSplitPaneInstall().setRightComponent(app.getPromPanelApp().getPanel());
-		app.getPromSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		app.getPromSplitPane().setLeftComponent(app.getPromSplitPaneInstall());
-		app.setPromPanelFixList(new PromPanelFixList());
-		app.getPromSplitPane().setRightComponent(app.getPromPanelFixList().getPanel());
-		frame.add(app.getPromSplitPane());
+		app.getSplitPaneProm().setRightComponent(app.getPromPanelFix().getPanel());
+		
+		app.getSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		
+		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
+		
+		app.setOePanelFixAndApp(new OePanelFixAndApp());
+		app.getSplitPane().setRightComponent(app.getPromPanelFix().getPanel());
+		
+		frame.add(app.getSplitPane());
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		ConfigFix.getConfig();
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
 		if (app.getPromFixHave() < 1) {
-			app.getPromPanelFix().getInfo().setText("Отсутствуют фиксы для установки.");
+			app.getPromPanelFixAndApp().getInfo().setText("Отсутствуют фиксы для установки.");
 		} else {
-			app.getPromPanelFix().getInfo()
+			app.getPromPanelFixAndApp().getInfo()
 					.setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
 		}
 	}
