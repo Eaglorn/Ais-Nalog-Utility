@@ -34,9 +34,9 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/slf4j-api-2.0.12-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/lombok-1.18.30.jar" sourcepath="C:/AisNalogUtilityLib/lombok-1.18.30-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/lombok-1.18.32.jar" sourcepath="C:/AisNalogUtilityLib/lombok-1.18.32-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/lombok-1.18.30-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/lombok-1.18.32-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

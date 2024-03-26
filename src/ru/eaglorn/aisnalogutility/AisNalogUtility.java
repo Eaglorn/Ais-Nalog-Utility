@@ -4,6 +4,8 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -42,14 +44,18 @@ public class AisNalogUtility {
 		try {
 			fileTest = File.createTempFile("test", ".dll", testPriv);
 		} catch (IOException e) {
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 			return false;
 		} finally {
 			if (fileTest != null) {
 				try {
 					cleanUp(Path.of(new URI(fileTest.getAbsolutePath())));
 				} catch (IOException | URISyntaxException e) {
-					log.error(e.getMessage());
+					StringWriter stack = new StringWriter();
+					e.printStackTrace(new PrintWriter(stack));
+					log.error(stack.toString());
 				}
 			}
 		}
@@ -107,7 +113,9 @@ public class AisNalogUtility {
 			file.write(crypt);
 			file.flush();
 		} catch (IOException e) {
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 

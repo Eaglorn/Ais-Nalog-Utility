@@ -50,7 +50,6 @@ public class ConfigFix {
 					log.error("Error create save file.");
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
 				log.error(e.getMessage());
 			}
 			save();
@@ -68,4 +67,5 @@ public class ConfigFix {
 			log.error(e.getMessage());
 		}
 	}
+	
 }
