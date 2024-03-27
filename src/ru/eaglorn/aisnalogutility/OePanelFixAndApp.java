@@ -14,7 +14,7 @@ import lombok.Getter;
 
 public class OePanelFixAndApp {
 	private @Getter JPanel panel = new JPanel();
-	private int width = 300;
+	private int width = 320;
 
 	public OePanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
@@ -42,7 +42,7 @@ public class OePanelFixAndApp {
 			if (app.getOeVersion().equals(AisNalogUtility.getData().getConfigApp().getOeVersion())) {
 				text = "Переустановить АИС-Налог 3 ОЭ";
 			} else {
-				text = "Установить новую версию\nАИС-Налог 3 ОЭ";
+				text = "Установить новую версию АИС-Налог 3 ОЭ";
 			}
 		} else {
 			text = "Установить АИС-Налог 3 ОЭ";

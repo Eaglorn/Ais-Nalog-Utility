@@ -47,6 +47,8 @@ public class App {
 
 	private @val String versionPath = "Client\\CSC.ClientPackage.ver";
 
+	private @val @Getter String processName = "CommonComponents.UnifiedClient.exe";
+
 	public App() {
 		getAisPromVersion();
 		getAisOeVersion();

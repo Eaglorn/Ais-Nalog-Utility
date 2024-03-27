@@ -32,6 +32,19 @@ public class PromFixThread extends Thread {
 	public void run() {
 		App app = AisNalogUtility.getApp();
 		Data data = AisNalogUtility.getData();
+
+		try {
+			String[] commands1 = { "wmic", "process", "where", "name=" + "\"" + app.getProcessName() + "\"", "and",
+					"executablePath=" + "\"" + app.getPromPath() + "Client\\" + app.getProcessName() + "\"", "call",
+					"terminate" };
+			app.processBuilderStart(commands1, false);
+		} catch (InterruptedException e) {
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
+			Thread.currentThread().interrupt();
+		}
+
 		switch (installMode) {
 		case 1: { // All
 			for (Fix fix : data.getPromFixs()) {
@@ -75,8 +88,8 @@ public class PromFixThread extends Thread {
 		}
 		try {
 			app.getLoadingThread().setProcessText("Статус выполнения: индексация распакованных фиксов.");
-			String[] commands = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
-			app.processBuilderStart(commands, true);
+			String[] commands2 = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
+			app.processBuilderStart(commands2, true);
 		} catch (InterruptedException e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));

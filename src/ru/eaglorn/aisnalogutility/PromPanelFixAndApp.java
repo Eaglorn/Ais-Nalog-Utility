@@ -21,7 +21,7 @@ public class PromPanelFixAndApp {
 	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
 	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
 	private @Getter JPanel panel = null;
-	private int width = 300;
+	private int width = 340;
 
 	public PromPanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
@@ -120,7 +120,7 @@ public class PromPanelFixAndApp {
 			if (app.getPromVersion().equals(AisNalogUtility.getData().getConfigApp().getPromVersion())) {
 				text = "Переустановить АИС-Налог 3 ПРОМ";
 			} else {
-				text = "Установить новую версию\nАИС-Налог 3 ПРОМ";
+				text = "Установить новую версию АИС-Налог 3 ПРОМ";
 			}
 		} else {
 			text = "Установить АИС-Налог 3 ПРОМ";

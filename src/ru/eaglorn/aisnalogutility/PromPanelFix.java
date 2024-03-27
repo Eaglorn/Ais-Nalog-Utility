@@ -19,7 +19,7 @@ import lombok.Getter;
 public class PromPanelFix {
 	private @Getter JPanel panel = new JPanel(new BorderLayout());
 	private JScrollPane scrollPane = new JScrollPane();
-	private int width = 265;
+	private int width = 290;
 
 	public PromPanelFix() {
 		scrollPane.setViewportView(getPromFixList());
