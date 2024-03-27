@@ -26,7 +26,6 @@ public class PromPanelFix {
 		scrollPane.getViewport().setViewPosition(new Point(0, 99999));
 		panel.add(scrollPane);
 		panel.setMinimumSize(new Dimension(width, 0));
-		scrollPane.setMinimumSize(new Dimension(width, 0));
 		AisNalogUtility.getApp().addWidth(width);
 	}
 

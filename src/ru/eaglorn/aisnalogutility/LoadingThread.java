@@ -27,33 +27,35 @@ public class LoadingThread extends Thread {
 		App app = AisNalogUtility.getApp();
 		while (work) {
 			app.getFrame().getContentPane().removeAll();
-			app.getFrame().setSize(565, 180);
+			app.getFrame().setSize(490, 235);
 			JPanel panel = new JPanel();
-			panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-			GridLayout layout = new GridLayout(2, 0, 0, 0);
+			panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+			GridLayout layout = new GridLayout(6, 0, 0, 0);
 			panel.setLayout(layout);
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append("<html><div style='text-align: center;'>");
+			String messageFirst = "";
+			String messageSecond = "";
 			switch (type) {
 			case (1): {
-				stringBuilder.append(
-						"Выполняется установка АИС Налог-3 ПРОМ.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+				messageFirst = "Выполняется установка АИС Налог-3 ПРОМ.";
+				messageSecond = "Во время установки не запускайте АИС Налог-3 ПРОМ!";
 				break;
 			}
 			case (2): {
-				stringBuilder.append(
-						"Выполняется установка АИС Налог-3 ОЕ.<br>Во время установки не запускайте АИС Налог-3 ОЕ!<br>После завершения установки программа закроется.<br><br>");
+				messageFirst = "Выполняется установка АИС Налог-3 ОЕ.";
+				messageSecond = "Во время установки не запускайте АИС Налог-3 ОЕ!";
 				break;
 			}
 			default: {
-				stringBuilder.append(
-						"Выполняется установка фиксов.<br>Во время установки не запускайте АИС Налог-3 ПРОМ!<br>После завершения установки программа закроется.<br><br>");
+				messageFirst = "Выполняется установка фиксов.";
+				messageSecond = "Во время установки не запускайте АИС Налог-3 ПРОМ!";
 			}
 			}
-			stringBuilder.append(processText + "<br><br></div></html>");
-			JLabel label = new JLabel(stringBuilder.toString(), SwingConstants.CENTER);
+			panel.add(new JLabel(messageFirst, SwingConstants.CENTER));
+			panel.add(new JLabel(messageSecond, SwingConstants.CENTER));
+			panel.add(new JLabel("После завершения установки программа закроется.", SwingConstants.CENTER));
+			panel.add(new JLabel("", SwingConstants.CENTER));
+			panel.add(new JLabel(processText, SwingConstants.CENTER));
 			progressBar.setIndeterminate(true);
-			panel.add(label);
 			panel.add(progressBar);
 			app.getFrame().add(panel);
 			app.getFrame().revalidate();

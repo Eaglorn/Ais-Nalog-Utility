@@ -1,6 +1,5 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.awt.Dimension;
 import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
@@ -64,14 +63,16 @@ public class AisNalogUtility {
 
 	private static void runApp() {
 		ConfigApp.getConfig();
+		ConfigFix.getConfig();
 		JFrame frame = app.getFrame();
 		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getAppVersion() + ")");
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.setSize(300 + 265 + 300 + 60, app.getHeigth());
+		app.getFrame().setSize(0, app.getHeigth());
+		app.getFrame().setVisible(true);
+		app.getFrame().setLocationRelativeTo(null);
+		app.getFrame().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
 		app.getSplitPaneProm().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		app.getSplitPaneProm().setMinimumSize(new Dimension(300 + 265 + 40, 0));
 		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
 		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
 		app.setPromPanelFix(new PromPanelFix());
@@ -80,12 +81,8 @@ public class AisNalogUtility {
 		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
 		app.setOePanelFixAndApp(new OePanelFixAndApp());
 		app.getSplitPane().setRightComponent(app.getOePanelFixAndApp().getPanel());
-		app.getSplitPane().setMinimumSize(new Dimension(300 + 265 + 300 + 60, 0));
 		frame.add(app.getSplitPane());
 		frame.setSize(app.getWidth(), app.getHeigth());
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		ConfigFix.getConfig();
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
 		if (app.getPromFixHave() < 1) {
 			app.getPromPanelFixAndApp().getInfo().setText("Отсутствуют фиксы для установки.");
@@ -93,6 +90,8 @@ public class AisNalogUtility {
 			app.getPromPanelFixAndApp().getInfo()
 					.setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
 		}
+		frame.setSize(app.getWidth(), app.getHeigth());
+		frame.setLocationRelativeTo(null);
 	}
 
 	public static void runAppAuth() {

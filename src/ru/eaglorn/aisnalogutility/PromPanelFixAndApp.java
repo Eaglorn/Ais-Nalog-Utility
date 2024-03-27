@@ -26,7 +26,7 @@ public class PromPanelFixAndApp {
 	public PromPanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
 		panel = new JPanel();
-		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridLayout layout = new GridLayout(9, 0, 0, 0);
 		panel.setLayout(layout);
 		panel.add(info);

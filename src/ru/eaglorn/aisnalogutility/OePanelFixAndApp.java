@@ -1,6 +1,5 @@
 package ru.eaglorn.aisnalogutility;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +19,7 @@ public class OePanelFixAndApp {
 	public OePanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
 		panel = new JPanel();
-		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridLayout layout = new GridLayout(9, 0, 0, 0);
 		panel.setLayout(layout);
 		panel.add(new JLabel("", SwingConstants.CENTER));
@@ -33,7 +32,6 @@ public class OePanelFixAndApp {
 		panel.add(new JLabel("", SwingConstants.CENTER));
 		panel.add(new JLabel("", SwingConstants.CENTER));
 		panel.add(new JLabel("", SwingConstants.CENTER));
-		panel.setMinimumSize(new Dimension(width, 0));
 		app.addWidth(width);
 	}
 
