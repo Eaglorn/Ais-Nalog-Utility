@@ -2,6 +2,8 @@ package ru.eaglorn.aisnalogutility;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -20,8 +22,9 @@ public class ConfigApp {
 			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));
 			AisNalogUtility.getData().setConfigApp(new Gson().fromJson(reader, ConfigApp.class));
 		} catch (IOException e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 }

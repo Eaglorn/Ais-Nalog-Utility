@@ -1,5 +1,7 @@
 package ru.eaglorn.aisnalogutility;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.MessageFormat;
 
 import javax.swing.JList;
@@ -38,7 +40,9 @@ public class FixListSelectionDocument extends PlainDocument implements ListSelec
 			remove(0, getLength());
 			insertString(0, text, null);
 		} catch (BadLocationException e) {
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 

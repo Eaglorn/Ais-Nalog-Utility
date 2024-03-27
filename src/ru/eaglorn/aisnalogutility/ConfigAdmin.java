@@ -3,6 +3,8 @@ package ru.eaglorn.aisnalogutility;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
@@ -23,7 +25,9 @@ public class ConfigAdmin {
 		try {
 			file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
 		} catch (FileNotFoundException e) {
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 		try (Scanner scan = new Scanner(file)) {
 			StringBuilder gson = new StringBuilder();
@@ -32,7 +36,9 @@ public class ConfigAdmin {
 			}
 			data.setConfigAdmin(new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class));
 		} catch (JsonSyntaxException e) {
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 

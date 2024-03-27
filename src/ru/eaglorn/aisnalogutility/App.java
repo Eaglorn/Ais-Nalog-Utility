@@ -2,6 +2,8 @@ package ru.eaglorn.aisnalogutility;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFrame;
@@ -69,8 +71,9 @@ public class App {
 			try {
 				promVersion = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8).get(0));
 			} catch (IOException e) {
-				log.error(e.getMessage());
-				e.printStackTrace();
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 			}
 		}
 	}
@@ -94,8 +97,9 @@ public class App {
 			try {
 				oeVersion = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8).get(0));
 			} catch (IOException e) {
-				log.error(e.getMessage());
-				e.printStackTrace();
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 			}
 		}
 	}
@@ -117,8 +121,9 @@ public class App {
 				frame.dispose();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 }

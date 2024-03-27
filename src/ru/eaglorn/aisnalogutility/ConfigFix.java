@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,8 +41,9 @@ public class ConfigFix {
 				}
 				save();
 			} catch (IOException e) {
-				e.printStackTrace();
-				log.error(e.getMessage());
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 			}
 		} else {
 			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
@@ -50,7 +53,9 @@ public class ConfigFix {
 					log.error("Error create save file.");
 				}
 			} catch (IOException e) {
-				log.error(e.getMessage());
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
 			}
 			save();
 		}
@@ -63,8 +68,9 @@ public class ConfigFix {
 			file.write(str);
 			file.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 	

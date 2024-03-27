@@ -1,5 +1,8 @@
 package ru.eaglorn.aisnalogutility;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -18,8 +21,9 @@ public class PromAppThread extends Thread {
 			String[] commands2 = { "\"c:\\AisNalogUtility\\aisprom\\run-silentmode.cmd\"" };
 			app.processBuilderStart(commands2, true);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 			Thread.currentThread().interrupt();
 		}
 	}

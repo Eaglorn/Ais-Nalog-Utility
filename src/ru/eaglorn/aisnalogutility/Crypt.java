@@ -1,5 +1,7 @@
 package ru.eaglorn.aisnalogutility;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -27,9 +29,10 @@ public class Crypt {
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 			byte[] original = cipher.doFinal(Base64.getDecoder().decode(encrypted));
 			return new String(original);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			log.error(ex.getMessage());
+		} catch (Exception e) {
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 		return null;
 	}
@@ -42,9 +45,10 @@ public class Crypt {
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 			byte[] encrypted = cipher.doFinal(value.getBytes());
 			return new String(Base64.getEncoder().encode(encrypted));
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			log.error(ex.getMessage());
+		} catch (Exception e) {
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 		return null;
 	}

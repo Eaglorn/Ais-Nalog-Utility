@@ -2,6 +2,8 @@ package ru.eaglorn.aisnalogutility;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,8 +22,9 @@ public class PromFixThread extends Thread {
 			Process process = pb.start();
 			process.waitFor();
 		} catch (IOException e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 
@@ -75,8 +78,9 @@ public class PromFixThread extends Thread {
 			String[] commands = { app.getPromPath() + "Client\\CommonComponents.Catalog.IndexationUtility.exe" };
 			app.processBuilderStart(commands, true);
 		} catch (InterruptedException e) {
-			log.error(e.getMessage());
-			Thread.currentThread().interrupt();
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 
@@ -87,8 +91,9 @@ public class PromFixThread extends Thread {
 			app.getLoadingThread().setProcessText("Статус выполнения: распаковка  фикса " + fix.getName());
 			decompress7ZipEmbedded(new File(pathFix), new File(app.getPromPath()));
 		} catch (IOException | InterruptedException e) {
-			log.error(e.getMessage());
-			Thread.currentThread().interrupt();
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
 		}
 	}
 }
