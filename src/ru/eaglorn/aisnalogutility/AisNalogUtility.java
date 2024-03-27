@@ -63,13 +63,19 @@ public class AisNalogUtility {
 	}
 
 	public static void main(String[] args) {
-		String arg = args[0];
-		if (arg.equals("-run"))
-			runAppRun();
-		if (arg.equals("-app"))
-			runAppMain();
-		if (arg.equals("-auth"))
-			runAppAuth();
+		try {
+			String arg = args[0];
+			if (arg.equals("-run"))
+				runAppRun();
+			if (arg.equals("-app"))
+				runAppMain();
+			if (arg.equals("-auth"))
+				runAppAuth();
+		} catch (Exception e) {
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			log.error(stack.toString());
+		}
 	}
 
 	private static void runApp() {
@@ -87,7 +93,7 @@ public class AisNalogUtility {
 		app.getSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
 		app.setOePanelFixAndApp(new OePanelFixAndApp());
-		app.getSplitPane().setRightComponent(app.getPromPanelFix().getPanel());
+		app.getSplitPane().setRightComponent(app.getOePanelFixAndApp().getPanel());
 		frame.add(app.getSplitPane());
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);

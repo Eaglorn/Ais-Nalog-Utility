@@ -41,7 +41,7 @@ public class OePanelFixAndApp {
 				text = "Установить новую версию\nАИС-Налог 3 ОЭ";
 			}
 		} else {
-			text = "Установить АИС-Налог 3 ПРОМ";
+			text = "Установить АИС-Налог 3 ОЭ";
 		}
 		JButton button = new JButton(text);
 		button.addActionListener(new ActionListener() {
