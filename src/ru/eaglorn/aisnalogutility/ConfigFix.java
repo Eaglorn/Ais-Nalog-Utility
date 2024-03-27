@@ -73,5 +73,5 @@ public class ConfigFix {
 			log.error(stack.toString());
 		}
 	}
-	
+
 }

@@ -21,7 +21,7 @@ public class PromPanelFixAndApp {
 	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
 	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
 	private @Getter JPanel panel = null;
-	private int width = 320;
+	private int width = 300;
 
 	public PromPanelFixAndApp() {
 		App app = AisNalogUtility.getApp();

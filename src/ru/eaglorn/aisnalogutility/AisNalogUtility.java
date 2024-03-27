@@ -1,15 +1,12 @@
 package ru.eaglorn.aisnalogutility;
 
+import java.awt.Dimension;
 import java.io.Console;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -32,10 +29,6 @@ public class AisNalogUtility {
 	private static @val @Getter App app = new App();
 	private static @val @Getter Data data = new Data();
 
-	public static void cleanUp(Path path) throws IOException {
-		Files.delete(path);
-	}
-
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
 		if (!testPriv.canWrite())
@@ -47,18 +40,9 @@ public class AisNalogUtility {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));
 			log.error(stack.toString());
-			return false;
-		} finally {
-			if (fileTest != null) {
-				try {
-					cleanUp(Path.of(new URI(fileTest.getAbsolutePath())));
-				} catch (IOException | URISyntaxException e) {
-					StringWriter stack = new StringWriter();
-					e.printStackTrace(new PrintWriter(stack));
-					log.error(stack.toString());
-				}
-			}
 		}
+		if (fileTest != null)
+			fileTest.delete();
 		return true;
 	}
 
@@ -83,9 +67,11 @@ public class AisNalogUtility {
 		JFrame frame = app.getFrame();
 		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getAppVersion() + ")");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setSize(300 + 265 + 300 + 60, app.getHeigth());
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
 		app.getSplitPaneProm().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		app.getSplitPaneProm().setMinimumSize(new Dimension(300 + 265 + 40, 0));
 		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
 		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
 		app.setPromPanelFix(new PromPanelFix());
@@ -94,6 +80,7 @@ public class AisNalogUtility {
 		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
 		app.setOePanelFixAndApp(new OePanelFixAndApp());
 		app.getSplitPane().setRightComponent(app.getOePanelFixAndApp().getPanel());
+		app.getSplitPane().setMinimumSize(new Dimension(300 + 265 + 300 + 60, 0));
 		frame.add(app.getSplitPane());
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);

@@ -15,18 +15,24 @@ import lombok.Getter;
 
 public class OePanelFixAndApp {
 	private @Getter JPanel panel = new JPanel();
-	private int width = 260;
+	private int width = 300;
 
 	public OePanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		GridLayout layout = new GridLayout(3, 0, 0, 0);
+		GridLayout layout = new GridLayout(9, 0, 0, 0);
 		panel.setLayout(layout);
+		panel.add(new JLabel("", SwingConstants.CENTER));
+		panel.add(new JLabel("", SwingConstants.CENTER));
+		panel.add(new JLabel("", SwingConstants.CENTER));
 		panel.add(new JLabel("Установленная версия: " + app.getOeVersion(), SwingConstants.CENTER));
 		panel.add(buttonInstallOe());
 		panel.add(new JLabel("Актуальная версия: " + AisNalogUtility.getData().getConfigApp().getOeVersion(),
 				SwingConstants.CENTER));
+		panel.add(new JLabel("", SwingConstants.CENTER));
+		panel.add(new JLabel("", SwingConstants.CENTER));
+		panel.add(new JLabel("", SwingConstants.CENTER));
 		panel.setMinimumSize(new Dimension(width, 0));
 		app.addWidth(width);
 	}
