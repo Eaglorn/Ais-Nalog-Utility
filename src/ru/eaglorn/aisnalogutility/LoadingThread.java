@@ -30,7 +30,7 @@ public class LoadingThread extends Thread {
 			app.getFrame().setSize(490, 235);
 			JPanel panel = new JPanel();
 			panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-			GridLayout layout = new GridLayout(6, 0, 0, 0);
+			GridLayout layout = new GridLayout(9, 0, 0, 0);
 			panel.setLayout(layout);
 			String messageFirst = "";
 			String messageSecond = "";
@@ -54,7 +54,10 @@ public class LoadingThread extends Thread {
 			panel.add(new JLabel(messageSecond, SwingConstants.CENTER));
 			panel.add(new JLabel("После завершения установки программа закроется.", SwingConstants.CENTER));
 			panel.add(new JLabel("", SwingConstants.CENTER));
+			panel.add(new JLabel("", SwingConstants.CENTER));
 			panel.add(new JLabel(processText, SwingConstants.CENTER));
+			panel.add(new JLabel("", SwingConstants.CENTER));
+			panel.add(new JLabel("", SwingConstants.CENTER));
 			progressBar.setIndeterminate(true);
 			panel.add(progressBar);
 			app.getFrame().add(panel);
