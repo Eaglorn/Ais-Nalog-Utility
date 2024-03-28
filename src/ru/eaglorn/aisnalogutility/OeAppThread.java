@@ -17,9 +17,13 @@ public class OeAppThread extends Thread {
 			String[] commands1 = { "robocopy", "/XC", "/XO", "/NP", "/NS", "/NC", "/NFL", "/NDL", "/R:3", "/W:1", "/Z",
 					data.getConfigApp().getNetPath() + "\\\\aisoe\\\\", "c:\\AisNalogUtility\\aisoe\\" };
 			app.processBuilderStart(commands1, false);
-			String[] commands2 = { "wmic", "process", "where", "name=" + "\"" + app.getProcessName() + "\"", "and",
-					"executablePath=" + "\"" + app.getOePath() + "Client\\" + app.getProcessName() + "\"", "call",
-					"terminate" };
+			String path = "";
+			if(app.isWinArch()) {
+				path = "\"c:\\AisNalogUtility\\scripts\\killoe64.bat\"";
+			} else {
+				path = "\"c:\\AisNalogUtility\\scripts\\killoe32.bat\"";
+			}
+			String[] commands2 = { path };
 			app.processBuilderStart(commands2, false);
 			thread.setProcessText("Статус выполнения: установка АИС Налог-3 ОЭ.");
 			String[] commands3 = { "\"c:\\AisNalogUtility\\aisoe\\run-silentmode.cmd\"" };

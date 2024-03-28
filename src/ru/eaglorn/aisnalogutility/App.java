@@ -38,6 +38,8 @@ public class App {
 	private @Getter @Setter int promFixInstalled = 0;
 	private @Getter @Setter boolean promInstalled = false;
 	private @Getter @Setter boolean oeInstalled = false;
+	
+	private @Getter @Setter boolean winArch = false;
 
 	private @val String prom32Path = "c:\\Program Files\\Ais3Prom\\";
 	private @val String prom64Path = "c:\\Program Files (x86)\\Ais3Prom\\";
@@ -58,10 +60,12 @@ public class App {
 		String path = "";
 		if (new File(prom64Path + versionPath).exists()) {
 			promPath = prom64Path;
+			winArch = true;
 			path = promPath + versionPath;
 			promInstalled = true;
 		} else if (new File(prom32Path + versionPath).exists()) {
 			promPath = prom32Path;
+			winArch = false;
 			path = promPath + versionPath;
 			promInstalled = true;
 		} else {
@@ -84,10 +88,12 @@ public class App {
 		String path = "";
 		if (new File(oe64Path + versionPath).exists()) {
 			oePath = oe64Path;
+			winArch = true;
 			path = oePath + versionPath;
 			oeInstalled = true;
 		} else if (new File(oe32Path + versionPath).exists()) {
 			oePath = oe32Path;
+			winArch = false;
 			path = oePath + versionPath;
 			oeInstalled = true;
 		} else {

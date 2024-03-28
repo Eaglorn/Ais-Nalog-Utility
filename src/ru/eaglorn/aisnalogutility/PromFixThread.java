@@ -34,9 +34,13 @@ public class PromFixThread extends Thread {
 		Data data = AisNalogUtility.getData();
 
 		try {
-			String[] commands1 = { "wmic", "process", "where", "name=" + "\"" + app.getProcessName() + "\"", "and",
-					"executablePath=" + "\"" + app.getPromPath() + "Client\\" + app.getProcessName() + "\"", "call",
-					"terminate" };
+			String path = "";
+			if(app.isWinArch()) {
+				path = "\"c:\\AisNalogUtility\\scripts\\killprom64.bat\"";
+			} else {
+				path = "\"c:\\AisNalogUtility\\scripts\\killprom32.bat\"";
+			}
+			String[] commands1 = { path };
 			app.processBuilderStart(commands1, false);
 		} catch (InterruptedException e) {
 			StringWriter stack = new StringWriter();

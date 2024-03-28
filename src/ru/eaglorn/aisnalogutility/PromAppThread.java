@@ -17,9 +17,13 @@ public class PromAppThread extends Thread {
 			String[] commands1 = { "robocopy", "/XC", "/XO", "/NP", "/NS", "/NC", "/NFL", "/NDL", "/R:3", "/W:1", "/Z",
 					data.getConfigApp().getNetPath() + "\\\\aisprom\\\\", "c:\\AisNalogUtility\\aisprom\\" };
 			app.processBuilderStart(commands1, false);
-			String[] commands2 = { "wmic", "process", "where", "name=" + "\"" + app.getProcessName() + "\"", "and",
-					"executablePath=" + "\"" + app.getPromPath() + "Client\\" + app.getProcessName() + "\"", "call",
-					"terminate" };
+			String path = "";
+			if(app.isWinArch()) {
+				path = "\"c:\\AisNalogUtility\\scripts\\killprom64.bat\"";
+			} else {
+				path = "\"c:\\AisNalogUtility\\scripts\\killprom32.bat\"";
+			}
+			String[] commands2 = { path };
 			app.processBuilderStart(commands2, false);
 			thread.setProcessText("Статус выполнения: установка АИС Налог-3 ПРОМ.");
 			String[] commands3 = { "\"c:\\AisNalogUtility\\aisprom\\run-silentmode.cmd\"" };

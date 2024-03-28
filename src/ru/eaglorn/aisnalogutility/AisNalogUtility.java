@@ -35,14 +35,13 @@ public class AisNalogUtility {
 		File fileTest = null;
 		try {
 			fileTest = File.createTempFile("test", ".dll", testPriv);
-		} catch (IOException e) {
-			StringWriter stack = new StringWriter();
-			e.printStackTrace(new PrintWriter(stack));
-			log.error(stack.toString());
-		}
-		if (fileTest != null)
+		} catch (IOException e) {}
+		if (fileTest != null) {
 			fileTest.delete();
-		return true;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static void main(String[] args) {
@@ -64,6 +63,10 @@ public class AisNalogUtility {
 	private static void runApp() {
 		ConfigApp.getConfig();
 		ConfigFix.getConfig();
+		String osArch = System.getProperty("os.arch").toLowerCase();
+		if(osArch.contains("64")) {
+			app.setWinArch(true);
+		}
 		JFrame frame = app.getFrame();
 		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getAppVersion() + ")");
 		app.getFrame().setSize(0, app.getHeigth());
