@@ -98,6 +98,7 @@ public class PromFixThread extends Thread {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));
 			log.error(stack.toString());
+			Thread.currentThread().interrupt();
 		}
 	}
 

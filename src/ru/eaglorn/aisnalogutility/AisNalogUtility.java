@@ -38,8 +38,12 @@ public class AisNalogUtility {
 		} catch (IOException e) {
 		}
 		if (fileTest != null) {
-			fileTest.delete();
-			return true;
+			if (fileTest.delete()) {
+				return true;
+			} else {
+				log.info("File Test Not Delete: " + fileTest.getName());
+				return true;
+			}
 		} else {
 			return false;
 		}
