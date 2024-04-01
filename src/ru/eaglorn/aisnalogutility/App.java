@@ -38,7 +38,7 @@ public class App {
 	private @Getter @Setter int promFixInstalled = 0;
 	private @Getter @Setter boolean promInstalled = false;
 	private @Getter @Setter boolean oeInstalled = false;
-	
+
 	private @Getter @Setter boolean winArch = false;
 
 	private @val String prom32Path = "c:\\Program Files\\Ais3Prom\\";

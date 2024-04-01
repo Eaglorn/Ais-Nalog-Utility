@@ -35,7 +35,8 @@ public class AisNalogUtility {
 		File fileTest = null;
 		try {
 			fileTest = File.createTempFile("test", ".dll", testPriv);
-		} catch (IOException e) {}
+		} catch (IOException e) {
+		}
 		if (fileTest != null) {
 			fileTest.delete();
 			return true;
@@ -64,7 +65,7 @@ public class AisNalogUtility {
 		ConfigApp.getConfig();
 		ConfigFix.getConfig();
 		String osArch = System.getProperty("os.arch").toLowerCase();
-		if(osArch.contains("64")) {
+		if (osArch.contains("64")) {
 			app.setWinArch(true);
 		}
 		JFrame frame = app.getFrame();

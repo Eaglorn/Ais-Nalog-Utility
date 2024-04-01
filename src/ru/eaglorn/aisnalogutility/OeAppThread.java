@@ -18,7 +18,7 @@ public class OeAppThread extends Thread {
 					data.getConfigApp().getNetPath() + "\\\\aisoe\\\\", "c:\\AisNalogUtility\\aisoe\\" };
 			app.processBuilderStart(commands1, false);
 			String path = "";
-			if(app.isWinArch()) {
+			if (app.isWinArch()) {
 				path = "\"c:\\AisNalogUtility\\scripts\\killoe64.bat\"";
 			} else {
 				path = "\"c:\\AisNalogUtility\\scripts\\killoe32.bat\"";

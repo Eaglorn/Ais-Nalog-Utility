@@ -35,7 +35,7 @@ public class PromFixThread extends Thread {
 
 		try {
 			String path = "";
-			if(app.isWinArch()) {
+			if (app.isWinArch()) {
 				path = "\"c:\\AisNalogUtility\\scripts\\killprom64.bat\"";
 			} else {
 				path = "\"c:\\AisNalogUtility\\scripts\\killprom32.bat\"";

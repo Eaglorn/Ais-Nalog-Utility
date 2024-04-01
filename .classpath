@@ -6,9 +6,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-io-2.15.1.jar" sourcepath="C:/AisNalogUtilityLib/commons-io-2.15.1-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-io-2.16.0.jar" sourcepath="C:/AisNalogUtilityLib/commons-io-2.16.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-io-2.15.1-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-io-2.16.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/gson-2.10.1.jar" sourcepath="C:/AisNalogUtilityLib/gson-2.10.1-sources.jar">

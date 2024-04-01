@@ -18,7 +18,7 @@ public class PromAppThread extends Thread {
 					data.getConfigApp().getNetPath() + "\\\\aisprom\\\\", "c:\\AisNalogUtility\\aisprom\\" };
 			app.processBuilderStart(commands1, false);
 			String path = "";
-			if(app.isWinArch()) {
+			if (app.isWinArch()) {
 				path = "\"c:\\AisNalogUtility\\scripts\\killprom64.bat\"";
 			} else {
 				path = "\"c:\\AisNalogUtility\\scripts\\killprom32.bat\"";
