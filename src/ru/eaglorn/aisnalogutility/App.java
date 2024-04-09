@@ -24,7 +24,7 @@ public class App {
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oePath = "";
 	private @Getter @Setter String oeVersion = "";
-	private @val @Getter String appVersion = "8";
+	private @val @Getter String appVersion = "9";
 	private @Getter @Setter int width = 0;
 	private @Getter @Setter int heigth = 600;
 	private @Getter LoadingThread loadingThread = new LoadingThread();
