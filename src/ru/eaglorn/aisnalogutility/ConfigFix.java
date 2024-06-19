@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonReader;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,7 +24,7 @@ public class ConfigFix {
 	private @Getter @Setter String oeVersion = "";
 	private @Getter @Setter List<String> promFixs = new ArrayList<>();
 	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
-	private static @val String pathSave = "c:\\AisNalogUtility\\config\\save.json";
+	private static String pathSave = "c:\\AisNalogUtility\\config\\save.json";
 
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();

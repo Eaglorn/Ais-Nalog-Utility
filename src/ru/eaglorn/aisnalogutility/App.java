@@ -14,26 +14,25 @@ import org.apache.commons.io.FileUtils;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class App {
-	private @val @Getter JFrame frame = new JFrame();
+	private final @Getter JFrame frame = new JFrame();
 	private @Getter @Setter String promPath = "";
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oePath = "";
 	private @Getter @Setter String oeVersion = "";
-	private @val @Getter String appVersion = "9";
+	private @Getter String appVersion = "10";
 	private @Getter @Setter int width = 0;
 	private @Getter @Setter int heigth = 600;
 	private @Getter LoadingThread loadingThread = new LoadingThread();
-	private @val @Getter JMenuBar menuBar = new JMenuBar();
-	private @val @Getter @Setter PromPanelFixAndApp promPanelFixAndApp;
-	private @val @Getter @Setter PromPanelFix promPanelFix;
-	private @val @Getter @Setter OePanelFixAndApp oePanelFixAndApp;
-	private @val @Getter JSplitPane splitPane = new JSplitPane();
-	private @val @Getter JSplitPane splitPaneProm = new JSplitPane();
+	private @Getter JMenuBar menuBar = new JMenuBar();
+	private @Getter @Setter PromPanelFixAndApp promPanelFixAndApp;
+	private @Getter @Setter PromPanelFix promPanelFix;
+	private @Getter @Setter OePanelFixAndApp oePanelFixAndApp;
+	private @Getter JSplitPane splitPane = new JSplitPane();
+	private @Getter JSplitPane splitPaneProm = new JSplitPane();
 	private @Getter @Setter int promFixHave = 0;
 	private @Getter @Setter int promFixInstalled = 0;
 	private @Getter @Setter boolean promInstalled = false;
@@ -41,15 +40,15 @@ public class App {
 
 	private @Getter @Setter boolean winArch = false;
 
-	private @val String prom32Path = "c:\\Program Files\\Ais3Prom\\";
-	private @val String prom64Path = "c:\\Program Files (x86)\\Ais3Prom\\";
+	private final String prom32Path = "c:\\Program Files\\Ais3Prom\\";
+	private final String prom64Path = "c:\\Program Files (x86)\\Ais3Prom\\";
 
-	private @val String oe32Path = "c:\\Program Files\\Ais3FB3OE\\";
-	private @val String oe64Path = "c:\\Program Files (x86)\\Ais3FB3OE\\";
+	private final String oe32Path = "c:\\Program Files\\Ais3FB3OE\\";
+	private final String oe64Path = "c:\\Program Files (x86)\\Ais3FB3OE\\";
 
-	private @val String versionPath = "Client\\CSC.ClientPackage.ver";
+	private final String versionPath = "Client\\CSC.ClientPackage.ver";
 
-	private @val @Getter String processName = "CommonComponents.UnifiedClient.exe";
+	private final @Getter String processName = "CommonComponents.UnifiedClient.exe";
 
 	public App() {
 		getAisPromVersion();

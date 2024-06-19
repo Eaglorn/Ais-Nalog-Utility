@@ -20,13 +20,12 @@ import com.sun.jna.platform.win32.WinBase.PROCESS_INFORMATION;
 import com.sun.jna.platform.win32.WinBase.STARTUPINFO;
 
 import lombok.Getter;
-import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AisNalogUtility {
-	private static @val @Getter App app = new App();
-	private static @val @Getter Data data = new Data();
+	private static final @Getter App app = new App();
+	private static final @Getter Data data = new Data();
 
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");

@@ -8,14 +8,13 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Crypt {
-	private static @val String initVector = "kgsyrmgnbsdhyrkp";
-	private static @val String key = "ngdteohqkslbhydm";
-	private static @val String charset = "UTF-8";
+	private static String initVector = "kgsyrmgnbsdhyrkp";
+	private static String key = "ngdteohqkslbhydm";
+	private static String charset = "UTF-8";
 
 	private Crypt() {
 		throw new IllegalStateException("Utility class");

@@ -39,10 +39,18 @@ public class MenuBar {
 						+ "    9)  <<Установить новую версию АИС-Налог 3 ОЭ>> - Выполнится установка новой версии АИС Налог-3 ОЭ\n"
 						+ "    10) <<Переустановить АИС-Налог 3 ОЭ>> - Выполнится переустановка текущей версии АИС Налог-3 ОЭ\n"
 						+ "Цвет фиксов:\n" + "    1) Красный - не установлен.\n" + "    2) Зелёным - установлен.\n\n"
-						+ "По вопросам или ошибкам в работе программы обращаться в ФКУ", "Справка",
+						+ "По вопросам или ошибкам в работе программы обращаться в ФКУ", "Помощь",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
+		itm = new JMenuItem("Изменения");
+		itm.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Улучшено распознование архивов с фиксами.", "Изменения", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		menu.add(itm);
 		itm = new JMenuItem("О программе");
 		itm.addActionListener(new ActionListener() {
 			@Override

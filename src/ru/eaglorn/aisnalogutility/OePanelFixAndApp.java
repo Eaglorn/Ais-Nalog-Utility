@@ -18,7 +18,6 @@ public class OePanelFixAndApp {
 
 	public OePanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
-		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridLayout layout = new GridLayout(9, 0, 0, 0);
 		panel.setLayout(layout);

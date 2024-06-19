@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,6 +13,8 @@ import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
 
@@ -28,6 +30,27 @@ public class PromPanelFix {
 		panel.setMinimumSize(new Dimension(width, 0));
 		AisNalogUtility.getApp().addWidth(width);
 	}
+	
+	private Integer getNumberNameFile(File file) {
+		String name = file.getName();
+		int lastNumber = name.lastIndexOf('.');
+		int firstNumber = lastNumber - 1;
+		boolean whileRunning = true;
+		while( whileRunning) {
+			if(firstNumber >= 0) {
+				if(StringUtils.isNumeric(name.substring(firstNumber, lastNumber))) {
+					firstNumber--;
+				} else {
+					firstNumber++;
+					whileRunning = false;
+				}
+			} else {
+				firstNumber = 0;
+				whileRunning = false;
+			}
+		}
+		return Integer.valueOf(name.substring(firstNumber, lastNumber));
+	}
 
 	private JList<String> getPromFixList() {
 		Data data = AisNalogUtility.getData();
@@ -35,19 +58,30 @@ public class PromPanelFix {
 		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
 		File dir = new File(data.getConfigApp().getNetPath() + "\\promfix");
 		File[] arrFiles = dir.listFiles();
+		List<File> lst = new ArrayList<File>();
+		for(File file : arrFiles) {
+			String name = file.getName();
+			int lastNumber = name.lastIndexOf('.');
+			if(lastNumber > 0 && lastNumber != name.length() - 1) {
+				if(StringUtils.isNumeric(String.valueOf(name.charAt(lastNumber - 1)))) {
+					String type = name.substring(lastNumber + 1);
+					boolean isArchive = false;
+					for (String str : AisNalogUtility.getData().getConfigApp().getArchiveTypes()) {
+						if(type.equals(str)) isArchive = true;
+					}
+					if(isArchive) {
+						lst.add(file);
+					}
+				}
+			}
+		}
 		Comparator<File> comp = new Comparator<File>() {
 			@Override
 			public int compare(File f1, File f2) {
-				String name1 = f1.getName();
-				Integer numb1 = Integer.valueOf(name1.substring(name1.indexOf("№") + 1, name1.lastIndexOf(".")));
-				String name2 = f2.getName();
-				Integer numb2 = Integer.valueOf(name2.substring(name2.indexOf("№") + 1, name2.lastIndexOf(".")));
-				return numb1.compareTo(numb2);
+				return getNumberNameFile(f1).compareTo(getNumberNameFile(f2));
 			}
 		};
-
-		Arrays.sort(arrFiles, comp);
-		List<File> lst = Arrays.asList(arrFiles);
+		lst.sort(comp);
 		int i = 1;
 		for (File file : lst) {
 			modelList.addElement(file.getName());

@@ -20,12 +20,11 @@ public class PromPanelFixAndApp {
 	private JButton buttonAll = new JButton("Установить все фиксы");
 	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
 	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
-	private @Getter JPanel panel = null;
+	private @Getter JPanel panel = new JPanel();
 	private int width = 340;
 
 	public PromPanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
-		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridLayout layout = new GridLayout(9, 0, 0, 0);
 		panel.setLayout(layout);

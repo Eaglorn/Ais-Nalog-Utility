@@ -12,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -21,7 +20,7 @@ public class LoadingThread extends Thread {
 	private @Setter int type = 0;
 	private @Setter int typeFix = 0;
 	private @Getter @Setter boolean work = true;
-	private @val JProgressBar progressBar = new JProgressBar();
+	private JProgressBar progressBar = new JProgressBar();
 
 	@Override
 	public void run() {
