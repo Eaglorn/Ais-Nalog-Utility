@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class App {
-	private final @Getter JFrame frame = new JFrame();
+	private @Getter JFrame frame = new JFrame();
 	private @Getter @Setter String promPath = "";
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oePath = "";
@@ -40,15 +40,15 @@ public class App {
 
 	private @Getter @Setter boolean winArch = false;
 
-	private final String prom32Path = "c:\\Program Files\\Ais3Prom\\";
-	private final String prom64Path = "c:\\Program Files (x86)\\Ais3Prom\\";
+	private String prom32Path = "c:\\Program Files\\Ais3Prom\\";
+	private String prom64Path = "c:\\Program Files (x86)\\Ais3Prom\\";
 
-	private final String oe32Path = "c:\\Program Files\\Ais3FB3OE\\";
-	private final String oe64Path = "c:\\Program Files (x86)\\Ais3FB3OE\\";
+	private String oe32Path = "c:\\Program Files\\Ais3FB3OE\\";
+	private String oe64Path = "c:\\Program Files (x86)\\Ais3FB3OE\\";
 
-	private final String versionPath = "Client\\CSC.ClientPackage.ver";
+	private String versionPath = "Client\\CSC.ClientPackage.ver";
 
-	private final @Getter String processName = "CommonComponents.UnifiedClient.exe";
+	private @Getter String processName = "CommonComponents.UnifiedClient.exe";
 
 	public App() {
 		getAisPromVersion();

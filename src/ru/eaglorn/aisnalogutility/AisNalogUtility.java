@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AisNalogUtility {
-	private static final @Getter App app = new App();
-	private static final @Getter Data data = new Data();
+	private static @Getter App app = new App();
+	private static @Getter Data data = new Data();
 
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
