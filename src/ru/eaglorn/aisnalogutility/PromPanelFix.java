@@ -63,13 +63,13 @@ public class PromPanelFix {
 			String name = file.getName();
 			int lastNumber = name.lastIndexOf('.');
 			if(lastNumber > 0 && lastNumber != name.length() - 1) {
-				if(StringUtils.isNumeric(String.valueOf(name.charAt(lastNumber - 1)))) {
-					String type = name.substring(lastNumber + 1);
-					boolean isArchive = false;
-					for (String str : AisNalogUtility.getData().getConfigApp().getArchiveTypes()) {
-						if(type.equals(str)) isArchive = true;
-					}
-					if(isArchive) {
+				String type = name.substring(lastNumber + 1);
+				boolean isArchive = false;
+				for (String str : AisNalogUtility.getData().getConfigApp().getArchiveTypes()) {
+					if(type.equals(str)) isArchive = true;
+				}
+				if(isArchive) {
+					if(StringUtils.isNumeric(String.valueOf(name.charAt(lastNumber - 1)))) {
 						lst.add(file);
 					}
 				}
