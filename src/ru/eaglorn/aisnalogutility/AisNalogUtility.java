@@ -93,10 +93,7 @@ public class AisNalogUtility {
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
 		if (app.getPromFixHave() < 1) {
 			app.getPromPanelFixAndApp().getInfo().setText("Отсутствуют фиксы для установки.");
-			app.getPromPanelFixAndApp().getButtonUninstalled().setEnabled(false);
-			app.getPromPanelFixAndApp().getButtonAll().setEnabled(false);
-			app.getPromPanelFixAndApp().getButtonChecked().setEnabled(false);
-			app.getPromPanelFixAndApp().getButtonUnchecked().setEnabled(false);
+			app.getPromPanelFixAndApp().disableButtonFixs();
 		} else {
 			app.getPromPanelFixAndApp().getInfo()
 					.setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
