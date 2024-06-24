@@ -50,7 +50,7 @@ public class PromPanelFixAndApp {
 			disableButtonFixs();
 		}
 		
-		if (app.getPromFixHave() != 0 && !app.getPromVersion().equals(data.getConfigApp().getPromFixsVersion())) {
+		if (app.getPromFixHave() != 0 && !app.getPromVersion().equals(data.getConfigApp().getPromVersion())) {
 			info.setText("Доступные фиксы относятся к предыдущей версии");
 			disableButtonFixs();
 		}
