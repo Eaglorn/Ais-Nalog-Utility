@@ -18,7 +18,9 @@ public class ConfigApp {
 	private @Getter String netPath = "";
 	private @Getter List<String> archiveTypes = new ArrayList<>();
 	private @Getter String oeVersion = "";
+	private @Getter String oeFixsVersion = "";
 	private @Getter String promVersion = "";
+	private @Getter String promFixsVersion = "";
 	
 	public static void getConfig() {
 		try {

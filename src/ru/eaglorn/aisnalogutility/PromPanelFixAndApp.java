@@ -16,15 +16,23 @@ import lombok.Getter;
 
 public class PromPanelFixAndApp {
 	private @Getter JLabel info = new JLabel("", SwingConstants.CENTER);
-	private JButton buttonUninstalled = new JButton("Установить новые фиксы");
-	private JButton buttonAll = new JButton("Установить все фиксы");
-	private JButton buttonChecked = new JButton("Установить только выбранные фиксы");
-	private JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
+	private @Getter JButton buttonUninstalled = new JButton("Установить новые фиксы");
+	private @Getter JButton buttonAll = new JButton("Установить все фиксы");
+	private @Getter JButton buttonChecked = new JButton("Установить только выбранные фиксы");
+	private @Getter JButton buttonUnchecked = new JButton("Установить все фиксы кроме выбранных");
 	private @Getter JPanel panel = new JPanel();
 	private int width = 340;
+	
+	public void disableButtonFixs() {
+		buttonUninstalled.setEnabled(false);
+		buttonAll.setEnabled(false);
+		buttonChecked.setEnabled(false);
+		buttonUnchecked.setEnabled(false);
+	}
 
 	public PromPanelFixAndApp() {
 		App app = AisNalogUtility.getApp();
+		Data data = AisNalogUtility.getData();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		GridLayout layout = new GridLayout(9, 0, 0, 0);
 		panel.setLayout(layout);
@@ -39,10 +47,12 @@ public class PromPanelFixAndApp {
 		panel.add(new JLabel("Актуальная версия: " + AisNalogUtility.getData().getConfigApp().getPromVersion(),
 				SwingConstants.CENTER));
 		if (!app.isPromInstalled()) {
-			buttonUninstalled.setEnabled(false);
-			buttonAll.setEnabled(false);
-			buttonChecked.setEnabled(false);
-			buttonUnchecked.setEnabled(false);
+			disableButtonFixs();
+		}
+		
+		if (app.getPromFixHave() != 0 && !app.getPromVersion().equals(data.getConfigApp().getPromFixsVersion())) {
+			info.setText("Доступные фиксы относятся к предыдущей версии");
+			disableButtonFixs();
 		}
 		panel.setMinimumSize(new Dimension(width, 0));
 		app.addWidth(width);

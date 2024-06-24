@@ -47,7 +47,7 @@ public class MenuBar {
 		itm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Улучшено распознование архивов с фиксами.", "Изменения", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "При отсутствии фиксов кнопки установки фиксов будут заблокированы.\nПри выходе новой версии АИС и её установке будут заблокирована установка фиксов от предыдущей версии.", "Изменения", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		menu.add(itm);
@@ -59,7 +59,7 @@ public class MenuBar {
 						"УФНС России по Хабаровскому краю.\n\n"
 								+ "Утилита для АИС Налог-3 ПРОМ(Установка фиксов, установка или переустановка программы), АИС Налог-3 ОЭ (Установка или переустановка программы).\n\n"
 								+ "Версия программы - " + app.getAppVersion() + "\n\n"
-								+ "Дата выпуска данной версии - 09.04.2024",
+								+ "Дата выпуска данной версии - 24.06.2024",
 						"О программе", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
