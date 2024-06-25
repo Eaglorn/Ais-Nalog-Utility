@@ -51,9 +51,10 @@ public class PromPanelFixAndApp {
 		}
 		
 		if (app.getPromFixHave() != 0 && !app.getPromVersion().equals(data.getConfigApp().getPromVersion())) {
-			info.setText("Доступные фиксы относятся к предыдущей версии");
+			info.setText("Доступные фиксы относятся к другой версии");
 			disableButtonFixs();
 		}
+
 		panel.setMinimumSize(new Dimension(width, 0));
 		app.addWidth(width);
 	}

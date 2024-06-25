@@ -19,8 +19,7 @@ public class ConfigAdmin {
 	private @Getter @Setter String login = "";
 	private @Getter @Setter String password = "";
 
-	static void getConfig() {
-		Data data = AisNalogUtility.getData();
+	static ConfigAdmin getConfig() {
 		FileReader file = null;
 		try {
 			file = new FileReader(new File("c:\\AisNalogUtility\\config\\auth"));
@@ -34,12 +33,14 @@ public class ConfigAdmin {
 			while (scan.hasNextLine()) {
 				gson.append(scan.nextLine());
 			}
-			data.setConfigAdmin(new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class));
+			
+			return new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class);
 		} catch (JsonSyntaxException e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));
 			log.error(stack.toString());
 		}
+		return null;
 	}
 
 	public ConfigAdmin(String login, char[] password) {

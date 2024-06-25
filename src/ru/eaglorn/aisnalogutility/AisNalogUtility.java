@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AisNalogUtility {
-	private static @Getter App app = new App();
-	private static @Getter Data data = new Data();
+	private static @Getter App app = null;
+	private static @Getter Data data = null;
 
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
@@ -65,6 +65,8 @@ public class AisNalogUtility {
 	}
 
 	private static void runApp() {
+		data = new Data();
+		app = new App();
 		ConfigApp.getConfig();
 		ConfigFix.getConfig();
 		String osArch = System.getProperty("os.arch").toLowerCase();
@@ -106,8 +108,10 @@ public class AisNalogUtility {
 		Console terminal = System.console();
 		String login = terminal.readLine("Input local admin login: ");
 		char[] password = terminal.readPassword("Input local admin password: ");
-		data.setConfigAdmin(new ConfigAdmin(login, password));
-		String crypt = new Gson().toJson(data.getConfigAdmin(), ConfigAdmin.class);
+		
+		ConfigAdmin configAdmin = new ConfigAdmin(login, password);
+		
+		String crypt = new Gson().toJson(configAdmin, ConfigAdmin.class);
 		crypt = Crypt.encrypt(crypt);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\auth")) {
 			file.write(crypt);
@@ -134,13 +138,13 @@ public class AisNalogUtility {
 	}
 
 	public static void runAppRun() {
-		ConfigAdmin.getConfig();
+		ConfigAdmin configAdmin = ConfigAdmin.getConfig();
 		WString nullW = null;
 		PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
 		STARTUPINFO startupInfo = new STARTUPINFO();
 		boolean result = false;
-		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(data.getConfigAdmin().getLogin()), nullW,
-				new WString(data.getConfigAdmin().getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
+		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(configAdmin.getLogin()), nullW,
+				new WString(configAdmin.getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
 				new WString(
 						"c:\\AisNalogUtility\\java\\bin\\javaw.exe -Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
 				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
