@@ -103,10 +103,13 @@ public class AisNalogUtility {
 			}
 			app.getPromPanelFixAndApp().disableButtonFixs();
 		} else {
+			if(app.getPromFixInstalled() == app.getPromFixHave()) {
+				app.getPromPanelFixAndApp().getButtonUninstalled().setEnabled(false);
+			}
 			if(app.getPromPanelFixAndApp().isEditInfo()) {
 				app.getPromPanelFixAndApp().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
 			}
-		}
+		} 
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);
 	}
