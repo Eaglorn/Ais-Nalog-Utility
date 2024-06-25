@@ -16,10 +16,6 @@ public class Crypt {
 	private static String key = "ngdteohqkslbhydm";
 	private static String charset = "UTF-8";
 
-	private Crypt() {
-		throw new IllegalStateException("Utility class");
-	}
-
 	public static String decrypt(String encrypted) {
 		try {
 			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
@@ -50,5 +46,9 @@ public class Crypt {
 			log.error(stack.toString());
 		}
 		return null;
+	}
+
+	private Crypt() {
+		throw new IllegalStateException("Utility class");
 	}
 }

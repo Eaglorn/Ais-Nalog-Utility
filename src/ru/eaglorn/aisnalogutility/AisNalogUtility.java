@@ -29,8 +29,9 @@ public class AisNalogUtility {
 
 	private static boolean checkPrivileges() {
 		File testPriv = new File("c:\\Windows\\");
-		if (!testPriv.canWrite())
+		if (!testPriv.canWrite()) {
 			return false;
+		}
 		File fileTest = null;
 		try {
 			fileTest = File.createTempFile("test", ".dll", testPriv);
@@ -51,12 +52,15 @@ public class AisNalogUtility {
 	public static void main(String[] args) {
 		try {
 			String arg = args[0];
-			if (arg.equals("-run"))
+			if (arg.equals("-run")) {
 				runAppRun();
-			if (arg.equals("-app"))
+			}
+			if (arg.equals("-app")) {
 				runAppMain();
-			if (arg.equals("-auth"))
+			}
+			if (arg.equals("-auth")) {
 				runAppAuth();
+			}
 		} catch (Exception e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));
@@ -82,10 +86,10 @@ public class AisNalogUtility {
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
 		app.getSplitPaneProm().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
-		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
 		app.setPromPanelFix(new PromPanelFix());
 		app.getSplitPaneProm().setRightComponent(app.getPromPanelFix().getPanel());
+		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
+		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
 		app.getSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
 		app.setOePanelFixAndApp(new OePanelFixAndApp());
@@ -94,11 +98,14 @@ public class AisNalogUtility {
 		frame.setSize(app.getWidth(), app.getHeigth());
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
 		if (app.getPromFixHave() < 1) {
-			app.getPromPanelFixAndApp().getInfo().setText("Отсутствуют фиксы для установки.");
+			if(app.getPromPanelFixAndApp().isEditInfo()) {
+				app.getPromPanelFixAndApp().getInfo().setText("Отсутствуют фиксы для установки.");
+			}
 			app.getPromPanelFixAndApp().disableButtonFixs();
 		} else {
-			app.getPromPanelFixAndApp().getInfo()
-					.setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
+			if(app.getPromPanelFixAndApp().isEditInfo()) {
+				app.getPromPanelFixAndApp().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
+			}
 		}
 		frame.setSize(app.getWidth(), app.getHeigth());
 		frame.setLocationRelativeTo(null);
@@ -108,9 +115,7 @@ public class AisNalogUtility {
 		Console terminal = System.console();
 		String login = terminal.readLine("Input local admin login: ");
 		char[] password = terminal.readPassword("Input local admin password: ");
-		
 		ConfigAdmin configAdmin = new ConfigAdmin(login, password);
-		
 		String crypt = new Gson().toJson(configAdmin, ConfigAdmin.class);
 		crypt = Crypt.encrypt(crypt);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\auth")) {

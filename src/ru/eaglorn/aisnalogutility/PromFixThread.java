@@ -11,10 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 public class PromFixThread extends Thread {
 	private int installMode = 0;
 
-	public PromFixThread(int installMode) {
-		this.installMode = installMode;
-	}
-
 	public static void decompress7ZipEmbedded(File source, File destination) throws IOException, InterruptedException {
 		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x",
 				source.getAbsolutePath(), "-o" + destination.getAbsolutePath(), "-aoa");
@@ -26,6 +22,10 @@ public class PromFixThread extends Thread {
 			e.printStackTrace(new PrintWriter(stack));
 			log.error(stack.toString());
 		}
+	}
+
+	public PromFixThread(int installMode) {
+		this.installMode = installMode;
 	}
 
 	@Override
@@ -50,45 +50,45 @@ public class PromFixThread extends Thread {
 		}
 
 		switch (installMode) {
-		case 1: { // All
-			for (Fix fix : data.getPromFixs()) {
-				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-					data.getConfigFix().getPromFixs().add(fix.getName());
-				}
-				unpack(fix);
-			}
-			break;
-		}
-		case 2: { // Checked
-			for (Fix fix : data.getPromFixs()) {
-				if (fix.isChecked()) {
+			case 1: { // All
+				for (Fix fix : data.getPromFixs()) {
 					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
 						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
 					unpack(fix);
 				}
+				break;
 			}
-			break;
-		}
-		case 3: { // Unchecked
-			for (Fix fix : data.getPromFixs()) {
-				if (!fix.isChecked()) {
+			case 2: { // Checked
+				for (Fix fix : data.getPromFixs()) {
+					if (fix.isChecked()) {
+						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+							data.getConfigFix().getPromFixs().add(fix.getName());
+						}
+						unpack(fix);
+					}
+				}
+				break;
+			}
+			case 3: { // Unchecked
+				for (Fix fix : data.getPromFixs()) {
+					if (!fix.isChecked()) {
+						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+							data.getConfigFix().getPromFixs().add(fix.getName());
+						}
+						unpack(fix);
+					}
+				}
+				break;
+			}
+			default: { // UnInstalled
+				for (Fix fix : data.getPromFixs()) {
 					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+						unpack(fix);
 						data.getConfigFix().getPromFixs().add(fix.getName());
 					}
-					unpack(fix);
 				}
 			}
-			break;
-		}
-		default: { // UnInstalled
-			for (Fix fix : data.getPromFixs()) {
-				if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-					unpack(fix);
-					data.getConfigFix().getPromFixs().add(fix.getName());
-				}
-			}
-		}
 		}
 		try {
 			app.getLoadingThread().setProcessText("Статус выполнения: индексация распакованных фиксов.");

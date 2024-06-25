@@ -37,17 +37,12 @@ public class App {
 	private @Getter @Setter int promFixInstalled = 0;
 	private @Getter @Setter boolean promInstalled = false;
 	private @Getter @Setter boolean oeInstalled = false;
-
 	private @Getter @Setter boolean winArch = false;
-
 	private String prom32Path = "c:\\Program Files\\Ais3Prom\\";
 	private String prom64Path = "c:\\Program Files (x86)\\Ais3Prom\\";
-
 	private String oe32Path = "c:\\Program Files\\Ais3FB3OE\\";
 	private String oe64Path = "c:\\Program Files (x86)\\Ais3FB3OE\\";
-
 	private String versionPath = "Client\\CSC.ClientPackage.ver";
-
 	private @Getter String processName = "CommonComponents.UnifiedClient.exe";
 
 	public App() {
@@ -55,32 +50,8 @@ public class App {
 		getAisOeVersion();
 	}
 
-	private void getAisPromVersion() {
-		String path = "";
-		if (new File(prom64Path + versionPath).exists()) {
-			promPath = prom64Path;
-			winArch = true;
-			path = promPath + versionPath;
-			promInstalled = true;
-		} else if (new File(prom32Path + versionPath).exists()) {
-			promPath = prom32Path;
-			winArch = false;
-			path = promPath + versionPath;
-			promInstalled = true;
-		} else {
-			promVersion = "НЕ УСТАНОВЛЕН!";
-			return;
-		}
-		File file = new File(path);
-		if (file.exists()) {
-			try {
-				promVersion = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8).get(0));
-			} catch (IOException e) {
-				StringWriter stack = new StringWriter();
-				e.printStackTrace(new PrintWriter(stack));
-				log.error(stack.toString());
-			}
-		}
+	public void addWidth(int add) {
+		width += add;
 	}
 
 	private void getAisOeVersion() {
@@ -111,8 +82,32 @@ public class App {
 		}
 	}
 
-	public void addWidth(int add) {
-		width += add;
+	private void getAisPromVersion() {
+		String path = "";
+		if (new File(prom64Path + versionPath).exists()) {
+			promPath = prom64Path;
+			winArch = true;
+			path = promPath + versionPath;
+			promInstalled = true;
+		} else if (new File(prom32Path + versionPath).exists()) {
+			promPath = prom32Path;
+			winArch = false;
+			path = promPath + versionPath;
+			promInstalled = true;
+		} else {
+			promVersion = "НЕ УСТАНОВЛЕН!";
+			return;
+		}
+		File file = new File(path);
+		if (file.exists()) {
+			try {
+				promVersion = String.join("", FileUtils.readLines(file, StandardCharsets.UTF_8).get(0));
+			} catch (IOException e) {
+				StringWriter stack = new StringWriter();
+				e.printStackTrace(new PrintWriter(stack));
+				log.error(stack.toString());
+			}
+		}
 	}
 
 	public void processBuilderStart(String[] commands, boolean exit) throws InterruptedException {

@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ConfigAdmin {
 	private @Getter @Setter String login = "";
 	private @Getter @Setter String password = "";
-
+	
 	static ConfigAdmin getConfig() {
 		FileReader file = null;
 		try {
@@ -33,7 +33,7 @@ public class ConfigAdmin {
 			while (scan.hasNextLine()) {
 				gson.append(scan.nextLine());
 			}
-			
+
 			return new Gson().fromJson(Crypt.decrypt(gson.toString()), ConfigAdmin.class);
 		} catch (JsonSyntaxException e) {
 			StringWriter stack = new StringWriter();

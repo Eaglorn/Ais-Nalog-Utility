@@ -50,18 +50,16 @@ public class OePanelFixAndApp {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!((JButton) e.getSource()).isEnabled())
+				if (!((JButton) e.getSource()).isEnabled()) {
 					return;
-
+				}
 				LoadingThread loadingThread = app.getLoadingThread();
 				loadingThread.setType(2);
 				loadingThread.start();
-
 				Thread thread = new OeAppThread();
 				thread.start();
 			}
 		});
 		return button;
 	}
-
 }

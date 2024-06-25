@@ -34,20 +34,20 @@ public class LoadingThread extends Thread {
 		String messageFirst = "";
 		String messageSecond = "";
 		switch (type) {
-		case (1): {
-			messageFirst = "Выполняется установка АИС Налог-3 ПРОМ.";
-			messageSecond = "Во время установки не запускайте АИС Налог-3 ПРОМ!";
-			break;
-		}
-		case (2): {
-			messageFirst = "Выполняется установка АИС Налог-3 ОЕ.";
-			messageSecond = "Во время установки не запускайте АИС Налог-3 ОЕ!";
-			break;
-		}
-		default: {
-			messageFirst = "Выполняется установка фиксов.";
-			messageSecond = "Во время установки не запускайте АИС Налог-3 ПРОМ!";
-		}
+			case (1): {
+				messageFirst = "Выполняется установка АИС Налог-3 ПРОМ.";
+				messageSecond = "Во время установки не запускайте АИС Налог-3 ПРОМ!";
+				break;
+			}
+			case (2): {
+				messageFirst = "Выполняется установка АИС Налог-3 ОЕ.";
+				messageSecond = "Во время установки не запускайте АИС Налог-3 ОЕ!";
+				break;
+			}
+			default: {
+				messageFirst = "Выполняется установка фиксов.";
+				messageSecond = "Во время установки не запускайте АИС Налог-3 ПРОМ!";
+			}
 		}
 		panel.add(new JLabel(messageFirst, SwingConstants.CENTER));
 		panel.add(new JLabel(messageSecond, SwingConstants.CENTER));

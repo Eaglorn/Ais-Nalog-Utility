@@ -30,7 +30,7 @@ public class PromPanelFix {
 		panel.setMinimumSize(new Dimension(width, 0));
 		AisNalogUtility.getApp().addWidth(width);
 	}
-	
+
 	private Integer getNumberNameFile(File file) {
 		String name = file.getName();
 		int lastNumber = name.lastIndexOf('.');
@@ -58,7 +58,7 @@ public class PromPanelFix {
 		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
 		File dir = new File(data.getConfigApp().getNetPath() + "\\promfix");
 		File[] arrFiles = dir.listFiles();
-		List<File> lst = new ArrayList<File>();
+		List<File> lst = new ArrayList<>();
 		for(File file : arrFiles) {
 			String name = file.getName();
 			int lastNumber = name.lastIndexOf('.');
@@ -66,7 +66,9 @@ public class PromPanelFix {
 				String type = name.substring(lastNumber + 1);
 				boolean isArchive = false;
 				for (String str : AisNalogUtility.getData().getConfigApp().getArchiveTypes()) {
-					if(type.equals(str)) isArchive = true;
+					if(type.equals(str)) {
+						isArchive = true;
+					}
 				}
 				if(isArchive) {
 					if(StringUtils.isNumeric(String.valueOf(name.charAt(lastNumber - 1)))) {
@@ -94,16 +96,17 @@ public class PromPanelFix {
 		list.addListSelectionListener(listSelectionDocument);
 		list.setSelectionModel(new DefaultListSelectionModel() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void setSelectionInterval(int index0, int index1) {
 				if (super.isSelectedIndex(index0)) {
-					if (index0 >= 0)
+					if (index0 >= 0) {
 						data.getPromFixs().get(index0).setChecked(false);
+					}
 					super.removeSelectionInterval(index0, index1);
 				} else {
-					if (index0 >= 0)
+					if (index0 >= 0) {
 						data.getPromFixs().get(index0).setChecked(true);
+					}
 					super.addSelectionInterval(index0, index1);
 				}
 			}

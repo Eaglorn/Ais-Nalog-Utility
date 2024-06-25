@@ -31,7 +31,6 @@ public interface Shell32X extends Shell32 {
 		public WString lpParameters;
 		public WString lpVerb;
 		public int nShow;
-
 		@Override
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		protected List getFieldOrder() {

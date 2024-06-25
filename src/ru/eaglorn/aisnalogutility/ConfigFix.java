@@ -24,8 +24,8 @@ public class ConfigFix {
 	private @Getter @Setter String oeVersion = "";
 	private @Getter @Setter List<String> promFixs = new ArrayList<>();
 	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
+	
 	private static String pathSave = "c:\\AisNalogUtility\\config\\save.json";
-
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();
 		App app = AisNalogUtility.getApp();
@@ -59,7 +59,6 @@ public class ConfigFix {
 			save();
 		}
 	}
-
 	public static void save() {
 		Data data = AisNalogUtility.getData();
 		String str = new Gson().toJson(data.getConfigFix(), ConfigFix.class);
@@ -72,5 +71,4 @@ public class ConfigFix {
 			log.error(stack.toString());
 		}
 	}
-
 }
