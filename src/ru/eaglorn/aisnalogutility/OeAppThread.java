@@ -10,12 +10,11 @@ public class OeAppThread extends Thread {
 	@Override
 	public void run() {
 		App app = AisNalogUtility.getApp();
-		Data data = AisNalogUtility.getData();
 		try {
 			LoadingThread thread = app.getLoadingThread();
 			thread.setProcessText("Статус выполнения: загрузка установочных файлов АИС Налог-3 ОЭ.");
 			String[] commands1 = { "robocopy", "/XC", "/XO", "/NP", "/NS", "/NC", "/NFL", "/NDL", "/R:3", "/W:1", "/Z",
-					data.getConfigApp().getNetPath() + "\\\\aisoe\\\\", "c:\\AisNalogUtility\\aisoe\\" };
+					AisNalogUtility.getData().getConfigApp().getNetPath() + "\\\\aisoe\\\\", "c:\\AisNalogUtility\\aisoe\\" };
 			app.processBuilderStart(commands1, false);
 			String path = "";
 			if (app.isWinArch()) {

@@ -24,19 +24,20 @@ public class ConfigFix {
 	private @Getter @Setter String oeVersion = "";
 	private @Getter @Setter List<String> promFixs = new ArrayList<>();
 	private @Getter @Setter List<String> oeFixs = new ArrayList<>();
-	
 	private static String pathSave = "c:\\AisNalogUtility\\config\\save.json";
+	
 	public static void getConfig() {
 		Data data = AisNalogUtility.getData();
-		App app = AisNalogUtility.getApp();
+		ConfigFix configFix = data.getConfigFix();
+		ConfigApp configApp = data.getConfigApp();
 		if (Files.exists(Paths.get(pathSave))) {
 			try {
 				JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\save.json"));
 				data.setConfigFix(new Gson().fromJson(reader, ConfigFix.class));
-				if (!data.getConfigApp().getPromVersion().equals(data.getConfigFix().getPromVersion())
-						|| !Files.exists(Paths.get(app.getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
-					data.getConfigFix().getPromFixs().clear();
-					data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
+				if (!configApp.getPromVersion().equals(configFix.getPromVersion())
+						|| !Files.exists(Paths.get(AisNalogUtility.getApp().getPromPath() + "Client\\CSC.ClientPackage.fix"))) {
+					configFix.getPromFixs().clear();
+					configFix.setPromVersion(configApp.getPromVersion());
 				}
 				save();
 			} catch (IOException e) {
@@ -45,7 +46,7 @@ public class ConfigFix {
 				log.error(stack.toString());
 			}
 		} else {
-			data.getConfigFix().setPromVersion(data.getConfigApp().getPromVersion());
+			configFix.setPromVersion(configApp.getPromVersion());
 			File file = new File(pathSave);
 			try {
 				if (file.createNewFile()) {
@@ -59,11 +60,10 @@ public class ConfigFix {
 			save();
 		}
 	}
+	
 	public static void save() {
-		Data data = AisNalogUtility.getData();
-		String str = new Gson().toJson(data.getConfigFix(), ConfigFix.class);
 		try (FileWriter file = new FileWriter(pathSave)) {
-			file.write(str);
+			file.write(new Gson().toJson(AisNalogUtility.getData().getConfigFix(), ConfigFix.class));
 			file.flush();
 		} catch (IOException e) {
 			StringWriter stack = new StringWriter();

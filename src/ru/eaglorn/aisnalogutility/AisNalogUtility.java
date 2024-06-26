@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
@@ -79,35 +80,41 @@ public class AisNalogUtility {
 		}
 		JFrame frame = app.getFrame();
 		frame.setTitle("Утилита для АИС Налог 3 (v" + app.getAppVersion() + ")");
-		app.getFrame().setSize(0, app.getHeigth());
-		app.getFrame().setVisible(true);
-		app.getFrame().setLocationRelativeTo(null);
-		app.getFrame().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setSize(0, app.getHeigth());
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new MenuBar();
 		frame.setJMenuBar(app.getMenuBar());
-		app.getSplitPaneProm().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		JSplitPane splitPaneProm = app.getSplitPaneProm();
+		splitPaneProm.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
 		app.setPromPanelFix(new PromPanelFix());
-		app.getSplitPaneProm().setRightComponent(app.getPromPanelFix().getPanel());
+		splitPaneProm.setRightComponent(app.getPromPanelFix().getPanel());
 		app.setPromPanelFixAndApp(new PromPanelFixAndApp());
-		app.getSplitPaneProm().setLeftComponent(app.getPromPanelFixAndApp().getPanel());
-		app.getSplitPane().setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-		app.getSplitPane().setLeftComponent(app.getSplitPaneProm());
+		splitPaneProm.setLeftComponent(app.getPromPanelFixAndApp().getPanel());
+		JSplitPane splitPane = app.getSplitPane();
+		splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		splitPane.setLeftComponent(splitPaneProm);
 		app.setOePanelFixAndApp(new OePanelFixAndApp());
-		app.getSplitPane().setRightComponent(app.getOePanelFixAndApp().getPanel());
-		frame.add(app.getSplitPane());
+		splitPane.setRightComponent(app.getOePanelFixAndApp().getPanel());
+		frame.add(splitPane);
 		frame.setSize(app.getWidth(), app.getHeigth());
 		app.setPromFixInstalled(data.getConfigFix().getPromFixs().size());
-		if (app.getPromFixHave() < 1) {
-			if(app.getPromPanelFixAndApp().isEditInfo()) {
-				app.getPromPanelFixAndApp().getInfo().setText("Отсутствуют фиксы для установки.");
+		int promFixHave = app.getPromFixHave();
+		PromPanelFixAndApp promPanelFixAndApp = app.getPromPanelFixAndApp();
+		boolean editInfo = promPanelFixAndApp.isEditInfo();
+		JLabel info = promPanelFixAndApp.getInfo();
+		if (promFixHave < 1) {
+			if(editInfo) {
+				info.setText("Отсутствуют фиксы для установки.");
 			}
-			app.getPromPanelFixAndApp().disableButtonFixs();
+			promPanelFixAndApp.disableButtonFixs();
 		} else {
-			if(app.getPromFixInstalled() == app.getPromFixHave()) {
-				app.getPromPanelFixAndApp().getButtonUninstalled().setEnabled(false);
+			if(app.getPromFixInstalled() == promFixHave) {
+				promPanelFixAndApp.getButtonUninstalled().setEnabled(false);
 			}
-			if(app.getPromPanelFixAndApp().isEditInfo()) {
-				app.getPromPanelFixAndApp().getInfo().setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + app.getPromFixHave() + ".");
+			if(editInfo) {
+				info.setText("Установлено " + app.getPromFixInstalled() + " фиксов из " + promFixHave + ".");
 			}
 		} 
 		frame.setSize(app.getWidth(), app.getHeigth());
@@ -116,9 +123,7 @@ public class AisNalogUtility {
 
 	public static void runAppAuth() {
 		Console terminal = System.console();
-		String login = terminal.readLine("Input local admin login: ");
-		char[] password = terminal.readPassword("Input local admin password: ");
-		ConfigAdmin configAdmin = new ConfigAdmin(login, password);
+		ConfigAdmin configAdmin = new ConfigAdmin(terminal.readLine("Input local admin login: "), terminal.readPassword("Input local admin password: "));
 		String crypt = new Gson().toJson(configAdmin, ConfigAdmin.class);
 		crypt = Crypt.encrypt(crypt);
 		try (FileWriter file = new FileWriter("c:\\AisNalogUtility\\config\\auth")) {
@@ -148,14 +153,13 @@ public class AisNalogUtility {
 	public static void runAppRun() {
 		ConfigAdmin configAdmin = ConfigAdmin.getConfig();
 		WString nullW = null;
-		PROCESS_INFORMATION processInformation = new PROCESS_INFORMATION();
 		STARTUPINFO startupInfo = new STARTUPINFO();
 		boolean result = false;
 		result = AdvApi32.INSTANCE.CreateProcessWithLogonW(new WString(configAdmin.getLogin()), nullW,
 				new WString(configAdmin.getPassword()), AdvApi32.LOGON_WITH_PROFILE, nullW,
 				new WString(
 						"c:\\AisNalogUtility\\java\\bin\\javaw.exe -Dlog4j.configurationFile=log4j2.xml -jar c:\\AisNalogUtility\\app\\AisNalogUtility.jar -app"),
-				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, processInformation);
+				AdvApi32.CREATE_NEW_CONSOLE, null, nullW, startupInfo, new PROCESS_INFORMATION());
 		if (!result) {
 			int error = Kernel32.INSTANCE.GetLastError();
 			log.error("OS error # {}", error);

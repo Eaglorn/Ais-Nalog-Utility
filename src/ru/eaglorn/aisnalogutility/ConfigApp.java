@@ -22,8 +22,7 @@ public class ConfigApp {
 	
 	public static void getConfig() {
 		try {
-			JsonReader reader = new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json"));
-			AisNalogUtility.getData().setConfigApp(new Gson().fromJson(reader, ConfigApp.class));
+			AisNalogUtility.getData().setConfigApp(new Gson().fromJson(new JsonReader(new FileReader("c:\\AisNalogUtility\\config\\config.json")), ConfigApp.class));
 		} catch (IOException e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));

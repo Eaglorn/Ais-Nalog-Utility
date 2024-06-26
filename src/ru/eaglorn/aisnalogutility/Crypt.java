@@ -18,12 +18,9 @@ public class Crypt {
 
 	public static String decrypt(String encrypted) {
 		try {
-			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
-			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(charset), "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-			cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-			byte[] original = cipher.doFinal(Base64.getDecoder().decode(encrypted));
-			return new String(original);
+			cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(charset), "AES"), new IvParameterSpec(initVector.getBytes(charset)));
+			return new String(cipher.doFinal(Base64.getDecoder().decode(encrypted)));
 		} catch (Exception e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));
@@ -34,12 +31,9 @@ public class Crypt {
 
 	public static String encrypt(String value) {
 		try {
-			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(charset));
-			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(charset), "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-			byte[] encrypted = cipher.doFinal(value.getBytes());
-			return new String(Base64.getEncoder().encode(encrypted));
+			cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(charset), "AES"), new IvParameterSpec(initVector.getBytes(charset)));
+			return new String(Base64.getEncoder().encode(cipher.doFinal(value.getBytes())));
 		} catch (Exception e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));

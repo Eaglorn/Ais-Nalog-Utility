@@ -20,7 +20,7 @@ class PromFixCheckboxListCellRenderer<E> extends JCheckBox implements ListCellRe
 		setComponentOrientation(list.getComponentOrientation());
 		setFont(list.getFont());
 		String str = String.valueOf(value);
-		setText(String.valueOf(value));
+		setText(str);
 		if (AisNalogUtility.getData().getConfigFix().getPromFixs().contains(str)) {
 			setBackground(new Color(185, 255, 185));
 		} else {

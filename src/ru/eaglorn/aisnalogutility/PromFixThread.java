@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,8 +16,7 @@ public class PromFixThread extends Thread {
 		ProcessBuilder pb = new ProcessBuilder().inheritIO().command("c://AisNalogUtility//7zip/7z.exe", "x",
 				source.getAbsolutePath(), "-o" + destination.getAbsolutePath(), "-aoa");
 		try {
-			Process process = pb.start();
-			process.waitFor();
+			pb.start().waitFor();
 		} catch (IOException e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));
@@ -32,6 +32,7 @@ public class PromFixThread extends Thread {
 	public void run() {
 		App app = AisNalogUtility.getApp();
 		Data data = AisNalogUtility.getData();
+		ConfigFix configFix = data.getConfigFix();
 
 		try {
 			String path = "";
@@ -48,22 +49,24 @@ public class PromFixThread extends Thread {
 			log.error(stack.toString());
 			Thread.currentThread().interrupt();
 		}
+		
+		List<Fix> promFixs = data.getPromFixs();
 
 		switch (installMode) {
 			case 1: { // All
-				for (Fix fix : data.getPromFixs()) {
-					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-						data.getConfigFix().getPromFixs().add(fix.getName());
+				for (Fix fix : promFixs) {
+					if (!configFix.getPromFixs().contains(fix.getName())) {
+						configFix.getPromFixs().add(fix.getName());
 					}
 					unpack(fix);
 				}
 				break;
 			}
 			case 2: { // Checked
-				for (Fix fix : data.getPromFixs()) {
+				for (Fix fix : promFixs) {
 					if (fix.isChecked()) {
-						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-							data.getConfigFix().getPromFixs().add(fix.getName());
+						if (!configFix.getPromFixs().contains(fix.getName())) {
+							configFix.getPromFixs().add(fix.getName());
 						}
 						unpack(fix);
 					}
@@ -71,10 +74,10 @@ public class PromFixThread extends Thread {
 				break;
 			}
 			case 3: { // Unchecked
-				for (Fix fix : data.getPromFixs()) {
+				for (Fix fix : promFixs) {
 					if (!fix.isChecked()) {
-						if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
-							data.getConfigFix().getPromFixs().add(fix.getName());
+						if (!configFix.getPromFixs().contains(fix.getName())) {
+							configFix.getPromFixs().add(fix.getName());
 						}
 						unpack(fix);
 					}
@@ -82,10 +85,10 @@ public class PromFixThread extends Thread {
 				break;
 			}
 			default: { // UnInstalled
-				for (Fix fix : data.getPromFixs()) {
-					if (!data.getConfigFix().getPromFixs().contains(fix.getName())) {
+				for (Fix fix : promFixs) {
+					if (!configFix.getPromFixs().contains(fix.getName())) {
 						unpack(fix);
-						data.getConfigFix().getPromFixs().add(fix.getName());
+						configFix.getPromFixs().add(fix.getName());
 					}
 				}
 			}
@@ -104,10 +107,9 @@ public class PromFixThread extends Thread {
 
 	public void unpack(Fix fix) {
 		App app = AisNalogUtility.getApp();
-		String pathFix = AisNalogUtility.getData().getConfigApp().getNetPath() + "\\promfix\\" + fix.getName();
 		try {
 			app.getLoadingThread().setProcessText("Статус выполнения: распаковка  фикса " + fix.getName());
-			decompress7ZipEmbedded(new File(pathFix), new File(app.getPromPath()));
+			decompress7ZipEmbedded(new File(AisNalogUtility.getData().getConfigApp().getNetPath() + "\\promfix\\" + fix.getName()), new File(app.getPromPath()));
 		} catch (IOException | InterruptedException e) {
 			StringWriter stack = new StringWriter();
 			e.printStackTrace(new PrintWriter(stack));

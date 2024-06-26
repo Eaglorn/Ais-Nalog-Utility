@@ -53,19 +53,19 @@ public class PromPanelFix {
 	}
 
 	private JList<String> getPromFixList() {
+		App app = AisNalogUtility.getApp();
 		Data data = AisNalogUtility.getData();
+		ConfigApp configApp = data.getConfigApp();
 		DefaultListModel<String> modelList = new DefaultListModel<>();
-		FixListSelectionDocument listSelectionDocument = new FixListSelectionDocument();
-		File dir = new File(data.getConfigApp().getNetPath() + "\\promfix");
-		File[] arrFiles = dir.listFiles();
+		File dir = new File(configApp.getNetPath() + "\\promfix");
 		List<File> lst = new ArrayList<>();
-		for(File file : arrFiles) {
+		for(File file : dir.listFiles()) {
 			String name = file.getName();
 			int lastNumber = name.lastIndexOf('.');
 			if(lastNumber > 0 && lastNumber != name.length() - 1) {
 				String type = name.substring(lastNumber + 1);
 				boolean isArchive = false;
-				for (String str : AisNalogUtility.getData().getConfigApp().getArchiveTypes()) {
+				for (String str : configApp.getArchiveTypes()) {
 					if(type.equals(str)) {
 						isArchive = true;
 					}
@@ -84,28 +84,29 @@ public class PromPanelFix {
 			}
 		};
 		lst.sort(comp);
+		List<Fix> promFixs = data.getPromFixs();
 		int i = 1;
 		for (File file : lst) {
 			modelList.addElement(file.getName());
-			data.getPromFixs().add(new Fix(i, file.getName()));
+			promFixs.add(new Fix(i, file.getName()));
 			i++;
-			AisNalogUtility.getApp().setPromFixHave(AisNalogUtility.getApp().getPromFixHave() + 1);
+			app.setPromFixHave(app.getPromFixHave() + 1);
 		}
 		JList<String> list = new JList<>(modelList);
 		list.setCellRenderer(new PromFixCheckboxListCellRenderer<>());
-		list.addListSelectionListener(listSelectionDocument);
+		list.addListSelectionListener(new FixListSelectionDocument());
 		list.setSelectionModel(new DefaultListSelectionModel() {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void setSelectionInterval(int index0, int index1) {
 				if (super.isSelectedIndex(index0)) {
 					if (index0 >= 0) {
-						data.getPromFixs().get(index0).setChecked(false);
+						promFixs.get(index0).setChecked(false);
 					}
 					super.removeSelectionInterval(index0, index1);
 				} else {
 					if (index0 >= 0) {
-						data.getPromFixs().get(index0).setChecked(true);
+						promFixs.get(index0).setChecked(true);
 					}
 					super.addSelectionInterval(index0, index1);
 				}

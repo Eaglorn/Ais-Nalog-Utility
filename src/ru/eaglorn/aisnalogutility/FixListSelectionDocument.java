@@ -30,8 +30,7 @@ public class FixListSelectionDocument extends PlainDocument implements ListSelec
 	}
 
 	private void formatElement(Object element, StringBuilder textBuilder) {
-		String formatted = elementFormat.format(new Object[] { element });
-		textBuilder.append(formatted);
+		textBuilder.append(elementFormat.format(new Object[] { element }));
 		textBuilder.append(delim);
 	}
 
@@ -56,8 +55,7 @@ public class FixListSelectionDocument extends PlainDocument implements ListSelec
 		StringBuilder textBuilder = new StringBuilder();
 		for (int i = minSelectionIndex; i <= maxSelectionIndex; i++) {
 			if (listSelectionModel.isSelectedIndex(i)) {
-				Object elementAt = model.getElementAt(i);
-				formatElement(elementAt, textBuilder);
+				formatElement(model.getElementAt(i), textBuilder);
 			}
 		}
 		setText(textBuilder.toString());

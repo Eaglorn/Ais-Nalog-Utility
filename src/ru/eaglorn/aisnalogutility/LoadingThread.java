@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -24,13 +25,12 @@ public class LoadingThread extends Thread {
 
 	@Override
 	public void run() {
-		App app = AisNalogUtility.getApp();
-		app.getFrame().getContentPane().removeAll();
-		app.getFrame().setSize(490, 235);
+		JFrame frame = AisNalogUtility.getApp().getFrame();
+		frame.getContentPane().removeAll();
+		frame.setSize(490, 235);
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		GridLayout layout = new GridLayout(9, 0, 0, 0);
-		panel.setLayout(layout);
+		panel.setLayout(new GridLayout(9, 0, 0, 0));
 		String messageFirst = "";
 		String messageSecond = "";
 		switch (type) {
@@ -60,9 +60,9 @@ public class LoadingThread extends Thread {
 		panel.add(new JLabel("", SwingConstants.CENTER));
 		progressBar.setIndeterminate(true);
 		panel.add(progressBar);
-		app.getFrame().add(panel);
-		app.getFrame().revalidate();
-		app.getFrame().repaint();
+		frame.add(panel);
+		frame.revalidate();
+		frame.repaint();
 		while (work) {
 			try {
 				Thread.sleep(100);
