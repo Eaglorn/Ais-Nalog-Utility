@@ -47,13 +47,6 @@ public class MenuBar {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		itm = new JMenuItem("Изменения");
-		itm.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Чистка кода.", "Изменения", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
 		menu.add(itm);
 		itm = new JMenuItem("О программе");
 		itm.addActionListener(new ActionListener() {
