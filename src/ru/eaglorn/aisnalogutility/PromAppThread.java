@@ -25,6 +25,7 @@ public class PromAppThread extends Thread {
 			String[] commands2 = { path };
 			app.processBuilderStart(commands2, false);
 			thread.setProcessText("Статус выполнения: установка АИС Налог-3 ПРОМ.");
+			AisNalogUtility.getData().getConfigFix().getPromFixs().clear();
 			String[] commands3 = { "\"c:\\AisNalogUtility\\aisprom\\run-silentmode.cmd\"" };
 			app.processBuilderStart(commands3, true);
 		} catch (InterruptedException e) {
