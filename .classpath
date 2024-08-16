@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre-1.8">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
@@ -29,19 +29,19 @@
 	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-core-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-core-2.23.1-sources.jar"/>
 	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-api-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-api-2.23.1-sources.jar"/>
 	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-slf4j2-impl-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-slf4j2-impl-2.23.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/slf4j-api-2.0.13.jar" sourcepath="C:/AisNalogUtilityLib/slf4j-api-2.0.13-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/slf4j-api-2.0.14.jar" sourcepath="C:/AisNalogUtilityLib/slf4j-api-2.0.14-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/slf4j-api-2.0.13-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/slf4j-api-2.0.14-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/lombok-1.18.32.jar" sourcepath="C:/AisNalogUtilityLib/lombok-1.18.32-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/lombok-1.18.34.jar" sourcepath="C:/AisNalogUtilityLib/lombok-1.18.34-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/lombok-1.18.32-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/lombok-1.18.34-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-lang3-3.14.0.jar" sourcepath="C:/AisNalogUtilityLib/commons-lang3-3.14.0-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-lang3-3.15.0.jar" sourcepath="C:/AisNalogUtilityLib/commons-lang3-3.15.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-lang3-3.14.0-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-lang3-3.15.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
