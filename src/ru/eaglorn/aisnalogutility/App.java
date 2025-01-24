@@ -23,7 +23,7 @@ public class App {
 	private @Getter @Setter String promVersion = "";
 	private @Getter @Setter String oePath = "";
 	private @Getter @Setter String oeVersion = "";
-	private @Getter String appVersion = "12";
+	private @Getter String appVersion = "13";
 	private @Getter @Setter int width = 0;
 	private @Getter @Setter int heigth = 600;
 	private @Getter LoadingThread loadingThread = new LoadingThread();
@@ -117,6 +117,9 @@ public class App {
 			Process process = pb.start();
 			process.waitFor();
 			if (exit) {
+				String[] commands1 = { "\"c:\\AisNalogUtility\\scripts\\StatFix.bat\"" };
+				this.processBuilderStart(commands1,false);
+				
 				loadingThread.setWork(false);
 				ConfigFix.save();
 				frame.setVisible(false);

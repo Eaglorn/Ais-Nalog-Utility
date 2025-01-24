@@ -6,9 +6,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-io-2.16.1.jar" sourcepath="C:/AisNalogUtilityLib/commons-io-2.16.1-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-io-2.18.0.jar" sourcepath="C:/AisNalogUtilityLib/commons-io-2.18.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-io-2.16.1-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-io-2.18.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/gson-2.11.0.jar" sourcepath="C:/AisNalogUtilityLib/gson-2.11.0-sources.jar">
@@ -26,22 +26,22 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/jna-platform-5.14.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-core-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-core-2.23.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-api-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-api-2.23.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-slf4j2-impl-2.23.1.jar" sourcepath="C:/AisNalogUtilityLib/log4j-slf4j2-impl-2.23.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/slf4j-api-2.0.14.jar" sourcepath="C:/AisNalogUtilityLib/slf4j-api-2.0.14-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-core-2.24.3.jar" sourcepath="C:/AisNalogUtilityLib/log4j-core-2.24.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-api-2.24.3.jar" sourcepath="C:/AisNalogUtilityLib/log4j-api-2.24.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/log4j-slf4j2-impl-2.24.3.jar" sourcepath="C:/AisNalogUtilityLib/log4j-slf4j2-impl-2.24.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/slf4j-api-2.0.16.jar" sourcepath="C:/AisNalogUtilityLib/slf4j-api-2.0.16-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/slf4j-api-2.0.14-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/slf4j-api-2.0.16-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/lombok-1.18.34.jar" sourcepath="C:/AisNalogUtilityLib/lombok-1.18.34-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/lombok-1.18.36.jar" sourcepath="C:/AisNalogUtilityLib/lombok-1.18.36-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/lombok-1.18.34-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/lombok-1.18.36-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-lang3-3.15.0.jar" sourcepath="C:/AisNalogUtilityLib/commons-lang3-3.15.0-sources.jar">
+	<classpathentry kind="lib" path="C:/AisNalogUtilityLib/commons-lang3-3.17.0.jar" sourcepath="C:/AisNalogUtilityLib/commons-lang3-3.17.0-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-lang3-3.15.0-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="jar:file:/C:/AisNalogUtilityLib/commons-lang3-3.17.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
